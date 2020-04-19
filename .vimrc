@@ -15,4 +15,5 @@ inoremap <S-tab> <C-p>
 noremap ;; :update<cr>
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
+let g:clang_complete_pattern = 1
 let g:clang_library_path = '/usr/lib/llvm-7/lib'
