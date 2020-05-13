@@ -1,0 +1,4 @@
+vim
+bash-completion
+git
+nfs-common

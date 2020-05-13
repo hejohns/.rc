@@ -1,0 +1,7 @@
+vim.gtk
+valgrind
+massif-visualizer
+linux-perf
+clang
+g++
+gdb
