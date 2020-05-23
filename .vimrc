@@ -16,6 +16,13 @@ inoremap jk <C-w>
 inoremap <tab> <C-n>
 inoremap <S-tab> <C-p>
 noremap ;; :update<cr>
+
+augroup remember_folds
+    autocmd!
+    autocmd BufWinLeave * mkview
+    autocmd BufWinEnter * silent! loadview
+augroup END
+
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_complete_pattern = 1
