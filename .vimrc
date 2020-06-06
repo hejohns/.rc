@@ -41,7 +41,7 @@ function! MyDeleteView()
 endfunction
 
 " # Command Delview (and it's abbreviation 'delview')
-command Delview call MyDeleteView()
+command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 | set foldlevel=99
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
