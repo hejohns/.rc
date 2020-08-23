@@ -7,12 +7,12 @@ use strict;
 use utf8;
 
 # hardcoded
-my $equivs_control_template = 'hejohns_dev.ctl';
+my $equivs_control_template = 'hejohns-dev.ctl';
 my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
-my $dep_list = 'hejohns_dev.txt';
-my $updated_control_file = 'hejohns_dev';
+my $dep_list = 'hejohns-dev.txt';
+my $updated_control_file = 'hejohns-dev';
 
-# generate hejohns_dev
+# generate hejohns-dev
 my $seen_SUB_FOR_DEPS = 0;
 open(my $hejohns_dev_ctl_fh, '< :encoding(UTF-8)', $equivs_control_template)
     or die "equivs control file '$equivs_control_template' unable to be read: $!.";
