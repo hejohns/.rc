@@ -7,10 +7,11 @@ use strict;
 use utf8;
 
 # hardcoded
-my $equivs_control_template = 'hejohns-dev.ctl';
+my $package_name = 'hejohns-dev';
+my $equivs_control_template = "$package_name.ctl";
 my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
-my $dep_list = 'hejohns-dev.txt';
-my $updated_control_file = 'hejohns-dev.new.ctl';
+my $dep_list = "$package_name.txt";
+my $updated_control_file = "$package_name.new.ctl";
 
 # generate hejohns-dev
 my $seen_SUB_FOR_DEPS = 0;

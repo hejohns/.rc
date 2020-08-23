@@ -7,10 +7,11 @@ use strict;
 use utf8;
 
 # hardcoded
-my $equivs_control_template = 'hejohns-utils.ctl';
+my $package_name = 'hejohns-utils';
+my $equivs_control_template = "$package_name.ctl";
 my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
-my $dep_list = 'hejohns-utils.txt';
-my $updated_control_file = 'hejohns-utils.new.ctl';
+my $dep_list = "$package_name.txt";
+my $updated_control_file = "$package_name.new.ctl";
 
 # generate hejohns-dev
 my $seen_SUB_FOR_DEPS = 0;
@@ -46,7 +47,7 @@ if(-e $updated_control_file){
     say "'$updated_control_file' already exists. rm? y/n/c";
     chomp(my $ync = <STDIN>);
     if($ync eq 'y'){
-        # goto proceed
+        # goto PROCEED
     }
     else{
         die "aborting.";
