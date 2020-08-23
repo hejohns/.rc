@@ -1,4 +1,4 @@
-vim.gtk
+vim-gtk3
 valgrind
 massif-visualizer
 linux-perf
