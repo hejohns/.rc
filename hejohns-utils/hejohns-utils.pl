@@ -13,13 +13,13 @@ my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
 my $dep_list = "$package_name.txt";
 my $updated_control_file = "$package_name.new.ctl";
 
-# generate hejohns-dev
+# generate $package_name control file
+my $output; #store updated control file as string (it's short anyways...)
 my $seen_SUB_FOR_DEPS = 0;
 open(my $ctl_fh, '< :encoding(UTF-8)', $equivs_control_template)
     or die "equivs control file '$equivs_control_template' unable to be read: $!.";
 open(my $dep_txt_fh, '< :encoding(UTF-8)', $dep_list)
     or die "list of dependencies '$dep_list' unable to be read: $!.";
-my $output; #store updated control file as string (it's short anyways...)
 while(<$ctl_fh>){
     if(m/$SUB_FOR_DEPS/){
         chomp;
