@@ -31,13 +31,8 @@ while(<$ctl_fh>){
         }
         s/$SUB_FOR_DEPS//;
         $output .= $_;
-        while(<$dep_txt_fh>){
-            chomp;
-            $output .= "$_, ";
-        }
-        chop($output) eq ' ' or die 'malformed dep list.';
-        chop($output) eq ',' or die 'malformed dep list.';
-        $output .= "\n";
+        chomp(my @deps = <$dep_txt_fh>);
+        $output .= join(', ', @deps) . "\n";
     }
     else{
         $output .= $_;
