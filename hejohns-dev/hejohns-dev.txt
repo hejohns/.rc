@@ -1,7 +1,7 @@
 vim-gtk3
-valgrind
-massif-visualizer
-linux-perf
-clang
-g++
 gdb
+valgrind
+g++
+clang
+linux-perf
+massif-visualizer
