@@ -46,7 +46,7 @@ if(-e $updated_control_file){
     say "'$updated_control_file' already exists. rm? y/n/c";
     chomp(my $ync = <STDIN>);
     if($ync eq 'y'){
-        # goto proceed
+        # goto PROCEED
     }
     else{
         die "aborting.";
