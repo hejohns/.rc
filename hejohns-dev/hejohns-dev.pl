@@ -10,7 +10,7 @@ use utf8;
 my $equivs_control_template = 'hejohns-dev.ctl';
 my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
 my $dep_list = 'hejohns-dev.txt';
-my $updated_control_file = 'hejohns-dev';
+my $updated_control_file = 'hejohns-dev.new.ctl';
 
 # generate hejohns-dev
 my $seen_SUB_FOR_DEPS = 0;
