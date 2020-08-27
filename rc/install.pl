@@ -41,6 +41,7 @@ else{
 }
 foreach(&filter_out_non_rcs(readdir($cd_dh))){
     copy(File::Spec->catfile(dirname($0), $_),
-        File::Spec->catfile($home, '.' . $_));
+        File::Spec->catfile($home, '.' . $_))
+        or die "Failed to copy rc files over: $!";
 }
 say "Installed rc files to $home.";
