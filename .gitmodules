@@ -1,0 +1,3 @@
+[submodule "etc/openvpn/keys"]
+	path = etc/openvpn/keys
+	url = https://github.com/hejohns/keys.git
