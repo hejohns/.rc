@@ -3,4 +3,5 @@
 package:
 	./hejohns-utils.pl
 clean:
-	rm *.deb *.new.ctl
+	rm *.new.ctl
+	git rm *.deb
