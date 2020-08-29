@@ -32,7 +32,7 @@ sub filter_out_non_rcs{
 opendir(my $cd_dh, dirname($0)) or die "Couldn't open rc file directory: $!";
 my $home = File::HomeDir->my_home;
 say "Continue, potentially overwriting existing .rc files in $home? y/n";
-my $yn = <STDIN>;
+chomp(my $yn = <STDIN>);
 if($yn eq 'y'){
     # continue;
 }
