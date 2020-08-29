@@ -2,3 +2,4 @@ vim
 bash-completion
 git
 nfs-common
+tlp
