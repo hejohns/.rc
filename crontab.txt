@@ -23,7 +23,7 @@
 # m h  dom mon dow   command
 DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/1000/bus"
 
-*/3 9-21 *  *  *   gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4300 2>&1 > /dev/null
-*/3 0-8 *   *   *    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3500 2>&1 > /dev/null
+*/3 9-21 *  *   *    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 4300 2>&1 > /dev/null
+*/3 0-8  *  *   *    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3500 2>&1 > /dev/null
 */3 22-23 * *   *    gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 3500 2>&1 > /dev/null
 
