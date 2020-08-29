@@ -3,4 +3,6 @@ bash-completion
 git
 nfs-common
 tlp
+tp-smapi-dkms
 smartmontools
+equivs
