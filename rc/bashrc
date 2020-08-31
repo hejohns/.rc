@@ -119,3 +119,6 @@ fi
 #export TESSDATA_PREFIX='${HOME}/documentsNoSync/mfly/tesseract/share/tessdata'
 alias update='sudo apt update && sudo apt upgrade -y'
 alias vim='vim.gtk3'
+
+# sticky note
+echo ""

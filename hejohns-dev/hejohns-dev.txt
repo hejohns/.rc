@@ -5,3 +5,4 @@ g++
 clang
 linux-perf
 massif-visualizer
+texlive-latex-extra
