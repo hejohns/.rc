@@ -3,6 +3,8 @@ gdb
 valgrind
 g++
 clang
+libclang-dev
+ctags
 linux-perf
 massif-visualizer
 texlive-latex-extra
