@@ -5,5 +5,5 @@
 git submodule update --init --recursive
 cd keys
 git pull origin master
-cp ../*.conf /etc/openvpn/
-cp *.key /etc/openvpn/
+sudo cp ../*.conf /etc/openvpn/
+sudo cp *.key /etc/openvpn/
