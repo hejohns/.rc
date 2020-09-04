@@ -8,3 +8,5 @@ ctags
 linux-perf
 massif-visualizer
 texlive-latex-extra
+debootstrap
+schroot
