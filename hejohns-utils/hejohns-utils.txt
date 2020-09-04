@@ -5,3 +5,4 @@ nfs-common
 tlp
 smartmontools
 equivs
+screen
