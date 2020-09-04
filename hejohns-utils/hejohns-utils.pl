@@ -3,11 +3,12 @@ use v5.28;
 
 use warnings;
 use strict;
+use File::Basename;
 
 use utf8;
 
 # hardcoded
-my $package_name = 'hejohns-utils';
+(my $package_name = basename($0)) =~ s/\.[^.]+$//;
 my $equivs_control_template = "$package_name.ctl";
 my $SUB_FOR_DEPS = 'SUB_FOR_DEPS';
 my $dep_list = "$package_name.txt";
