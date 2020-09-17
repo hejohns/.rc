@@ -16,6 +16,7 @@ inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap <tab> <C-n>
 inoremap <S-tab> <C-p>
+inoremap df <BS>
 noremap ;; :update<cr>
 
 augroup remember_folds
