@@ -6,3 +6,4 @@ tlp
 smartmontools
 equivs
 screen
+rsync
