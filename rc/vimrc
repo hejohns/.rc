@@ -13,6 +13,7 @@ set foldcolumn=0
 set foldlevel=99
 set foldclose=all
 set ruler
+set vb
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap <tab> <C-n>
@@ -22,12 +23,12 @@ noremap ;; :update<cr>
 noremap <C-l><C-l> :set invrelativenumber<CR>
 noremap <C-l> :set invnumber<CR>
 
+" fold settings
 augroup remember_folds
     autocmd!
     autocmd BufWinLeave * mkview
     autocmd BufWinEnter * silent! loadview
 augroup END
-
 " # Function to permanently delete views created by 'mkview'
 function! MyDeleteView()
     let path = fnamemodify(bufname('%'),':p')
@@ -43,12 +44,40 @@ function! MyDeleteView()
     call delete(path)
     echo "Deleted: ".path
 endfunction
-
 " # Command Delview (and it's abbreviation 'delview')
 command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 | set foldlevel=99
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
+" my perl stuff
+" (keeping this here for future ref)
+perl << EOF
+use strict;
+use warnings FATAL => 'all';
+use warnings NONFATAL => 'redefine';
+
+sub mySub{
+    print (glob q(*.pl));
+}
+EOF
+function! MyFunc()
+    perl mySub
+endfunction
+
+" vim-plug
+" for auto-installation
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !mkdir -p ~/.vim/autoload && wget -O ~/.vim/autoload/plug.vim
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+" list of plugins
+call plug#begin('~/.vim/plugged')
+Plug 'https://github.com/xavierd/clang_complete.git'
+Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
+call plug#end()
+
+" clang_complete
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_complete_pattern = 1
