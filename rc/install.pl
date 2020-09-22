@@ -33,10 +33,10 @@ opendir (my $cd_dh, dirname($0)) or die "Couldn't open rc file directory: $!";
 my $home = File::HomeDir->my_home;
 my @files_to_overwrite;
 foreach (&filter_out_non_rcs (readdir $cd_dh)){
-    system ('diff',
-            File::Spec->catfile($home, '.' . $_),
-            File::Spec->catfile(dirname($0), $_)
-            );
+    my ($here, $there) = (File::Spec->catfile($home, '.' . $_),
+        File::Spec->catfile(dirname($0), $_)
+        );
+    `diff $here $there`;
     if ($? == 0){
         next;
     }
@@ -44,7 +44,6 @@ foreach (&filter_out_non_rcs (readdir $cd_dh)){
         die "diff not found. $!";
     }
     else{
-        say $_;
         push (@files_to_overwrite, $_);
     }
 }
