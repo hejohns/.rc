@@ -44,6 +44,7 @@ foreach (&filter_out_non_rcs (readdir $cd_dh)){
         die "diff not found. $!";
     }
     else{
+        say $_;
         push (@files_to_overwrite, $_);
     }
 }
