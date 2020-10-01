@@ -2,7 +2,7 @@ syntax on
 colorscheme desert
 set tags=tags
 set autoindent
-"set expandtab
+set expandtab
 set shiftwidth=4
 set cindent
 set formatoptions +=cro
