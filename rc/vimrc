@@ -51,18 +51,21 @@ cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delvie
 
 " my perl stuff
 " (keeping this here for future ref)
-perl << EOF
-use strict;
-use warnings FATAL => 'all';
-use warnings NONFATAL => 'redefine';
+if has('perl')
+    perl << EOF
+    use strict;
+    use warnings FATAL => 'all';
+    use warnings NONFATAL => 'redefine';
 
-sub mySub{
-    print (glob q(*.pl));
-}
+    sub mySub{
+        print (glob q(*.pl));
+        VIM::Msg("Hello");
+    }
 EOF
-function! MyFunc()
-    perl mySub
-endfunction
+    function! MyFunc()
+        perl mySub
+    endfunction
+endif
 
 " vim-plug
 " for auto-installation
