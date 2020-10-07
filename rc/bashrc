@@ -115,9 +115,10 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
-#export PYTHONPATH='${PYTHONPATH}:/usr/local/python_modules:/usr/lib/python3/dist-packages/apt'
-#export TESSDATA_PREFIX='${HOME}/documentsNoSync/mfly/tesseract/share/tessdata'
+# end Debian's default .bashrc
+# begin my changes
 alias update='sudo apt update && sudo apt upgrade -y'
+set -o vi
 
 # sticky note
 echo ""
