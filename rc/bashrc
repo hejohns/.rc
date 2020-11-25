@@ -118,6 +118,7 @@ fi
 # end Debian's default .bashrc
 # begin my changes
 alias update='sudo apt update && sudo apt upgrade -y'
+PATH=~/bin:$PATH
 set -o vi
 
 # sticky note
