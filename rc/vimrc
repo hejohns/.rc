@@ -84,4 +84,18 @@ call plug#end()
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_complete_pattern = 1
-let g:clang_library_path = '/usr/lib/llvm-7/lib'
+" set g:clang_library_path with highest clang version available
+if has('perl')
+    perl << EOF
+    use strict;
+    use warnings FATAL => 'all';
+    use warnings NONFATAL => 'redefine';
+
+    my @clang_library_path = glob '/usr/lib/llvm-*/lib';
+    @clang_library_path = sort {$b cmp $a} @clang_library_path;
+    VIM::DoCommand(':let g:clang_library_path = \''
+            .  $clang_library_path[0] . '\'');
+EOF
+else
+    echoerr 'Need +perl to initialize clang_complete correctly'
+endif
