@@ -81,6 +81,8 @@ Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlig
 call plug#end()
 
 " clang_complete
+set omnifunc='ClangComplete'
+set completefunc='ClangComplete'
 let g:clang_complete_auto = 1
 let g:clang_complete_copen = 1
 let g:clang_complete_pattern = 1
