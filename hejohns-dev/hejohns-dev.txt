@@ -7,6 +7,7 @@ libclang-dev
 ctags
 linux-perf
 massif-visualizer
+kcachegrind
 texlive-latex-extra
 debootstrap
 schroot
