@@ -7,3 +7,4 @@ smartmontools
 equivs
 screen
 rsync
+sudo
