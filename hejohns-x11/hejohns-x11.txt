@@ -9,3 +9,4 @@ libncurses5
 libtinfo5
 xorg-dev
 libnuma-dev
+gdm3
