@@ -7,8 +7,13 @@ set spoolfile = +INBOX
 mailboxes +INBOX
 set from = $imap_user
 set realname = "Johnson He"
-set smtp_url = smtps://smtp.gmail.com:587/
+set smtp_url = smtp://hejohns@umich.edu:PASSWORD@smtp.gmail.com:587/
 set smtp_pass = ""
+
+#set smtp_authenticators="oauthbearer:xoauth2"
+#set smtp_oauth_refresh_command="~/.mutt/oauth2.py --quiet --user=hejohns@umich.edu\
+#    --client_id=[client_id] --client_secret=[client_secret]\
+#    --refresh_token=[refresh_token]"
 
 set sort = reverse-threads
 set sort_aux = last-date-received
