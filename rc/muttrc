@@ -24,3 +24,16 @@ set date_format = "%a, %y/%m/%d[%I:%M:%S%p %Z]"
 set index_format = "%4C %D %-20.20L %s"
 set assumed_charset = "utf-8"
 set send_charset = "utf-8"
+
+bind alias,index,browser,query gg first-entry
+bind pager gg top
+bind alias,index,browser,query G last-entry
+bind pager G bottom
+bind index zm collapse-all
+bind index zc collapse-thread
+bind pager j next-line
+bind pager k previous-line
+bind pager h previous-page
+bind pager l next-page 
+bind index,pager n search-next
+bind index,pager N search-opposite
