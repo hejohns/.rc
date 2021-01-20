@@ -30,10 +30,12 @@ bind pager gg top
 bind alias,index,browser,query G last-entry
 bind pager G bottom
 bind index zm collapse-all
+bind index j next-entry
+bind index k previous-entry
 bind index zc collapse-thread
 bind pager j next-line
 bind pager k previous-line
-bind pager h previous-undeleted
-bind pager l next-undeleted
+bind pager h previous-entry
+bind pager l next-entry
 bind index,pager n search-next
 bind index,pager N search-opposite
