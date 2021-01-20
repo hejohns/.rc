@@ -3,7 +3,7 @@ Priority: optional
 Standards-Version: 3.9.2
 
 Package: hejohns-dev
-Version: 0.6
+Version: 0.7
 Maintainer: Johnson He <hejohns@umich.edu>
 Depends: SUB_FOR_DEPS
 Architecture: all
