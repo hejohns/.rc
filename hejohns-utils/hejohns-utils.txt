@@ -8,3 +8,4 @@ equivs
 screen
 rsync
 sudo
+mutt
