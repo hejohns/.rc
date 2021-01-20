@@ -1,0 +1,19 @@
+set ssl_starttls = yes
+set ssl_force_tls = yes
+set imap_user = "hejohns@umich.edu"
+set imap_pass = ""
+set folder = imaps://imap.gmail.com:993/
+set spoolfile = +INBOX
+mailboxes +INBOX
+set from = $imap_user
+set realname = "Johnson He"
+set smtp_url = smtps://smtp.gmail.com:587/
+set smtp_pass = ""
+
+set sort = reverse-threads
+set sort_aux = last-date-received
+set header_cache = ~/.mutt/cache/headers
+set message_cachedir = ~/.mutt/cache/bodies
+set mail_check = 30
+set date_format = "%a, %y/%m/%d[%I:%M:%S%p %Z]"
+set index_format = "%4C %D %-20.20L %s"
