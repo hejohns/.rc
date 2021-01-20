@@ -117,9 +117,10 @@ if ! shopt -oq posix; then
 fi
 # end Debian's default .bashrc
 # begin my changes
-alias update='sudo apt update && sudo apt upgrade -y'
-PATH=~/bin:$PATH
 set -o vi
+bind 'set bell-style visible'
+PATH=~/bin:$PATH
+alias update='sudo apt update && sudo apt upgrade -y'
 
 # sticky note
 echo ""
