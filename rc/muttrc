@@ -25,7 +25,9 @@ set index_format = "%4C %D %-20.20L %s"
 set assumed_charset = "utf-8"
 set send_charset = "utf-8"
 
+bind index g noop
 bind alias,index,browser,query gg first-entry
+bind pager g noop
 bind pager gg top
 bind alias,index,browser,query G last-entry
 bind pager G bottom
