@@ -12,3 +12,4 @@ texlive-latex-extra
 debootstrap
 schroot
 perl-doc
+xournal
