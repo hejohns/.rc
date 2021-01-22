@@ -8,4 +8,4 @@ equivs
 screen
 rsync
 sudo
-mutt
+neomutt
