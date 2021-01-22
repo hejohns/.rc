@@ -17,6 +17,7 @@ set smtp_pass = ""
 
 set sort = reverse-threads
 set sort_aux = last-date-received
+set reverse_alias = yes
 set header_cache = ~/.mutt/cache/headers
 set message_cachedir = ~/.mutt/cache/bodies
 set mail_check = 30
