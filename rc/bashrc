@@ -123,7 +123,7 @@ PATH=~/bin:$PATH
 PATH=~/.ghcup/bin:$PATH
 PATH=~/.cabal/bin:$PATH
 alias update='sudo apt update && sudo apt upgrade -y'
-alias chromium='chromium --password-store=basic &'
+alias chromium='chromium --password-store=basic 2>&1 > /dev/null &'
 
 # sticky note
 echo ""
