@@ -121,6 +121,7 @@ set -o vi
 bind 'set bell-style visible'
 PATH=~/bin:$PATH
 PATH=~/.ghcup/bin:$PATH
+PATH=~/.cabal/bin:$PATH
 alias update='sudo apt update && sudo apt upgrade -y'
 alias chromium='chromium --password-store=basic &'
 
