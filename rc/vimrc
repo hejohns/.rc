@@ -79,6 +79,21 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'davidhalter/jedi-vim'
+Plug 'reasonml-editor/vim-reason-plus'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" for vim 8 with python
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+  " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
+  let g:python3_host_prog = "/usr/bin/python3"
+endif
 call plug#end()
 
 " clang_complete
@@ -91,8 +106,7 @@ let g:clang_complete_pattern = 1
 if has('perl')
     perl << EOF
     use strict;
-    use warnings FATAL => 'all';
-    use warnings NONFATAL => 'redefine';
+    use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my @clang_library_path = glob '/usr/lib/llvm-*/lib';
     @clang_library_path = sort {$b cmp $a} @clang_library_path;
@@ -101,4 +115,18 @@ if has('perl')
 EOF
 else
     echoerr 'Need +perl to initialize clang_complete correctly'
+endif
+
+" vim-reason-plus
+silent !pip3 install neovim > /dev/null 2>&1
+if v:shell_error
+    echoerr '`pip3` failed. Not using langauge server.'
+else
+    pythonx import neovim
+    let g:LanguageClient_serverCommands = {
+        \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
+        \ }
+
+    " enable autocomplete
+    let g:deoplete#enable_at_startup = 1
 endif
