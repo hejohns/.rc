@@ -124,6 +124,7 @@ PATH=~/.ghcup/bin:$PATH
 PATH=~/.cabal/bin:$PATH
 alias update='sudo apt update && sudo apt upgrade -y'
 alias chromium='chromium --password-store=basic > /dev/null 2>&1 &'
+alias xmonad='xmonad --replace > /dev/null 2>&1 &'
 
 # sticky note
 echo ""
