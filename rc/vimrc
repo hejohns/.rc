@@ -125,6 +125,7 @@ else
     pythonx import neovim
     let g:LanguageClient_serverCommands = {
         \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
+        \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
         \ }
 
     " enable autocomplete
