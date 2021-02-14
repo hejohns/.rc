@@ -22,6 +22,7 @@ inoremap df <BS>
 noremap ;; :update<cr>
 noremap <C-l><C-l> :set invrelativenumber<CR>
 noremap <C-l> :set invnumber<CR>
+filetype detect
 
 " fold settings
 augroup remember_folds
