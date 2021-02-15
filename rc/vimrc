@@ -95,8 +95,9 @@ else
   Plug 'roxma/nvim-yarp'
   Plug 'roxma/vim-hug-neovim-rpc'
   " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
-  let g:python3_host_prog = "/usr/bin/python3"
+  let g:python3_host_prog = exepath('python3')
 endif
+Plug 'lervag/vimtex'
 call plug#end()
 
 " clang_complete
