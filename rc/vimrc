@@ -1,8 +1,10 @@
 syntax on
 colorscheme desert
+set encoding=utf8
 set tags=tags
 set autoindent
 set expandtab
+set tabstop=8
 set shiftwidth=4
 set cindent
 set formatoptions +=cro
