@@ -99,6 +99,13 @@ else
 endif
 Plug 'lervag/vimtex'
 if executable('latexmk')
+    if executable('evince')
+        let g:vimtex_view_general_viewer = 'evince'
+    elseif executable('okular')
+        let g:vimtex_view_general_viewer = 'okular'
+    else
+        silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
+    endif
 else
     silent !echo '[Warning] vimtex requires latexmk.'
 endif
