@@ -97,7 +97,6 @@ else
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
 endif
-Plug 'lervag/vimtex'
 if executable('latexmk')
     if executable('evince')
         let g:vimtex_view_general_viewer = 'evince'
@@ -106,6 +105,7 @@ if executable('latexmk')
     else
         silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
     endif
+    Plug 'lervag/vimtex'
 else
     silent !echo '[Warning] vimtex requires latexmk.'
 endif
