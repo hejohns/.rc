@@ -123,8 +123,23 @@ if has('perl')
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
+    sub smartCmp{
+        if($a =~ m/usr\/lib\/llvm-(\d+)\/lib/){
+            my $aN = $1;
+            if($b =~ m/usr\/lib\/llvm-(\d+)\/lib/){
+                my $bN = $1;
+                $bN <=> $aN;
+            }
+            else{
+                die "Failed to match. $!";
+            }
+        }
+        else{
+            die "Failed to match. $!";
+        }
+    }
     my @clang_library_path = glob '/usr/lib/llvm-*/lib';
-    @clang_library_path = sort {$b cmp $a} @clang_library_path;
+    @clang_library_path = sort smartCmp @clang_library_path;
     VIM::DoCommand(':let g:clang_library_path = \''
             .  $clang_library_path[0] . '\'');
 EOF
