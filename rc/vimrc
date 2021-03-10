@@ -22,7 +22,9 @@ inoremap <tab> <C-n>
 inoremap <S-tab> <C-p>
 inoremap df <BS>
 noremap ;; :update<cr>
+set relativenumber
 noremap <C-l><C-l> :set invrelativenumber<CR>
+set number
 noremap <C-l> :set invnumber<CR>
 filetype detect
 
