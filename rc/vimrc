@@ -16,6 +16,7 @@ set foldlevel=99
 set foldclose=all
 set ruler
 set vb
+set autoread
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap <tab> <C-n>
