@@ -82,11 +82,12 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 " list of plugins
 call plug#begin('~/.vim/plugged')
-Plug 'https://github.com/xavierd/clang_complete.git'
+Plug 'https://github.com/xavierd/clang_complete.git', {'for': ['c', 'cpp']}
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
-Plug 'davidhalter/jedi-vim'
-Plug 'reasonml-editor/vim-reason-plus'
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'reasonml-editor/vim-reason-plus', {'for': 'reason'}
 Plug 'autozimu/LanguageClient-neovim', {
+    \ 'for': ['haskell', 'reason'],
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
@@ -94,9 +95,9 @@ if has('nvim')
     Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " for vim 8 with python
 else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+    Plug 'Shougo/deoplete.nvim', {'for': ['haskell', 'reason']}
+    Plug 'roxma/nvim-yarp', {'for': ['haskell', 'reason']}
+    Plug 'roxma/vim-hug-neovim-rpc', {'for': ['haskell', 'reason']}
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
 endif
@@ -108,7 +109,7 @@ if executable('latexmk')
     else
         silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
     endif
-    Plug 'lervag/vimtex'
+    Plug 'lervag/vimtex', {'for': 'tex'}
 else
     silent !echo '[Warning] vimtex requires latexmk.'
 endif
@@ -162,8 +163,8 @@ else
         pythonx import neovim
         " https://github.com/jaredly/reason-language-server
         let g:LanguageClient_serverCommands = {
-            \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
             \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
+            \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
             \ }
 
         " enable autocomplete
