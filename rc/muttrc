@@ -4,7 +4,7 @@ set imap_user = "hejohns@umich.edu"
 set imap_pass = "PASSWORD"
 set folder = imaps://imap.gmail.com:993/
 set spoolfile = +INBOX
-mailboxes +INBOX
+#mailboxes +INBOX
 set from = $imap_user
 set realname = "Johnson He"
 set smtp_url = smtp://hejohns@umich.edu:PASSWORD@smtp.gmail.com:587/
