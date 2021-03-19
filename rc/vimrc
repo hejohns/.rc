@@ -29,6 +29,11 @@ set number
 noremap <C-l> :set invnumber<CR>
 filetype detect
 
+autocmd FileType haskell setlocal shiftwidth=2
+autocmd FileType cabal setlocal shiftwidth=2
+autocmd FileType cabalconfig setlocal shiftwidth=2
+autocmd FileType cabalproject setlocal shiftwidth=2
+
 " fold settings
 augroup remember_folds
     autocmd!
