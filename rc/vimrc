@@ -165,7 +165,7 @@ if has('perl')
     my @lsLangs = ('haskell', 'reason');
     my $success;
     ($success, my $filetype) = VIM::Eval('&filetype');
-    if(grep {/$filetype/} $filetype){
+    if(grep {/$filetype/} @lsLangs){
         my $existsPip = `which pip3 2>&1`;
         if($? >> 8){
             VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
