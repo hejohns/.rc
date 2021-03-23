@@ -157,22 +157,24 @@ else
 endif
 
 " vim-reason-plus
-silent !which pip3 > /dev/null 2>&1
-if v:shell_error
-    silent !echo '[Warning] `pip3` not found. Not using langauge server.'
-else
-    silent !pip3 install neovim > /dev/null 2>&1
+if (&filetype ==# "python") || (&filetype ==# "python3")
+    silent !which pip3 > /dev/null 2>&1
     if v:shell_error
-        silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'
+        silent !echo '[Warning] `pip3` not found. Not using langauge server.'
     else
-        pythonx import neovim
-        " https://github.com/jaredly/reason-language-server
-        let g:LanguageClient_serverCommands = {
-            \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
-            \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
-            \ }
+        silent !pip3 install neovim > /dev/null 2>&1
+        if v:shell_error
+            silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'
+        else
+            pythonx import neovim
+            " https://github.com/jaredly/reason-language-server
+            let g:LanguageClient_serverCommands = {
+                \ 'haskell': ['haskell-language-server-wrapper', '--lsp'],
+                \ 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
+                \ }
 
-        " enable autocomplete
-        let g:deoplete#enable_at_startup = 1
+            " enable autocomplete
+            let g:deoplete#enable_at_startup = 1
+        endif
     endif
 endif
