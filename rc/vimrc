@@ -97,7 +97,7 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'for': ['haskell', 'reason'], 'do': ':UpdateRemotePlugins' }
 " for vim 8 with python
 else
     Plug 'Shougo/deoplete.nvim', {'for': ['haskell', 'reason']}
@@ -106,17 +106,19 @@ else
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
 endif
-if executable('latexmk')
-    if executable('evince')
-        let g:vimtex_view_general_viewer = 'evince'
-    elseif executable('okular')
-        let g:vimtex_view_general_viewer = 'okular'
+Plug 'lervag/vimtex', {'for': 'tex'}
+if &filetype ==# "tex"
+    if executable('latexmk')
+        if executable('evince')
+            let g:vimtex_view_general_viewer = 'evince'
+        elseif executable('okular')
+            let g:vimtex_view_general_viewer = 'okular'
+        else
+            silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
+        endif
     else
-        silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
+        silent !echo '[Warning] vimtex requires latexmk.'
     endif
-    Plug 'lervag/vimtex', {'for': 'tex'}
-else
-    silent !echo '[Warning] vimtex requires latexmk.'
 endif
 call plug#end()
 
@@ -137,7 +139,7 @@ if has('perl')
             my $aN = $1;
             if($b =~ m/usr\/lib\/llvm-(\d+)\/lib/){
                 my $bN = $1;
-                $bN <=> $aN;
+                $bN <=> $aN; #descending sort
             }
             else{
                 die "Failed to match. $!";
@@ -149,8 +151,7 @@ if has('perl')
     }
     my @clang_library_path = glob '/usr/lib/llvm-*/lib';
     @clang_library_path = sort smartCmp @clang_library_path;
-    VIM::DoCommand(':let g:clang_library_path = \''
-            .  $clang_library_path[0] . '\'');
+    VIM::DoCommand(":let g:clang_library_path = '" . $clang_library_path[0] . "'");
 EOF
 else
     silent !echo '[Warning] Need +perl to initialize clang_complete correctly'
@@ -163,10 +164,10 @@ if has('perl')
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my @lsLangs = ('haskell', 'reason');
-    my $success;
+    my $success; #don't bother...
     ($success, my $filetype) = VIM::Eval('&filetype');
     if(grep {/$filetype/} @lsLangs){
-        my $existsPip = `which pip3 2>&1`;
+        my $pipExists = `which pip3 2>&1`;
         if($? >> 8){
             VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
         }
