@@ -5,6 +5,7 @@ set tags=tags
 set autoindent
 set expandtab
 set tabstop=8
+" default shiftwidth-- langauge specific below
 set shiftwidth=4
 set cindent
 set formatoptions +=cro
