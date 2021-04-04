@@ -31,6 +31,7 @@ noremap <C-l><C-l> :set invrelativenumber<CR>
 set number
 noremap <C-l> :set invnumber<CR>
 filetype detect
+let g:tex_flavor = "latex"
 
 autocmd FileType haskell setlocal shiftwidth=2
 autocmd FileType cabal setlocal shiftwidth=2
@@ -44,6 +45,7 @@ augroup remember_folds
     autocmd BufWinEnter * silent! loadview
 augroup END
 " # Function to permanently delete views created by 'mkview'
+" I must've forgotten to paste the link...
 function! MyDeleteView()
     let path = fnamemodify(bufname('%'),':p')
     " vim's odd =~ escaping for /
@@ -110,19 +112,6 @@ else
     let g:python3_host_prog = exepath('python3')
 endif
 Plug 'lervag/vimtex', {'for': 'tex'}
-if &filetype ==# "tex"
-    if executable('latexmk')
-        if executable('evince')
-            let g:vimtex_view_general_viewer = 'evince'
-        elseif executable('okular')
-            let g:vimtex_view_general_viewer = 'okular'
-        else
-            silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
-        endif
-    else
-        silent !echo '[Warning] vimtex requires latexmk.'
-    endif
-endif
 call plug#end()
 
 " clang_complete
@@ -195,4 +184,19 @@ if has('perl')
 EOF
 else
     silent !echo '[Warning] Need +perl to initialize language server correctly'
+endif
+
+" vimtex
+if &filetype ==# "tex" || &filetype ==# "plaintex"
+    if executable('latexmk')
+        if executable('evince')
+            let g:vimtex_view_general_viewer = 'evince'
+        elseif executable('okular')
+            let g:vimtex_view_general_viewer = 'okular'
+        else
+            silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
+        endif
+    else
+        silent !echo '[Warning] vimtex requires latexmk.'
+    endif
 endif
