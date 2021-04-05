@@ -37,6 +37,7 @@ autocmd FileType haskell setlocal shiftwidth=2
 autocmd FileType cabal setlocal shiftwidth=2
 autocmd FileType cabalconfig setlocal shiftwidth=2
 autocmd FileType cabalproject setlocal shiftwidth=2
+autocmd FileType plaintex setlocal filetype=tex
 
 " fold settings
 augroup remember_folds
@@ -187,7 +188,7 @@ else
 endif
 
 " vimtex
-if &filetype ==# "tex" || &filetype ==# "plaintex"
+if &filetype ==# "tex"
     if executable('latexmk')
         if executable('evince')
             let g:vimtex_view_general_viewer = 'evince'
