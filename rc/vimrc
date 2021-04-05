@@ -188,7 +188,7 @@ else
 endif
 
 " vimtex
-if &filetype ==# "tex"
+if &filetype ==# "tex" || &filetype ==# "plaintex"
     if executable('latexmk')
         if executable('evince')
             let g:vimtex_view_general_viewer = 'evince'
