@@ -40,13 +40,13 @@ autocmd FileType cabalproject setlocal shiftwidth=2
 autocmd FileType plaintex setlocal filetype=tex
 
 " fold settings
+" I must've forgotten to paste the link...
 augroup remember_folds
     autocmd!
     autocmd BufWinLeave * mkview
     autocmd BufWinEnter * silent! loadview
 augroup END
 " # Function to permanently delete views created by 'mkview'
-" I must've forgotten to paste the link...
 function! MyDeleteView()
     let path = fnamemodify(bufname('%'),':p')
     " vim's odd =~ escaping for /
@@ -113,6 +113,7 @@ else
     let g:python3_host_prog = exepath('python3')
 endif
 Plug 'lervag/vimtex', {'for': 'tex'}
+Plug 'maxboisvert/vim-simple-complete'
 call plug#end()
 
 " clang_complete
