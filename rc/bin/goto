@@ -8,11 +8,10 @@ use warnings FATAL => qw(uninitialized);
 
 my $gg = 'git grep -rPn'; # not sure how backticks handles aliases
 chomp (my @hits = `$gg $ARGV[0]`);
-my $index = 1;
+my $index = 0;
 if(defined $ARGV[1] and $ARGV[1] eq '-n'){
     $index = $ARGV[2]
 }
-$index >= 0 or die;
-my $ggline = $hits[$index - 1];
+my $ggline = $hits[$index];
 $ggline =~ m/^(\S+):(\d+):.*/ or die;
 exec 'vim', $1,'-c', $2;
