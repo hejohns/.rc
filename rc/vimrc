@@ -176,7 +176,8 @@ if has('perl')
                 my $lsCmds = <<~"__EOF"
                     let g:LanguageClient_serverCommands = {
                     'haskell': ['haskell-language-server-wrapper', '--lsp'],
-                    'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
+                    'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
+                    'ocaml': ['ocamllsp'],
                     }
                     __EOF
                     ;
