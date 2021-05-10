@@ -71,8 +71,7 @@ cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delvie
 if has('perl')
     perl << EOF
     use strict;
-    use warnings FATAL => 'all';
-    use warnings NONFATAL => 'redefine';
+    use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     sub mySub{
         print (glob q(*.pl));
@@ -117,35 +116,36 @@ Plug 'maxboisvert/vim-simple-complete'
 call plug#end()
 
 " clang_complete
-set omnifunc='ClangComplete'
-set completefunc='ClangComplete'
-let g:clang_complete_auto = 1
-let g:clang_complete_copen = 1
-let g:clang_complete_pattern = 1
 " set g:clang_library_path with highest clang version available
 if has('perl')
-    perl << EOF
+    perl <<EOF
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     sub smartCmp{
-        if($a =~ m/usr\/lib\/llvm-(\d+)\/lib/){
-            my $aN = $1;
-            if($b =~ m/usr\/lib\/llvm-(\d+)\/lib/){
-                my $bN = $1;
-                $bN <=> $aN; #descending sort
-            }
-            else{
-                die "Failed to match. $!";
-            }
-        }
-        else{
-            die "Failed to match. $!";
-        }
+        $a =~ m/usr\/lib\/llvm-(\d+)\/lib/ or die "Failed to match. $!";
+        my $aN = $1;
+        $b =~ m/usr\/lib\/llvm-(\d+)\/lib/ or die "Failed to match. $!";
+        my $bN = $1;
+        $bN <=> $aN; #descending sort
     }
     my @clang_library_path = glob '/usr/lib/llvm-*/lib';
     @clang_library_path = sort smartCmp @clang_library_path;
     VIM::DoCommand(":let g:clang_library_path = '" . $clang_library_path[0] . "'");
+    my @clangLangs = qw(c cpp);
+    my $success; #don't bother...
+    ($success, my $filetype) = VIM::Eval('&filetype');
+    if(grep {/$filetype/} @clangLangs){
+        my @clangCmds = split /\n/, <<~"__EOF"
+            set omnifunc='ClangComplete'
+            set completefunc='ClangComplete'
+            let g:clang_complete_auto = 1
+            let g:clang_complete_copen = 1
+            let g:clang_complete_pattern = 1
+            __EOF
+            ;
+        map {VIM::DoCommand($_)} @clangCmds;
+    }
 EOF
 else
     silent !echo '[Warning] Need +perl to initialize clang_complete correctly'
@@ -153,7 +153,7 @@ endif
 
 " vim-reason-plus
 if has('perl')
-    perl << EOF
+    perl <<EOF
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
@@ -173,10 +173,14 @@ if has('perl')
             else{
                 VIM::DoCommand('pythonx import neovim');
                 # https://github.com/jaredly/reason-language-server
-                my $lsCmds = "let g:LanguageClient_serverCommands = {" .
-                    "'haskell': ['haskell-language-server-wrapper', '--lsp']," .
-                    "'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server']," .
-                    "}";
+                my $lsCmds = <<~"__EOF"
+                    let g:LanguageClient_serverCommands = {
+                    'haskell': ['haskell-language-server-wrapper', '--lsp'],
+                    'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server'],
+                    }
+                    __EOF
+                    ;
+                $lsCmds =~ s/\n//g;
                 VIM::DoCommand($lsCmds);
                 # enable autocomplete
                 VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
