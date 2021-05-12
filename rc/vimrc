@@ -33,8 +33,8 @@ noremap <C-l> :set invnumber<CR>
 " vimdiff mappings (for git mergetool)
 " https://vi.stackexchange.com/questions/2705/create-mappings-that-only-apply-to-diff-mode
 " even though &diff is always set for some reason...
-nnoremap <expr> gl &diff ? ':diffget LOCAL<CR>' : 'gl'
-nnoremap <expr> gr &diff ? ':diffget REMOTE<CR>' : 'gr'
+nnoremap <expr> gl &diff ? ':diffget LOCAL<CR>]c' : 'gl'
+nnoremap <expr> gr &diff ? ':diffget REMOTE<CR>]c' : 'gr'
 filetype detect
 let g:tex_flavor = "latex"
 
