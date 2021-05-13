@@ -7,7 +7,7 @@ use strict;
 use warnings FATAL => qw(uninitialized);
 
 my $gg = 'git grep -rPn'; # not sure how backticks handles aliases
-chomp (my @hits = `$gg $ARGV[0]`);
+chomp (my @hits = `$gg \'$ARGV[0]\'`);
 my $index = 0;
 if(defined $ARGV[1] and $ARGV[1] eq '-n'){
     $index = $ARGV[2]
