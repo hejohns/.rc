@@ -165,34 +165,37 @@ if has('perl')
     my @lsLangs = ('haskell', 'reason');
     my $success; #don't bother...
     ($success, my $filetype) = VIM::Eval('&filetype');
-    if(grep {/$filetype/} @lsLangs){
-        my $pipExists = `command -v pip3 2>&1`;
-        if($? >> 8){
-            VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
-            exit;
-        }
-        my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
-        if($? >> 8){
-            my $pipSuccess = `pip3 install neovim 2>&1`;
+    VOID_EVAL_LAST_WARNINGS:
+    {
+        if(grep {/$filetype/} @lsLangs){
+            my $pipExists = `sh -c 'command -v pip3' 2>&1`;
             if($? >> 8){
-                VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
-                exit;
+                VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
+                last VOID_EVAL_LAST_WARNINGS;
             }
+            my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
+            if($? >> 8){
+                my $pipSuccess = `pip3 install neovim 2>&1`;
+                if($? >> 8){
+                    VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
+                    last VOID_EVAL_LAST_WARNINGS;
+                }
+            }
+            VIM::DoCommand('pythonx import neovim');
+            # https://github.com/jaredly/reason-language-server
+            my $lsCmds = <<~"__EOF"
+                let g:LanguageClient_serverCommands = {
+                'haskell': ['haskell-language-server-wrapper', '--lsp'],
+                'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
+                'ocaml': ['ocamllsp'],
+                }
+                __EOF
+                ;
+            $lsCmds =~ s/\n//g;
+            VIM::DoCommand($lsCmds);
+            # enable autocomplete
+            VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
         }
-        VIM::DoCommand('pythonx import neovim');
-        # https://github.com/jaredly/reason-language-server
-        my $lsCmds = <<~"__EOF"
-            let g:LanguageClient_serverCommands = {
-            'haskell': ['haskell-language-server-wrapper', '--lsp'],
-            'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
-            'ocaml': ['ocamllsp'],
-            }
-            __EOF
-            ;
-        $lsCmds =~ s/\n//g;
-        VIM::DoCommand($lsCmds);
-        # enable autocomplete
-        VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
     }
 EOF
 else
