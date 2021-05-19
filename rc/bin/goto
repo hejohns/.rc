@@ -22,10 +22,12 @@ Description:
 
     $0 opens the selected file in vim at the corresponding line
 Examples:
-    grep -rPn <pattern> | $0
+    $0 -- grep -rPn <pattern>
         defaults to open first (0th) <file> at corresponding <line>
-    git grep -rPn <pattern> | $0 -n -1
-        opens last <file> at corresponding  <line>
+    $0 -n -1 -- git grep -rPn <pattern>
+        opens last <file> at corresponding <line>
+    $0 -n 1 -e -- \$(make 2>&1 | perl -p -e 'm/^([^:]+:\d+:)/; \$_ = \$1 . "\\n"')
+        opens second <file> at corresponding <line>, where <cmd> needs processing
 EOF
 ;
 
