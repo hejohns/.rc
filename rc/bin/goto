@@ -7,10 +7,11 @@ use strict;
 use warnings FATAL => qw(uninitialized);
 
 my $help = <<~"EOF"
-Usage: $0 [-n <index>] -- <cmd>
+Usage: $0 [-n <index>] [-e] -- <cmd>
 
     -n <index>     index into stdin lines (as a perl array,
                    thus 0-based and negative values count backwards from end)
+    -e             treat arguments as stdin lines
 Description:
     stdin of the following form is accepted
 
@@ -30,11 +31,16 @@ EOF
 
 my $my1;
 my $my2;
+my $eFlag;
 eval {
     my $index = 0;
     if(defined $ARGV[0] and $ARGV[0] eq '-n'){
         shift @ARGV; # -n
         $index = shift @ARGV; # <index>
+    }
+    if(defined $ARGV[0] and $ARGV[0] eq '-e'){
+        $eFlag = 1;
+        shift @ARGV; # -e
     }
     (my $dashdash = shift @ARGV) eq '--' or die;
     # handle aliases
@@ -53,7 +59,7 @@ eval {
         $ARGV[0] = $aliases{$ARGV[0]};
     }
     my $cmd = join ' ', @ARGV;
-    my @stdin = `$cmd`;
+    my @stdin = $eFlag? @ARGV : `$cmd`;
     my $line = $stdin[$index];
     $line =~ m/^(\S+):(\d+):/ or die;
     $my1 = $1;
