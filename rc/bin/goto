@@ -9,11 +9,11 @@ use warnings FATAL => qw(uninitialized);
 my $help = <<~"EOF"
 Usage: $0 [-n <index>] [-e] -- <cmd>
 
-    -n <index>     index into stdin lines (as a perl array,
+    -n <index>     index into <cmd> stdout lines (as a perl array,
                    thus 0-based and negative values count backwards from end)
-    -e             treat arguments as stdin lines
+    -e             treat arguments as stdout lines
 Description:
-    stdin of the following form is accepted
+    <cmd> stdout of the following form is accepted
 
     <file>:<line>:
     <file>:<line>:
@@ -26,7 +26,7 @@ Examples:
         defaults to open first (0th) <file> at corresponding <line>
     $0 -n -1 -- git grep -rPn <pattern>
         opens last <file> at corresponding <line>
-    $0 -n 1 -e -- \$(make 2>&1 | perl -p -e 'm/^([^:]+:\\d+:)/; \$_ = \$1 . "\\n"')
+    $0 -n 1 -e -- \$(make 2>&1 | perl -p -e 'm/^(\\S+:\\d+:)/; \$_ = \$1 . "\\n"')
         opens second <file> at corresponding <line>, where <cmd> needs processing
 EOF
 ;
@@ -61,8 +61,8 @@ eval {
         $ARGV[0] = $aliases{$ARGV[0]};
     }
     my $cmd = join ' ', @ARGV;
-    my @stdin = $eFlag? @ARGV : `$cmd`;
-    my $line = $stdin[$index];
+    my @stdout = $eFlag? @ARGV : `$cmd`;
+    my $line = $stdout[$index];
     $line =~ m/^(\S+):(\d+):/ or die;
     $my1 = $1;
     $my2 = $2;
