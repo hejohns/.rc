@@ -6,12 +6,65 @@ use utf8;
 use strict;
 use warnings FATAL => qw(uninitialized);
 
-my $gg = 'git grep -rPn'; # not sure how backticks handles aliases
-chomp (my @hits = `$gg \'$ARGV[0]\'`);
-my $index = 0;
-if(defined $ARGV[1] and $ARGV[1] eq '-n'){
-    $index = $ARGV[2]
+my $help = <<~"EOF"
+Usage: $0 [-n <index>] -- <cmd>
+
+    -n <index>     index into stdin lines (as a perl array,
+                   thus 0-based and negative values count backwards from end)
+Description:
+    stdin of the following form is accepted
+
+    <file>:<line>:
+    <file>:<line>:
+    ...
+    <file>:<line>:
+
+    $0 opens the selected file in vim at the corresponding line
+Examples:
+    grep -rPn <pattern> | $0
+        defaults to open first (0th) <file> at corresponding <line>
+    git grep -rPn <pattern> | $0 -n -1
+        opens last <file> at corresponding  <line>
+EOF
+;
+
+my $my1;
+my $my2;
+eval {
+    my $index = 0;
+    if(defined $ARGV[0] and $ARGV[0] eq '-n'){
+        shift @ARGV; # -n
+        $index = shift @ARGV; # <index>
+    }
+    (my $dashdash = shift @ARGV) eq '--' or die;
+    # handle aliases
+    chomp(my $bashrc = `ls ~/.bashrc`);
+    open(my $bashrcFH, '<:encoding(UTF-8)', $bashrc) or die;
+    chomp(my @bashrc = <$bashrcFH>);
+    @bashrc = grep {m/^alias\s+(\S+)=['"](.+)['"]/} @bashrc;
+    my @keys = map {m/^alias\s+(\S+)=/; $1} @bashrc;
+    my @vals = map {m/^alias\s+\S+=['"](.+)['"]/; $1} @bashrc;
+    my %aliases;
+    for(my $i=0; $i < @keys; $i++){
+        $aliases{$keys[$i]} = $vals[$i];
+    }
+    # done handling aliases
+    if(exists $aliases{$ARGV[0]}){
+        $ARGV[0] = $aliases{$ARGV[0]};
+    }
+    my $cmd = join ' ', @ARGV;
+    my @stdin = `$cmd`;
+    my $line = $stdin[$index];
+    $line =~ m/^(\S+):(\d+):/ or die;
+    $my1 = $1;
+    $my2 = $2;
+    0;
+} and goto HELP;
+
+if(defined $my1 and defined $my2){
+    exec 'vim', $my1,'-c', $my2;
 }
-my $ggline = $hits[$index];
-$ggline =~ m/^(\S+):(\d+):.*/ or die;
-exec 'vim', $1,'-c', $2;
+
+HELP:
+print $help;
+0;
