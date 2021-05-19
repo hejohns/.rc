@@ -26,7 +26,7 @@ Examples:
         defaults to open first (0th) <file> at corresponding <line>
     $0 -n -1 -- git grep -rPn <pattern>
         opens last <file> at corresponding <line>
-    $0 -n 1 -e -- \$(make 2>&1 | perl -p -e 'm/^([^:]+:\d+:)/; \$_ = \$1 . "\\n"')
+    $0 -n 1 -e -- \$(make 2>&1 | perl -p -e 'm/^([^:]+:\\d+:)/; \$_ = \$1 . "\\n"')
         opens second <file> at corresponding <line>, where <cmd> needs processing
 EOF
 ;
