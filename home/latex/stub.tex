@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage[margin=2cm]{geometry}
+\usepackage{titlesec} % see below
+\usepackage{xcolor} % \color \textcolor
+\usepackage{hyperref} % \href
+\usepackage[normalem]{ulem} % normalem retains \emph as italic
+% \uline \uuline \uwave \sout
+\usepackage{enumitem}
+% \begin{enumerate}[label=\Alpha*.]
+% \begin{enumerate}[label=\(\bullet\)]
+\usepackage{graphicx}
+% \includegraphicswidth=0.5\textwidth,trim=[0cm 0cm 0cm 0cm,clip]{file.png}
+\usepackage{pdfpages} % \includepdf[pages=1]{file.pdf}
+% for prose
+%\usepackage[doublespacing]{setspace}
+\usepackage{csquotes} % \blockquote
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\rmdefault}{cmr}
+\renewcommand{\sfdefault}{cmss}
+\renewcommand{\ttdefault}{cmtt}
+\renewcommand{\familydefault}{\rmdefault}
+\setlength{\titlewidth}{\textwidth}
+
+\titlespacing{\section}{0pt}{0pt}{0pt}
+\titlespacing{\subsection}{0pt}{0pt}{0pt}
+\titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+\titlespacing{\paragraph}{0pt}{0pt}{0pt}
+% https://www.overleaf.com/learn/latex/How_to_write_a_LaTeX_class_file_and_design_your_own_CV_(Part_1)
+% \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
+\titleformat{\section}         % Customise the \section command 
+    [hang]
+    {\Large\scshape\raggedright} % Make the \section headers large (\Large),
+                               % small capitals (\scshape) and left aligned (\raggedright)
+    {}{0em}                      % Can be used to give a prefix to all sections, like 'Section ...'
+    {}                           % Can be used to insert code before the heading
+    [\titlerule]                 % Inserts a horizontal line after the heading
+\titleformat{\subsection}
+    [hang]
+    {\large\scshape\raggedright}
+    {}{0em}
+    {}
+    []
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pagenumbering{gobble}
+\nonfrenchspacing
+%\frenchspacing % when monospaced
+\begin{document}
+\title{}
+\author{}
+\date{}
+\maketitle
+\section{}
+\end{document}
