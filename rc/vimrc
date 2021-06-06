@@ -39,6 +39,8 @@ nnoremap <expr> gl &diff ? ':diffget LOCAL<CR>]c' : 'gl'
 nnoremap <expr> gr &diff ? ':diffget REMOTE<CR>]c' : 'gr'
 filetype detect
 let g:tex_flavor = "latex"
+inoremap <C-\>^e ê
+inoremap <C-\>"o ö
 
 autocmd FileType haskell setlocal shiftwidth=2
 autocmd FileType cabal setlocal shiftwidth=2
