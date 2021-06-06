@@ -121,6 +121,7 @@ else
 endif
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'maxboisvert/vim-simple-complete'
+Plug 'JuliaEditorSupport/julia-vim'
 call plug#end()
 
 " clang_complete
@@ -219,3 +220,19 @@ if &filetype ==# "tex" || &filetype ==# "plaintex"
         silent !echo '[Warning] vimtex requires latexmk.'
     endif
 endif
+
+" julia latex2unicode
+" [let g:latex_to_unicode_tab = off] to disable julia tab completion
+" doesn't work for some reason
+function EnableL2U()
+    let g:latex_to_unicode_eager = 0
+    let g:latex_to_unicode_auto = 1 " enable space driven auto completion
+    let g:latex_to_unicode_file_types = ".*" " on all 
+    call LaTeXtoUnicode#Init()
+    call LaTeXtoUnicode#Enable()
+endfunction
+command L2UEnable call EnableL2U()
+function DisableL2U()
+    call LaTeXtoUnicode#Disable()
+endfunction
+command L2UDisable call DisableL2U()
