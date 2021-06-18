@@ -20,6 +20,7 @@ set vb
 set autoread
 inoremap kj <ESC>
 inoremap jk <C-w>
+inoremap lk <ESC>ll
 inoremap <tab> <C-n>
 inoremap <S-tab> <C-p>
 inoremap df <BS>
