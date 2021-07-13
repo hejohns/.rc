@@ -26,45 +26,51 @@
     \RequirePackage{joshuadunfield}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % syntax
-    \newcommand{\knd}[1][]{\redit{\kappa#1}}
-    \newcommand{\utyp}[1][]{\greenit{\hat{\tau#1}}}
-    \newcommand{\typ}[1][]{\greenit{\tau#1}}
-    \newcommand{\utypvar}[1][]{\greenit{t#1}}
-    \newcommand{\typvar}[1][]{\greenit{t#1}}
-    \newcommand{\uexp}[1][]{\blueit{\hat{\delta#1}}}
-    \renewcommand{\exp}[1][]{\blueit{\delta#1}}
-    \newcommand{\uexpvar}[1][]{\blueit{x#1}}
-    \newcommand{\expvar}[1][]{\blueit{x#1}}
-    \newcommand{\sigknd}[1][]{\orangeit{\xi#1}}
-    \newcommand{\usig}[1][]{\purpleit{\hat{\sigma#1}}}
-    \newcommand{\sig}[1][]{\purpleit{\sigma#1}}
-    \newcommand{\usigvar}[1][]{\purpleit{s#1}}
-    \newcommand{\sigvar}[1][]{\purpleit{s#1}}
-    \newcommand{\umod}[1][]{\tealit{\hat{\mu#1}}}
-    \renewcommand{\mod}[1][]{\tealit{\mu#1}}
-    \newcommand{\umodvar}[1][]{\tealit{m#1}}
-    \newcommand{\modvar}[1][]{\tealit{m#1}}
-    \newcommand{\lab}[1][]{\mathit{lab#1}}
+    \newcommand*{\knd}[1][]{\redit{\kappa_{#1}}}
+    \newcommand*{\utyp}[1][]{\greenit{\hat{\tau_{#1}}}}
+    \newcommand*{\typ}[1][]{\greenit{\tau_{#1}}}
+    \newcommand*{\utypvar}[1][]{\greenit{t_{#1}}}
+    \newcommand*{\typvar}[1][]{\greenit{t_{#1}}}
+    \newcommand*{\uexp}[1][]{\blueit{\hat{\delta_{#1}}}}
+    \renewcommand*{\exp}[1][]{\blueit{\delta_{#1}}}
+    \newcommand*{\uexpvar}[1][]{\blueit{x_{#1}}}
+    \newcommand*{\expvar}[1][]{\blueit{x_{#1}}}
+    \newcommand*{\sigknd}[1][]{\orangeit{\xi_{#1}}}
+    \newcommand*{\usig}[1][]{\purpleit{\hat{\sigma_{#1}}}}
+    \newcommand*{\sig}[1][]{\purpleit{\sigma_{#1}}}
+    \newcommand*{\usigvar}[1][]{\purpleit{s_{#1}}}
+    \newcommand*{\sigvar}[1][]{\purpleit{s_{#1}}}
+    \newcommand*{\umod}[1][]{\tealit{\hat{\mu_{#1}}}}
+    \renewcommand*{\mod}[1][]{\tealit{\mu_{#1}}}
+    \newcommand*{\umodvar}[1][]{\tealit{m_{#1}}}
+    \newcommand*{\modvar}[1][]{\tealit{m_{#1}}}
+    \newcommand*{\lab}[1][]{\mathit{lab_{#1}}}
 
-    \newcommand{\Type}{\redtt{Type}}
-    \newcommand{\SKind}[2][]{\redtt{S_{#1}(#2)}}
-    \newcommand{\KHole}{\redtt{KHole}}
-    \newcommand{\DepFunKind}[2]{\redtt{\Pi_{#1}.{#2}}}
-    \newcommand{\DepProdKind}[2]{\redtt{\Sigma_{#1}.{#2}}}
+    \newcommand*{\Type}{\redtt{Type}}
+    \NewDocumentCommand{\SKind}{O{\knd}O{\typ}}{\redtt{S_{#1}(#2)}}
+    \newcommand*{\KHole}{\redtt{KHole}}
+    \NewDocumentCommand{\DepFunKind}{O{}O{\knd[1]}O{\knd[2]}}{\redtt{\Pi_{\typvar[#1]\KndAssump#2}.{#3}}}
+    \NewDocumentCommand{\DepProdKind}{O{}O{\knd[1]}O{\knd[2]}}{\redtt{\Sigma_{\typvar[#1]\KndAssump#2}.{#3}}}
 
-    \newcommand{\TypCFun}[2]{\greentt{\lambda #1.#2}}
-    \newcommand{\TypCAp}[2]{\greentt{#1~#2}}
-    \newcommand{\TypCPair}[2]{\greentt{\langle #1, #2\rangle}}
-    \newcommand{\TypCPairPrjL}[1]{\greentt{\pi_1~#1}}
-    \newcommand{\TypCPairPrjR}[1]{\greentt{\pi_2~#1}}
-    \newcommand{\ListTyp}[1]{\greentt{[#1]}}
+    \NewDocumentCommand{\TypeFun}{O{}O{\knd}O{\typ}}{\greentt{\lambda\typvar[#1]\KndAssump#2.#3}}
+    \NewDocumentCommand{\TypeAp}{O{\typ[1]}O{\typ[2]}}{\greentt{#1~#2}}
+    \newcommand*{\ListType}[1]{\greentt{list~#1}}
     % use violet instead of green?
-    \newcommand{\TypCHole}[1][]{\greentt{\llparenthesis #1 \rrparenthesis}}
-    \newcommand{\ModTypPrj}[2]{\greentt{#1.#2}}
+    \NewDocumentCommand{\TypeHole}{O{}O{u}}{\greentt{\llparenthesis#1\rrparenthesis^{#2}}}
+    \newcommand*{\TypeEHole}{\TypeHole}
+    \NewDocumentCommand{\TypeNEHole}{O{\typ}}{\TypeHole[#1]}
+    \NewDocumentCommand{\UnboundTypeVar}{O{\typvar}}{\TypeHole[#1]}
+    \newcommand{\ModTypePrj}[2]{\greentt{#1.#2}}
 
-    \newcommand{\Int}{\greentt{Int}}
-    \newcommand{\Float}{\greentt{Float}}
-    \newcommand{\Bool}{\greentt{Bool}}
+    \newcommand*{\bse}[1][]{\greentt{bse_{#1}}}
+    \newcommand*{\Int}{\greentt{Int}}
+    \newcommand*{\Float}{\greentt{Float}}
+    \newcommand*{\Bool}{\greentt{Bool}}
+
+    \NewDocumentCommand{\binop}{O{\typ[1]}O{\typ[2]}}{\greentt{#1\oplus#2}}
+    \newcommand*{\ProdType}{\greentt{\times}}
+    \newcommand*{\SumType}{\greentt{+}}
+    \newcommand*{\FunType}{\greentt{\rightarrow}}
 
     \newcommand{\uLetSig}[2]{\purplett{signature~#1=#2}\bluett{~in~\uexp}}
     \newcommand{\LetSig}[2]{\purplett{signature~#1=#2}\bluett{~in~\exp}}
@@ -75,16 +81,16 @@
     \newcommand{\uModTermPrj}[2]{\bluett{#1.#2}}
     \newcommand{\ModTermPrj}[2]{\bluett{#1.#2}}
 
-    \newcommand*{\SSigKind}[1]{\orangett{SSigKind(#1)}}
-    \newcommand*{\SigKHole}{\orangett{SigKHole}}
+    \newcommand{\SSigKind}[1]{\orangett{SSigKind(#1)}}
+    \newcommand{\SigKHole}{\orangett{SigKHole}}
 
-    \newcommand*{\uSig}{\Sig}
+    \newcommand{\uSig}{\Sig}
     \newcommand{\Sig}[1]{\purplett{\{#1\}}}
-    \newcommand*{\uFunctorSig}{\FunctorSig}
+    \newcommand{\uFunctorSig}{\FunctorSig}
     \newcommand{\FunctorSig}[2]{\purplett{\Pi_{#1}.{#2}}}
-    \newcommand*{\uSigHole}{\SigHole}
+    \newcommand{\uSigHole}{\SigHole}
     \NewDocumentCommand{\SigHole}{O{}O{^{\hole}}}{\purplett{\llparenthesis#1\rrparenthesis#2}}
-    \newcommand*{\UnboundSigVar}[1][]{\uwave{\hphantom{.}\sigvar\hphantom{.}}}
+    \newcommand{\UnboundSigVar}[1][]{\uwave{\hphantom{.}\sigvar\hphantom{.}}}
 
     \newcommand{\Struct}[1]{\tealtt{\{#1\}}}
     \newcommand{\Functor}[2]{\tealtt{\lambda #1.#2}}
@@ -102,14 +108,14 @@
     \newcommand{\usdecs}{\greyit{\hat{sdecs}}}
     \newcommand{\sdecs}[1][]{\greyit{sdecs#1}}
 
-    \newcommand*{\uOpaqueTypeSdec}[1]{\greentt{type~#1}}
-    \newcommand*{\uTransparentTypeSdec}{\TypeSdec}
-    \newcommand*{\uValSdec}{\ValSdec}
-    \newcommand*{\TypeSdec}[2]{\greentt{type~#1\KndAnn #2}}
+    \newcommand{\uOpaqueTypeSdec}[1]{\greentt{type~#1}}
+    \newcommand{\uTransparentTypeSdec}{\TypeSdec}
+    \newcommand{\uValSdec}{\ValSdec}
+    \newcommand{\TypeSdec}[2]{\greentt{type~#1\KndAnn #2}}
     \newcommand{\ValSdec}[2]{\bluett{val~#1\TypAnn #2}}
-    \newcommand*{\uModSdec}{\ModSdec}
+    \newcommand{\uModSdec}{\ModSdec}
     \newcommand{\ModSdec}[2]{\tealtt{module~#1\SigAnn #2}}
-    \newcommand*{\uFunctorSdec}{\FunctorSdec}
+    \newcommand{\uFunctorSdec}{\FunctorSdec}
     \newcommand{\FunctorSdec}[2]{\tealtt{functor~#1\SigAnn #2}}
 
     \newcommand{\TypeSbnd}[2]{\greentt{type~#1 = #2}}
@@ -129,6 +135,17 @@
     \newcommand*{\submodule}[1]{\mathsf{submodule(}#1\mathsf{)}}
     \renewcommand*{\hole}[1][]{\blackrm{u#1}}
 
+    % https://tex.stackexchange.com/questions/128991/frac-or-inference-rule-with-dotted-line
+    % for mathpartir's inferrule
+    \makeatletter
+    \newcommand*{\dotfrac}[2]{
+    \mathchoice
+    {\ooalign{$\genfrac{}{}{0pt}{0}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\displaystyle\cdot$\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{1}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\textstyle\cdot$\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{2}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\scriptstyle\cdot$\hss}\hfill\kern\z@\cr}}
+    {\ooalign{$\genfrac{}{}{0pt}{3}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\scriptscriptstyle\cdot$\hss}\hfill\kern\z@\cr}}
+    }
+    \makeatother
     \newcommand{\hintpagebreak}{\pagebreak[3]} % 0-4; 2 too weak, 4 too strong
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % judgements
@@ -145,21 +162,21 @@
         \newcommand*{\SigKndAsc}{\black{::_{\sig}}}
         \newcommand*{\SigKndAssump}{\SigKndAsc}
 
-        \newcommand{\ConsistentSubkindOp}{\lesssim}
-        \NewDocumentCommand{\ConsistentSubkind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx}mm}{\mathrm{#1 \vdash #2 \ConsistentSubkindOp #3}}
+        \newcommand{\ConsistentSubKindOp}{\lesssim}
+        \NewDocumentCommand{\ConsistentSubKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx}mm}{\mathrm{#1 \vdash #2 \ConsistentSubKindOp #3}}
         \newcommand{\ConsistentSubSigKindOp}{\lesssim_{\sigknd}}
         \newcommand{\ConsistentSubSigKind}[3]{\mathrm{#1 \vdash #2 \ConsistentSubSigKindOp #3}}
         \newcommand*{\SubSdecOp}{\le_{\sdec}}
         \newcommand*{\SubSdec}[3]{\mathrm{#1 \vdash #2 \SubSdecOp #3}}
 
         \newcommand*{\TypeEquivOp}{\equiv}
-        \NewDocumentCommand{\TypeEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\KndAsc\knd}}{\mathrm{#1 \vdash #2 \TypeEquivOp #3 #4}}
+        \NewDocumentCommand{\TypeEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\knd}}{\mathrm{#1 \vdash #2 \stackrel{#4}{\TypeEquivOp} #3}}
         \newcommand*{\KindEquivOp}{\equiv}
         \NewDocumentCommand{\KindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \KindEquivOp #3}}
         \newcommand*{\SigEquivOp}{\equiv}
-        \NewDocumentCommand{\SigEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\SigKndAsc\sigknd}}{\mathrm{#1 \vdash #2 \SigEquivOp #3 #4}}
+        \NewDocumentCommand{\SigEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\sigknd}}{\mathrm{#1 \vdash #2 \stackrel{#4}{\SigEquivOp} #3 #4}}
         \newcommand*{\SigKindEquivOp}{\equiv}
-        \newcommand*{\SigKindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{}}{\mathrm{#1 \vdash #2 \equiv #3}}
+        \NewDocumentCommand{\SigKindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \equiv #3}}
         \newcommand*{\WellFormedAtType}[3]{\mathrm{#1 \vdash #2 \TypAsc #3}}
         \NewDocumentCommand{\WellFormedAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\mathrm{#1 \vdash #2 \KndAsc #3}}
         \NewDocumentCommand{\WellFormedAtSig}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\sig}}{\mathrm{#1 \vdash #2 \SigAsc #3}}
