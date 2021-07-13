@@ -178,7 +178,7 @@
         % types
             \newcommand*{\TypeEquivOp}{\equiv}
             \newcommand*{\TypeEquivAtKindOp}[1][\knd]{\stackrel{#1}{\TypeEquivOp}}
-            \NewDocumentCommand{\TypeEquivAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\knd}}{\mathrm{#1 \vdash #2 \TypeEquivAtKindOp[#4] #3}}
+            \NewDocumentCommand{\TypeEquivAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\knd}}{\mathrm{#1 \vdash #2 \TypeEquivAtKindOp[{#4}] #3}}
             \newcommand*{\TypeEquiv}[2]{\TypeEquivAtKind{#1}{#2}[]}
 
             \newcommand*{\PrincipalKindOp}{::>}
