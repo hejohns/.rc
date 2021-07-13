@@ -57,8 +57,8 @@
     \newcommand*{\ListType}[1]{\greentt{list~#1}}
     % use violet instead of green?
     \NewDocumentCommand{\TypeHole}{O{}O{u}}{\greentt{\llparenthesis#1\rrparenthesis^{#2}}}
-    \newcommand*{\TypeEHole}{\TypeHole}
-    \NewDocumentCommand{\TypeNEHole}{O{\typ}}{\TypeHole[#1]}
+    \newcommand*{\ETypeHole}{\TypeHole}
+    \NewDocumentCommand{\NETypeHole}{O{\typ}}{\TypeHole[#1]}
     \NewDocumentCommand{\UnboundTypeVar}{O{\typvar}}{\TypeHole[#1]}
     \newcommand{\ModTypePrj}[2]{\greentt{#1.#2}}
 
@@ -67,6 +67,7 @@
     \newcommand*{\Float}{\greentt{Float}}
     \newcommand*{\Bool}{\greentt{Bool}}
 
+    \NewDocumentCommand{\ubinop}{O{\utyp[1]}O{\utyp[2]}}{\greentt{#1\oplus#2}}
     \NewDocumentCommand{\binop}{O{\typ[1]}O{\typ[2]}}{\greentt{#1\oplus#2}}
     \newcommand*{\ProdType}{\greentt{\times}}
     \newcommand*{\SumType}{\greentt{+}}
@@ -146,6 +147,9 @@
     {\ooalign{$\genfrac{}{}{0pt}{3}{#1}{#2}$\cr\leavevmode\cleaders\hb@xt@ .22em{\hss $\scriptscriptstyle\cdot$\hss}\hfill\kern\z@\cr}}
     }
     \makeatother
+    \newcommand*{\inferruledotfrac}[2]{
+        \hbox{$\dotfrac{#1}{#2}$}
+    }
     \newcommand{\hintpagebreak}{\pagebreak[3]} % 0-4; 2 too weak, 4 too strong
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % judgements
