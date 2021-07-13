@@ -173,7 +173,7 @@
             \newcommand*{\KindEquivOp}{\equiv}
             \NewDocumentCommand{\KindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \KindEquivOp #3}}
 
-            \newcommand*{\MatchedPiKindOp}{\stackrel{\blacktriangleright}{\Pi}}
+            \newcommand*{\MatchedPiKindOp}{\stackrel{\blacktriangleright}{{}_{\Pi}}}
             \NewDocumentCommand{\MatchedPiKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\DepFunKind}}{\mathrm{#1 \vdash #2 \MatchedPiKindOp #3}}
         % types
             \newcommand*{\TypeEquivOp}{\equiv}
@@ -182,7 +182,7 @@
             \newcommand*{\TypeEquiv}[2]{\TypeEquivAtKind{#1}{#2}[]}
 
             \newcommand*{\PrincipalKindOp}{::>}
-            \NewDocumentCommand{\PrincipalKind}{O{}mO{}}{\mathrm{#1 \vdash #2 \PrincipalKindOp #3}}
+            \NewDocumentCommand{\PrincipalKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\mathrm{#1 \vdash #2 \PrincipalKindOp #3}}
 
             \NewDocumentCommand{\WellFormedAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\mathrm{#1 \vdash #2 \KndAsc #3}}
         % signature kinds
