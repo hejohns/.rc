@@ -162,25 +162,43 @@
         \newcommand*{\SigKndAsc}{\black{::_{\sig}}}
         \newcommand*{\SigKndAssump}{\SigKndAsc}
 
-        \newcommand{\ConsistentSubKindOp}{\lesssim}
-        \NewDocumentCommand{\ConsistentSubKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx}mm}{\mathrm{#1 \vdash #2 \ConsistentSubKindOp #3}}
-        \newcommand{\ConsistentSubSigKindOp}{\lesssim_{\sigknd}}
-        \newcommand{\ConsistentSubSigKind}[3]{\mathrm{#1 \vdash #2 \ConsistentSubSigKindOp #3}}
-        \newcommand*{\SubSdecOp}{\le_{\sdec}}
-        \newcommand*{\SubSdec}[3]{\mathrm{#1 \vdash #2 \SubSdecOp #3}}
+        % kinds
+            \newcommand*{\ConsistentSubKindOp}{\lesssim}
+            \NewDocumentCommand{\ConsistentSubKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \ConsistentSubKindOp #3}}
 
-        \newcommand*{\TypeEquivOp}{\equiv}
-        \NewDocumentCommand{\TypeEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\knd}}{\mathrm{#1 \vdash #2 \stackrel{#4}{\TypeEquivOp} #3}}
-        \newcommand*{\KindEquivOp}{\equiv}
-        \NewDocumentCommand{\KindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \KindEquivOp #3}}
-        \newcommand*{\SigEquivOp}{\equiv}
-        \NewDocumentCommand{\SigEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\sigknd}}{\mathrm{#1 \vdash #2 \stackrel{#4}{\SigEquivOp} #3 #4}}
-        \newcommand*{\SigKindEquivOp}{\equiv}
-        \NewDocumentCommand{\SigKindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \equiv #3}}
-        \newcommand*{\WellFormedAtType}[3]{\mathrm{#1 \vdash #2 \TypAsc #3}}
-        \NewDocumentCommand{\WellFormedAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\mathrm{#1 \vdash #2 \KndAsc #3}}
-        \NewDocumentCommand{\WellFormedAtSig}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\sig}}{\mathrm{#1 \vdash #2 \SigAsc #3}}
-        \NewDocumentCommand{\WellFormedAtSigKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\sigknd}}{\mathrm{#1 \vdash #2 \SigKndAsc #3}}
+            \newcommand*{\KindEquivOp}{\equiv}
+            \NewDocumentCommand{\KindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \KindEquivOp #3}}
+
+            \newcommand*{\MatchedPiKindOp}{\stackrel{\blacktriangleright}{\Pi}}
+            \NewDocumentCommand{\MatchedPiKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\DepFunKind}}{\mathrm{#1 \vdash #2 \MatchedPiKindOp #3}}
+        % types
+            \newcommand*{\TypeEquivOp}{\equiv}
+            \newcommand*{\TypeEquivAtKindOp}[1][\knd]{\stackrel{#1}{\TypeEquivOp}}
+            \NewDocumentCommand{\TypeEquivAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\knd}}{\mathrm{#1 \vdash #2 \TypeEquivAtKindOp[#4] #3}}
+            \newcommand*{\TypeEquiv}[2]{\TypeEquivAtKind{#1}{#2}}
+
+            \newcommand*{\PrincipalKindOp}{::>}
+            \NewDocumentCommand{\PrincipalKind}{O{}mO{}}{\mathrm{#1 \vdash #2 \PrincipalKindOp #3}}
+
+            \NewDocumentCommand{\WellFormedAtKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\mathrm{#1 \vdash #2 \KndAsc #3}}
+        % signature kinds
+            \newcommand{\ConsistentSubSigKindOp}{\lesssim_{\sigknd}}
+            \newcommand{\ConsistentSubSigKind}[3]{\mathrm{#1 \vdash #2 \ConsistentSubSigKindOp #3}}
+
+            \newcommand*{\SigKindEquivOp}{\equiv}
+            \NewDocumentCommand{\SigKindEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mm}{\mathrm{#1 \vdash #2 \equiv #3}}
+        % signatures
+            \newcommand*{\SigEquivOp}{\equiv}
+            \NewDocumentCommand{\SigEquiv}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mmO{\sigknd}}{\mathrm{#1 \vdash #2 \stackrel{#4}{\SigEquivOp} #3 #4}}
+
+            \NewDocumentCommand{\WellFormedAtSigKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\sigknd}}{\mathrm{#1 \vdash #2 \SigKndAsc #3}}
+        % modules
+            \NewDocumentCommand{\WellFormedAtSig}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\sig}}{\mathrm{#1 \vdash #2 \SigAsc #3}}
+        % sdecs
+            \newcommand{\SubSdecOp}{\le_{\sdec}}
+            \newcommand{\SubSdec}[3]{\mathrm{#1 \vdash #2 \SubSdecOp #3}}
+        % ???
+            \newcommand*{\WellFormedAtType}[3]{\mathrm{#1 \vdash #2 \TypAsc #3}}
     % algorithmic
         \newcommand{\Syn}[3]{#1 \vdash #2~\Rightarrow~#3}
         \NewDocumentCommand{\SynKind}{O{\HoleCtx\TypVarCtx\ModVarCtx\SigVarCtx[]}mO{\knd}}{\Syn{#1}{#2}{#3}}
