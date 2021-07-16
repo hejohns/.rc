@@ -5,8 +5,8 @@ use utf8;
 use strict;
 use warnings FATAL => qw(uninitialized);
 
-my $TODAY = `date '+%Y-%m-%d'`;
-`cp $ARGV[0] .$ARGV[0].tmp`;
+my $TODAY = `date '+%Y-%m-%d'` or die $!;
+`cp $ARGV[0] .$ARGV[0].tmp` or die $!;
 my $i = $ARGV[0];
 $i =~ m/(.+)\.tex/ or die "missing '.tex' extension. $!";
 my $o = $1 . '.md';
