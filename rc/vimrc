@@ -18,6 +18,7 @@ set foldclose=all
 set ruler
 set vb
 set autoread
+set showcmd
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
