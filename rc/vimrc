@@ -29,6 +29,7 @@ noremap DK kdd
 noremap DJ jddk
 noremap ;; :update<CR>
 nnoremap Q gq
+vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
 inoremap <C-E> <ESC><C-E>a
 set relativenumber
