@@ -9,3 +9,4 @@ screen
 rsync
 sudo
 neomutt
+rlwrap
