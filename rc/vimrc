@@ -177,7 +177,7 @@ if has('perl')
     ($success, my $filetype) = VIM::Eval('&filetype');
     VOID_EVAL_LAST_WARNINGS:
     {
-        if(grep {/$filetype/} @lsLangs){
+        if($filetype && grep {/$filetype/} @lsLangs){
             my $pipExists = `sh -c 'command -v pip3' 2>&1`;
             if($? >> 8){
                 VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
