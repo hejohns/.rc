@@ -128,4 +128,4 @@ alias xmonad='(xmonad --replace > /dev/null 2>&1 &) && (sleep 1 && xcompmgr > /d
 alias gg='git grep -rPn'
 
 # sticky note
-echo ""
+echo -n ""
