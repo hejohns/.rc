@@ -146,7 +146,9 @@ if has('perl')
     }
     my @clang_library_path = glob '/usr/lib/llvm-*/lib';
     @clang_library_path = sort smartCmp @clang_library_path;
-    VIM::DoCommand(":let g:clang_library_path = '" . $clang_library_path[0] . "'");
+    if(@clang_library_path){
+        VIM::DoCommand(":let g:clang_library_path = '" . $clang_library_path[0] . "'");
+    }
     my @clangLangs = qw(c cpp);
     my $success; #don't bother...
     ($success, my $filetype) = VIM::Eval('&filetype');
