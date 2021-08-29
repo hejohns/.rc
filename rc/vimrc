@@ -45,6 +45,9 @@ filetype detect
 let g:tex_flavor = "latex"
 inoremap <C-\>^e ê
 inoremap <C-\>"o ö
+" https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
+" Allow saving of files as sudo
+cmap w!! w !sudo tee > /dev/null %
 
 autocmd FileType haskell setlocal shiftwidth=2
 autocmd FileType cabal setlocal shiftwidth=2
