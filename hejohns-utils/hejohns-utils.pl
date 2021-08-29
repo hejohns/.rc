@@ -33,6 +33,7 @@ while(<$ctl_fh>){
         s/$SUB_FOR_DEPS//;
         $output .= $_;
         chomp(my @deps = <$dep_txt_fh>);
+        @deps = grep {!/^\s*#/} @deps;
         $output .= join(', ', @deps) . "\n";
     }
     else{
