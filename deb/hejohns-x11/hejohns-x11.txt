@@ -1,12 +1,16 @@
+# ghcup
 build-essential
 curl
 libffi-dev
-libffi6
+  # libffi6 is required, but libffi7 seems to work ok
+libffi7
 libgmp-dev
 libgmp10
 libncurses-dev
 libncurses5
 libtinfo5
+# xmonad, I think
 xorg-dev
 libnuma-dev
+# xfce4
 gdm3
