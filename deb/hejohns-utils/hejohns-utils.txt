@@ -1,12 +1,10 @@
-vim
-bash-completion
-git
+hejohns-base
 nfs-common
 tlp
 smartmontools
 equivs
 screen
 rsync
-sudo
 neomutt
 rlwrap
+nix-bin

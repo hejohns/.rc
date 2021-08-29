@@ -1,4 +1,5 @@
-vim-gtk3
+hejohns-base
+# C/C++
 gdb
 valgrind
 g++
@@ -8,8 +9,11 @@ ctags
 linux-perf
 massif-visualizer
 kcachegrind
+# perl
+perl-doc
+# latex
 texlive-latex-extra
+latexmk
+# schroot
 debootstrap
 schroot
-perl-doc
-xournal
