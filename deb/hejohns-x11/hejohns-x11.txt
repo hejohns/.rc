@@ -10,9 +10,9 @@ libgmp10
 libncurses-dev
 libncurses5
 libtinfo5
-# xmonad, I think
-#xorg-dev
-libnuma-dev
+# building xmonad, I think
+libx11-dev
+libxss-dev
 # xfce4
 gdm3
 # misc
