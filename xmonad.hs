@@ -3,7 +3,7 @@ import XMonad.Config.Xfce
 import XMonad.Layout.NoBorders
 
 main = xmonad xfceConfig
-    { terminal = "gnome-terminal"
+    { terminal = "xfce4-terminal"
     , layoutHook = myLayoutHook
     , focusedBorderColor = "#800080"
     , borderWidth = 1
