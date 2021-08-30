@@ -11,7 +11,7 @@ libncurses-dev
 libncurses5
 libtinfo5
 # xmonad, I think
-xorg-dev
+#xorg-dev
 libnuma-dev
 # xfce4
 gdm3
