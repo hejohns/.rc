@@ -112,7 +112,7 @@ else{
 # bash completion
 my $completions = $home . '.nix-profile/share/bash-completion/completions';
 if(-e $completions && -d $completions){
-    `rsync -av $completions ~/.bash_completion.d`;
+    `rsync -av $completions/ ~/.bash_completion.d/`;
     if($? == -1){
         die "rsync not found: $!";
     }
