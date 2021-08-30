@@ -13,6 +13,7 @@ libtinfo5
 # building xmonad, I think
 libx11-dev
 libxss-dev
+libxrandr-dev
 # xfce4
 gdm3
 # misc
