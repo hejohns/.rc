@@ -110,8 +110,8 @@ else{
     die "~/.mutt does not exist: $!"
 }
 # bash completion
-my $completions = '~/.nix-profile/share/bash-completion/completions';
-if(-e  $completions && -d $completions){
+my $completions = $home . '.nix-profile/share/bash-completion/completions';
+if(-e $completions && -d $completions){
     `rsync -av $completions ~/.bash_completion.d`;
     if($? == -1){
         die "rsync not found: $!";
