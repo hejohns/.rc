@@ -29,6 +29,7 @@ sub filter_out_non_rcs{
     return @rcs_only;
 }
 
+$SIG{INT} = sub{die "Aborting...\n"};
 opendir (my $cd_dh, dirname($0)) or die "Couldn't open rc file directory: $!";
 my $home = File::HomeDir->my_home;
 my @files_to_overwrite;
@@ -48,16 +49,15 @@ foreach (&filter_out_non_rcs (readdir $cd_dh)){
     }
 }
 if (@files_to_overwrite){
-    say "Continue, overwriting:";
     foreach (@files_to_overwrite){
-        say File::Spec->catfile($home, '.' . $_);
-    }
-    say "? y/n";
-    chomp (my $yn = <STDIN>);
-    unless ($yn eq 'y'){
-        die("Aborting...\n");
-    }
-    foreach (@files_to_overwrite){
+        print "overwrite: ";
+        print File::Spec->catfile($home, '.' . $_);
+        say "? y/n";
+        chomp (my $yn = <STDIN>);
+        unless ($yn eq 'y'){
+            say "skipping...";
+            next;
+        }
         copy (File::Spec->catfile(dirname($0), $_),
             File::Spec->catfile($home, '.' . $_)
         )
@@ -117,5 +117,5 @@ if(-e  $completions && -d $completions){
     }
 }
 else{
-    say "run: nix-env --install bash-completion";
+    die "run: nix-env --install bash-completion: $!";
 }
