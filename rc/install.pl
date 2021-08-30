@@ -107,7 +107,7 @@ if (-e $mutt_home){
     }
 }
 else{
-    die "~/.mutt does not exist: $!"
+    say "~/.mutt does not exist: $!"
 }
 # bash completion
 my $completions = $home . '.nix-profile/share/bash-completion/completions';
