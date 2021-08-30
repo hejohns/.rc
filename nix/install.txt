@@ -1,3 +1,4 @@
+# usermod -aG nix-users hejohns
 bash-completion
 nix-bash-completion
 firefox
