@@ -7,7 +7,6 @@ use strict;
 
 use File::Basename;
 use File::Copy;
-use File::HomeDir;
 use File::Spec;
 
 sub filter_out_non_rcs{
@@ -31,7 +30,12 @@ sub filter_out_non_rcs{
 
 $SIG{INT} = sub{die "Aborting...\n"};
 opendir (my $cd_dh, dirname($0)) or die "Couldn't open rc file directory: $!";
-my $home = File::HomeDir->my_home;
+my $home = `echo ~`;
+if($? != 0){
+    die "$!";
+}
+chomp $home;
+$home = $home . '/';
 my @files_to_overwrite;
 foreach (&filter_out_non_rcs (readdir $cd_dh)){
     my ($here, $there) = (File::Spec->catfile($home, '.' . $_),
