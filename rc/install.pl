@@ -37,11 +37,11 @@ foreach (&filter_out_non_rcs (readdir $cd_dh)){
         File::Spec->catfile(dirname($0), $_)
         );
     `diff $here $there`;
-    if ($? == 0){
-        next;
-    }
-    elsif ($? == -1){
+    if ($? == -1){
         die "diff not found. $!";
+    }
+    elsif ($? >> 8 == 0){
+        next;
     }
     else{
         push (@files_to_overwrite, $_);
@@ -104,4 +104,18 @@ if (-e $mutt_home){
 }
 else{
     die "~/.mutt does not exist: $!"
+}
+# bash completion
+my $completions = '~/.nix-profile/share/bash-completion/completions';
+if(-e  $completions && -d $completions){
+    `rsync -av $completions ~/.bash_completion.d`;
+    if($? == -1){
+        die "rsync not found: $!";
+    }
+    elsif($? >> 8 != 0){
+        die "some problem with rsync: $!";
+    }
+}
+else{
+    say "run: nix-env --install bash-completion";
 }

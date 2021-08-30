@@ -1,0 +1,5 @@
+bash-completion
+nix-bash-completion
+firefox
+git
+xcompmgr
