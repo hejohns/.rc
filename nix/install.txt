@@ -4,3 +4,4 @@ nix-bash-completion
 firefox
 git
 xcompmgr
+xournal

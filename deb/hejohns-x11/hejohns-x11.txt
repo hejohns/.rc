@@ -18,5 +18,4 @@ gdm3
 # misc
 vim-gtk3
   # solarized on gnome-terminal doesn't seem to work great
-xournal
 xfce4-terminal
