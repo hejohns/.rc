@@ -5,3 +5,4 @@ firefox
 git
 xcompmgr
 xournal
+pandoc
