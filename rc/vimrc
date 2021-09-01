@@ -224,6 +224,8 @@ if &filetype ==# "tex" || &filetype ==# "plaintex"
             let g:vimtex_view_general_viewer = 'evince'
         elseif executable('okular')
             let g:vimtex_view_general_viewer = 'okular'
+        elseif executable('atril')
+            let g:vimtex_view_general_viewer = 'atril'
         else
             silent !echo '[Warning] no suitable pdf viewer found. Prepare for havoc.'
         endif
