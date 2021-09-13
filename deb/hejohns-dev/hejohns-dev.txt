@@ -9,6 +9,7 @@ ctags
 linux-perf
 massif-visualizer
 kcachegrind
+clang-tools
 # perl
 perl-doc
 # latex
