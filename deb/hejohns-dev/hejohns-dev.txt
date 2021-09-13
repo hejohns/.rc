@@ -10,6 +10,7 @@ linux-perf
 massif-visualizer
 kcachegrind
 clang-tools
+cppcheck
 # perl
 perl-doc
 # latex
