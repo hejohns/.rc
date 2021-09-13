@@ -6,3 +6,4 @@ git
 xcompmgr
 xournal
 pandoc
+imagemagick
