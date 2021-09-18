@@ -7,4 +7,5 @@ xcompmgr
 xournal
 pandoc
 imagemagick
+ghostscript
 bear
