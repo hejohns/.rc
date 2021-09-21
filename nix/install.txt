@@ -9,3 +9,4 @@ pandoc
 imagemagick
 ghostscript
 bear
+lcov
