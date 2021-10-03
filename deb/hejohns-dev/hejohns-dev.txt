@@ -12,6 +12,7 @@ kcachegrind
 clang-tools
 cppcheck
 clang-tidy
+doxygen
 # perl
 perl-doc
 # latex
