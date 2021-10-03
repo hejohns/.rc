@@ -11,3 +11,4 @@ ghostscript
 bear
 lcov
 evince
+doxygen
