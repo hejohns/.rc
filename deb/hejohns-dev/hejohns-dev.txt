@@ -13,6 +13,7 @@ clang-tools
 cppcheck
 clang-tidy
 doxygen
+strace
 # perl
 perl-doc
 # latex
