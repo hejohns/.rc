@@ -12,3 +12,4 @@ bear
 lcov
 evince
 cmake
+meld
