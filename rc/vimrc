@@ -21,6 +21,7 @@ set ruler
 set vb
 set autoread
 set showcmd
+set wrap
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
