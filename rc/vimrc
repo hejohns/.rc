@@ -85,6 +85,10 @@ command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 |
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
+" more highlighting matches
+call matchadd("Todo", '\<notes\?\>\c')
+call matchadd("Todo", '\<todo\>\c')
+
 " my perl stuff
 " (keeping this here for future ref)
 if has('perl')
