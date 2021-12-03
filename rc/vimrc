@@ -274,5 +274,5 @@ endfunction
 command L2UDisable call DisableL2U()
 
 " fugitive
-command Gdiff vertical Git diff
-command Gstatus vertical Git
+command GD vertical Gdiff
+command GS vertical Git
