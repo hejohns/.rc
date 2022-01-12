@@ -36,9 +36,9 @@ vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
 inoremap <C-E> <ESC><C-E>a
 set relativenumber
-noremap <C-l><C-l> :set invrelativenumber<CR>
+noremap <C-\><C-\> :set invrelativenumber<CR>
 set number
-noremap <C-l> :set invnumber<CR>
+noremap <C-\> :set invnumber<CR>
 " vimdiff mappings (for git mergetool)
 " https://vi.stackexchange.com/questions/2705/create-mappings-that-only-apply-to-diff-mode
 " even though &diff is always set for some reason...
