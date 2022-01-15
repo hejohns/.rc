@@ -9,6 +9,7 @@ main = xmonad $ xfceConfig
     , layoutHook = myLayoutHook
     , focusedBorderColor = "#800080"
     , borderWidth = 1
+    , modMask = mod4Mask
     }
     `additionalKeysP`
     [ ("M-d", nextScreen)
