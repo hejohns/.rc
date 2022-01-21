@@ -31,6 +31,9 @@ inoremap df <BS>
 noremap DK kdd
 noremap DJ jddk
 noremap ;; :update<CR>
+" recover normal ; behavior
+noremap ;f ;
+noremap ;b ;
 nnoremap Q gq
 vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
