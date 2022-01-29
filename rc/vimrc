@@ -1,5 +1,8 @@
 syntax on
 colorscheme solarized
+if has("gui_running")
+    set background=dark
+endif
 set encoding=utf8
 set tags=tags
 set autoindent
