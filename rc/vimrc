@@ -304,6 +304,10 @@ command GS vertical Git
 
 " syntastic
 let g:syntastic_vim_checkers = ['vint']
+let g:syntastic_mode_map = {
+            \ 'mode': 'passive',
+            \ 'active_filetypes': ['reason', 'vim', 'pod'],
+            \ 'passive_filetypes': []}
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
