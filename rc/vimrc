@@ -1,9 +1,10 @@
 syntax on
 colorscheme solarized
-if has("gui_running")
+if has('gui_running')
     set background=dark
 endif
 set encoding=utf8
+scriptencoding utf8
 set tags=tags
 set autoindent
 set expandtab
@@ -54,7 +55,7 @@ noremap <C-\> :set invnumber<CR>
 nnoremap <expr> gl &diff ? ':diffget LOCAL<CR>]c' : 'gl'
 nnoremap <expr> gr &diff ? ':diffget REMOTE<CR>]c' : 'gr'
 filetype detect
-let g:tex_flavor = "latex"
+let g:tex_flavor = 'latex'
 inoremap <C-\>^e ê
 inoremap <C-\>"o ö
 " https://stackoverflow.com/questions/2600783/how-does-the-vim-write-with-sudo-trick-work
@@ -87,7 +88,7 @@ function! MyDeleteView()
     " view directory
     let path = &viewdir.'/'.path
     call delete(path)
-    echo "Deleted: ".path
+    echo 'Deleted: '.path
 endfunction
 " # Command Delview (and it's abbreviation 'delview')
 command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 | set foldlevel=99
@@ -95,8 +96,8 @@ command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 |
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
 " more highlighting matches
-call matchadd("Todo", '\<notes\?\>\c')
-call matchadd("Todo", '\<todo\>\c')
+call matchadd('Todo', '\<notes\?\>\c')
+call matchadd('Todo', '\<todo\>\c')
 
 " my perl stuff
 " (keeping this here for future ref)
@@ -127,7 +128,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/xavierd/clang_complete.git', {'for': ['c', 'cpp']}
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-"Plug 'reasonml-editor/vim-reason-plus', {'for': 'reason'}
 Plug 'autozimu/LanguageClient-neovim', {
     \ 'for': ['haskell', 'reason'],
     \ 'branch': 'next',
@@ -190,33 +190,46 @@ else
     silent !echo '[Warning] Need +perl to initialize clang_complete correctly'
 endif
 
-" vim-reason-plus
+" LanguageClient-neovim
+" (and any pip stuff)
 if has('perl')
     perl <<EOF
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
-    my @lsLangs = ('haskell', 'reason');
+    my @lsLangs = ('haskell', 'ocaml', 'reason');
+    push @lsLangs, qw(vim); # vim-vint requires pip install
     my $success; #don't bother...
     ($success, my $filetype) = VIM::Eval('&filetype');
-    VOID_EVAL_LAST_WARNINGS:
-    {
+    VOID_EVAL_LAST_WARNINGS: {
         if($filetype && grep {/$filetype/} @lsLangs){
             my $pipExists = `sh -c 'command -v pip3' 2>&1`;
             if($? >> 8){
                 VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
                 last VOID_EVAL_LAST_WARNINGS;
             }
-            my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
-            if($? >> 8){
-                my $pipSuccess = `pip3 install neovim 2>&1`;
+            my @pipRequire = qw(vim-vint);
+            for (@pipRequire){
+                my $pipHas = `pip3 list 2>&1 | grep '$_' 2>&1`;
                 if($? >> 8){
-                    VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
-                    last VOID_EVAL_LAST_WARNINGS;
+                    my $pipSuccess = `pip3 install $_ 2>&1`;
+                    if($? >> 8){
+                        VIM::DoCommand("silent !echo '[Warning] `pip3 install $_` failed'");
+                        last VOID_EVAL_LAST_WARNINGS;
+                    }
                 }
             }
-            VIM::DoCommand('pythonx import neovim');
             # https://github.com/jaredly/reason-language-server
+            # (which we're no longer using)
+            #my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
+            #if($? >> 8){
+            #    my $pipSuccess = `pip3 install neovim 2>&1`;
+            #    if($? >> 8){
+            #        VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
+            #        last VOID_EVAL_LAST_WARNINGS;
+            #    }
+            #}
+            #VIM::DoCommand('pythonx import neovim');
             my $lsCmds = <<~"__EOF"
                 let g:LanguageClient_serverCommands = {
                 'haskell': ['haskell-language-server-wrapper', '--lsp'],
@@ -237,7 +250,7 @@ else
 endif
 
 " vimtex
-if &filetype ==# "tex" || &filetype ==# "plaintex"
+if &filetype ==# 'tex' || &filetype ==# 'plaintex'
     if executable('latexmk')
         if executable('evince')
             let g:vimtex_view_general_viewer = 'evince'
@@ -269,12 +282,13 @@ if &filetype ==# "tex" || &filetype ==# "plaintex"
 endif
 
 " julia latex2unicode
-" [let g:latex_to_unicode_tab = off] to disable julia tab completion
+" [let g:latex_to_unicode_tab = "off"] to disable julia tab completion
+let g:latex_to_unicode_tab = 'off'
 " doesn't work for some reason
 function EnableL2U()
     let g:latex_to_unicode_eager = 0
     let g:latex_to_unicode_auto = 1 " enable space driven auto completion
-    let g:latex_to_unicode_file_types = ".*" " on all 
+    let g:latex_to_unicode_file_types = '.*' " on all
     call LaTeXtoUnicode#Init()
     call LaTeXtoUnicode#Enable()
 endfunction
@@ -287,3 +301,14 @@ command L2UDisable call DisableL2U()
 " fugitive
 command GD vertical Gdiff
 command GS vertical Git
+
+" syntastic
+let g:syntastic_vim_checkers = ['vint']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
