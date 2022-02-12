@@ -318,20 +318,16 @@ function! MyStatusline()
         perl << EOF
         use strict;
         use warnings FATAL => 'all', NONFATAL => 'redefine';
-        chomp(my $git = `git status 2>&1 | head -n 1`);
-        $git =~ /On branch (.*)/;
-        $git = (defined $1)? '[枝' . $1 . ']' : '';
-        # don't bother w/ detached head etc
         chomp(my $time = `date '+%r'`);
         $time = "[$time]";
-        my $statusline = $git . $time;
+        my $statusline = $time;
         VIM::DoCommand("let g:mystatusline='$statusline'");
 EOF
     endif
     return g:mystatusline
 endfunction
 " Emulate default statusline
-set statusline=%<%f\ %y%r%m\ %{MyStatusline()}%=
+set statusline=%f\ %y%r%m%<\ %{FugitiveStatusline()}\ %{MyStatusline()}%=
 set statusline+=%#warningmsg#
 set statusline+=%-24.(%{SyntasticStatuslineFlag()}%)
 set statusline+=%*
