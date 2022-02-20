@@ -13,3 +13,4 @@ lcov
 evince
 cmake
 meld
+fzf
