@@ -101,6 +101,10 @@ call matchadd('Todo', '\<notes\?\>\c')
 call matchadd('Todo', '\<todo\>\c')
 
 " my perl stuff
+" neovim perl provider
+if has('nvim')
+    let g:perl_host_provider = '/usr/bin/perl'
+endif
 " (keeping this here for future ref)
 if has('perl')
     perl << EOF
