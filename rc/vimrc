@@ -318,7 +318,8 @@ let g:syntastic_mode_map = {
 " (help statusline)
 let g:mystatusline = ''
 function! MyStatusline()
-    if has('perl')
+    " !has('nvim') -- neovim doesn't seem to like this for some reason
+    if has('perl') && !has('nvim')
         perl << EOF
         use strict;
         use warnings FATAL => 'all', NONFATAL => 'redefine';
