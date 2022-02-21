@@ -97,8 +97,8 @@ command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 |
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
 " more highlighting matches
-call matchadd('Todo', '\<notes\?\>\c')
-call matchadd('Todo', '\<todo\>\c')
+call matchadd('Todo', '\<notes\?:\?\>\c')
+call matchadd('Todo', '\<todo:\?\>\c')
 
 " my perl stuff
 " neovim perl provider
