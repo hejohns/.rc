@@ -256,6 +256,13 @@ if has('perl')
             VIM::DoCommand($lsCmds);
             # enable autocomplete
             VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
+            # langauge specific mappings
+            if($filetype eq 'haskell'){
+                VIM::DoCommand('nnoremap gd :call LanguageClient#textDocument_definition()<CR>');
+                VIM::DoCommand('nnoremap K :call LanguageClient#textDocument_hover()<CR>');
+                VIM::DoCommand('command LSRename :call LanguageClient#textDocument_rename()<CR>');
+                VIM::DoCommand('command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>');
+            }
         }
     }
 EOF
