@@ -14,3 +14,4 @@ evince
 cmake
 meld
 fzf
+stylish-haskell
