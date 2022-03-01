@@ -26,6 +26,8 @@ set vb
 set autoread
 set showcmd
 set wrap
+" for LanguageClient-neovim
+set hidden
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
@@ -128,23 +130,25 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 " list of plugins
+
+let g:myLSLangs = ['haskell', 'ocaml', 'reason', 'perl']
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/xavierd/clang_complete.git', {'for': ['c', 'cpp']}
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'autozimu/LanguageClient-neovim', {
-    \ 'for': ['haskell', 'reason'],
+    \ 'for': g:myLSLangs,
     \ 'branch': 'next',
     \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/fzf'
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'for': ['haskell', 'reason'], 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', { 'for': g:myLSLangs, 'do': ':UpdateRemotePlugins' }
 " for vim 8 with python
 else
-    Plug 'Shougo/deoplete.nvim', {'for': ['haskell', 'reason']}
-    Plug 'roxma/nvim-yarp', {'for': ['haskell', 'reason']}
-    Plug 'roxma/vim-hug-neovim-rpc', {'for': ['haskell', 'reason']}
+    Plug 'Shougo/deoplete.nvim', {'for': g:myLSLangs}
+    Plug 'roxma/nvim-yarp', {'for': g:myLSLangs}
+    Plug 'roxma/vim-hug-neovim-rpc', {'for': g:myLSLangs}
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
 endif
@@ -152,10 +156,10 @@ Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'maxboisvert/vim-simple-complete'
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'https://github.com/tpope/vim-fugitive'
-Plug 'jordwalke/vim-reasonml'
+Plug 'jordwalke/vim-reasonml', {'for': 'reason'}
 Plug 'scrooloose/syntastic'
 Plug 'osyo-manga/vim-over'
-Plug 'alx741/vim-hindent'
+Plug 'alx741/vim-hindent', {'for': 'haskell'}
 Plug 'tpope/vim-surround'
 call plug#end()
 
@@ -204,9 +208,10 @@ if has('perl')
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
-    my @lsLangs = ('haskell', 'ocaml', 'reason');
-    push @lsLangs, qw(vim); # vim-vint requires pip install
     my $success; #don't bother...
+    ($success, my $lsLangs) = VIM::Eval('g:myLSLangs');
+    my @lsLangs = split(' ', $lsLangs);
+    push @lsLangs, qw(vim); # vim-vint requires pip install
     ($success, my $filetype) = VIM::Eval('&filetype');
     VOID_EVAL_LAST_WARNINGS: {
         if($filetype && grep {/$filetype/} @lsLangs){
@@ -242,6 +247,7 @@ if has('perl')
                 'haskell': ['haskell-language-server-wrapper', '--lsp'],
                 'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
                 'ocaml': ['ocamllsp'],
+                'perl': ['pls'],
                 }
                 __EOF
                 ;
