@@ -64,6 +64,13 @@ inoremap <C-\>"o ö
 cmap w!! w !sudo tee > /dev/null %
 
 autocmd FileType haskell setlocal shiftwidth=2
+if &filetype ==# 'haskell'
+    if executable('hindent')
+        autocmd FileType haskell setlocal formatprg='hindent'
+    else
+        silent !echo '[Warning] Need hindent for Q, for haskell'
+    endif
+endif
 autocmd FileType cabal setlocal shiftwidth=2
 autocmd FileType cabalconfig setlocal shiftwidth=2
 autocmd FileType cabalproject setlocal shiftwidth=2
@@ -156,6 +163,7 @@ Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'jordwalke/vim-reasonml'
 Plug 'scrooloose/syntastic'
 Plug 'osyo-manga/vim-over'
+Plug 'alx741/vim-hindent'
 call plug#end()
 
 " clang_complete
