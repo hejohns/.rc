@@ -106,6 +106,36 @@ call matchadd('Todo', '\<todo:\?\>\c')
 if has('nvim')
     let g:perl_host_provider = '/usr/bin/perl'
 endif
+if has('perl')
+    if has('nvim')
+        perl << EOF
+        use strict;
+        use warnings FATAL => 'all', NONFATAL => 'redefine';
+
+        # NOTE: nvim's VIM::Eval does not dereference like vim does
+        sub SEval{
+            VIM::Eval(shift);
+        }
+        sub AEval{
+            my ($success, $e) = VIM::Eval(shift);
+            ($success, "@$e");
+        }
+EOF
+    " normal vim
+    else
+        perl << EOF
+        use strict;
+        use warnings FATAL => 'all', NONFATAL => 'redefine';
+
+        sub SEval{
+            VIM::Eval(shift);
+        }
+        sub AEval{
+            VIM::Eval(shift);
+        }
+EOF
+    endif
+endif
 " (keeping this here for future ref)
 if has('perl')
     perl << EOF
@@ -131,7 +161,32 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 " list of plugins
 
-let g:myLSLangs = ['haskell', 'ocaml', 'reason', 'perl']
+" LanguageClient-neovim variables
+let g:myLSLangs = []
+if has('perl')
+    perl <<EOF
+    use strict;
+    use warnings FATAL => 'all', NONFATAL => 'redefine';
+
+    my $lsCmds = <<~"__EOF"
+        let g:LanguageClient_serverCommands = {
+        'haskell': ['haskell-language-server-wrapper', '--lsp'],
+        'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
+        'ocaml': ['ocamllsp'],
+        'perl': ['pls'],
+        }
+        __EOF
+        ;
+    my @rows = split /\n/, $lsCmds; # for @langs
+    $lsCmds =~ s/\n//g; # vim doesn't like the newlines
+    VIM::DoCommand($lsCmds);
+    my @langs = map {/'(\S+)':/; $1} grep {/'(\S+)':/} @rows;
+    my @myLSLangs = map {"'$_',"} @langs;
+    VIM::DoCommand("let g:myLSLangs = [@myLSLangs]");
+EOF
+else
+    silent !echo '[Warning] Need +perl to initialize language server correctly'
+endif
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/xavierd/clang_complete.git', {'for': ['c', 'cpp']}
 Plug 'vim-perl/vim-perl', { 'for': 'perl', 'do': 'make clean carp dancer highlight-all-pragmas moose test-more try-tiny' }
@@ -184,7 +239,7 @@ if has('perl')
     }
     my @clangLangs = qw(c cpp);
     my $success; #don't bother...
-    ($success, my $filetype) = VIM::Eval('&filetype');
+    ($success, my $filetype) = SEval('&filetype');
     if(grep {/$filetype/} @clangLangs){
         my @clangCmds = split /\n/, <<~"__EOF"
             set omnifunc='ClangComplete'
@@ -209,10 +264,10 @@ if has('perl')
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my $success; #don't bother...
-    ($success, my $lsLangs) = VIM::Eval('g:myLSLangs');
+    ($success, my $lsLangs) = AEval('g:myLSLangs');
     my @lsLangs = split(' ', $lsLangs);
     push @lsLangs, qw(vim); # vim-vint requires pip install
-    ($success, my $filetype) = VIM::Eval('&filetype');
+    ($success, my $filetype) = SEval('&filetype');
     VOID_EVAL_LAST_WARNINGS: {
         if($filetype && grep {/$filetype/} @lsLangs){
             my $pipExists = `sh -c 'command -v pip3' 2>&1`;
@@ -242,17 +297,6 @@ if has('perl')
             #    }
             #}
             #VIM::DoCommand('pythonx import neovim');
-            my $lsCmds = <<~"__EOF"
-                let g:LanguageClient_serverCommands = {
-                'haskell': ['haskell-language-server-wrapper', '--lsp'],
-                'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
-                'ocaml': ['ocamllsp'],
-                'perl': ['pls'],
-                }
-                __EOF
-                ;
-            $lsCmds =~ s/\n//g;
-            VIM::DoCommand($lsCmds);
             # enable autocomplete
             VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
             # langauge specific mappings
