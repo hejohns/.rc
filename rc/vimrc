@@ -113,10 +113,10 @@ if has('perl')
         use warnings FATAL => 'all', NONFATAL => 'redefine';
 
         # NOTE: nvim's VIM::Eval does not dereference like vim does
-        sub SEval{
+        sub SEval($){
             VIM::Eval(shift);
         }
-        sub AEval{
+        sub AEval($){
             my ($success, $e) = VIM::Eval(shift);
             ($success, "@$e");
         }
@@ -127,10 +127,10 @@ EOF
         use strict;
         use warnings FATAL => 'all', NONFATAL => 'redefine';
 
-        sub SEval{
+        sub SEval($){
             VIM::Eval(shift);
         }
-        sub AEval{
+        sub AEval($){
             VIM::Eval(shift);
         }
 EOF
