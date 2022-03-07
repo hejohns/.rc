@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+=begin
+
+This is a very simple `hindent` wrapper so the error codes play better w/
+alx741/vim-hindent
+
+I'm using ruby since I'm trying to move from perl to ruby (2022-03-06)
+
+=end
+
+print (h = `hindent #{ARGV.join(' ')}`)
+if $?.exitstatus > 0 && h =~ /Parse error/i
+    Kernel.exit($?.exitstatus)
+else
+    Kernel.exit(0)
+end
