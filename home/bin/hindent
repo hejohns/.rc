@@ -9,9 +9,11 @@ I'm using ruby since I'm trying to move from perl to ruby (2022-03-06)
 
 =end
 
-print (h = `hindent #{ARGV.join(' ')}`)
+home = `echo ~`.chomp + '/bin'
+shortCircuitPATH = `echo $PATH`.chomp.split(/:/).grep_v(/#{home}/).join(':')
+print (h = `PATH='#{shortCircuitPATH}' hindent #{ARGV.join(' ')}`)
 if $?.exitstatus > 0 && h =~ /Parse error/i
-    Kernel.exit($?.exitstatus)
+    exit($?.exitstatus)
 else
-    Kernel.exit(0)
+    exit(0)
 end
