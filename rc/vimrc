@@ -92,6 +92,8 @@ function! MyDeleteView()
     let path = &viewdir.'/'.path
     call delete(path)
     echo 'Deleted: '.path
+    " my addition: vim gets stuck in diff mode a lot for some reason
+    diffoff
 endfunction
 " # Command Delview (and it's abbreviation 'delview')
 command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 | set foldlevel=99
