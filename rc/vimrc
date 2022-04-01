@@ -173,8 +173,9 @@ if has('perl')
 
     my $lsCmds = <<~"__EOF"
         let g:LanguageClient_serverCommands = {
+        'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
         'haskell': ['haskell-language-server-wrapper', '--lsp'],
-        'reason': ['/home/hejohns/.vim/language-server/rls-linux/reason-language-server', '--stdio'],
+        'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
         'ocaml': ['ocamllsp'],
         'perl': ['pls'],
         }
@@ -219,6 +220,7 @@ Plug 'scrooloose/syntastic'
 Plug 'osyo-manga/vim-over'
 Plug 'alx741/vim-hindent', {'for': 'haskell'}
 Plug 'tpope/vim-surround'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 call plug#end()
 
 " clang_complete
@@ -373,7 +375,7 @@ command GS vertical Git
 let g:syntastic_vim_checkers = ['vint']
 let g:syntastic_mode_map = {
             \ 'mode': 'passive',
-            \ 'active_filetypes': ['reason', 'vim', 'pod'],
+            \ 'active_filetypes': ['reason', 'vim', 'pod', 'rust'],
             \ 'passive_filetypes': []}
 
 " (help statusline)
