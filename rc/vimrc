@@ -175,7 +175,7 @@ if has('perl')
         let g:LanguageClient_serverCommands = {
         'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
         'haskell': ['haskell-language-server-wrapper', '--lsp'],
-        'reason': ['/home/hejohns/.vim/langauge-server/rls-linux/reason-language-server', '--stdio'],
+        'reason': ['/home/hejohns/.vim/language-server/rls-linux/reason-language-server', '--stdio'],
         'ocaml': ['ocamllsp'],
         'perl': ['pls'],
         }
