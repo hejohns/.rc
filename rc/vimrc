@@ -221,6 +221,8 @@ Plug 'osyo-manga/vim-over'
 Plug 'alx741/vim-hindent', {'for': 'haskell'}
 Plug 'tpope/vim-surround'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
+" requires >= 8.0.902
+Plug 'mhinz/vim-signify'
 call plug#end()
 
 " clang_complete
