@@ -407,3 +407,17 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+
+" vim-signify
+set updatetime=100
+let g:signify_sign_change = '∂'
+let g:mySignifyDiffToggle = 0
+function! MySignifyDiffToggle()
+    if g:mySignifyDiffToggle
+        autocmd! User Signify
+    else
+        autocmd User Signify SignifyHunkDiff
+    endif
+    let g:mySignifyDiffToggle = !g:mySignifyDiffToggle
+endfunction
+nnoremap gp :call MySignifyDiffToggle()<cr>
