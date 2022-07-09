@@ -313,8 +313,8 @@ if has('perl')
             VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
             # langauge specific mappings
             if($filetype eq 'haskell'){
-                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <BUFFER> gd :call LanguageClient#textDocument_definition()<CR>");
-                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <BUFFER> K :call LanguageClient#textDocument_hover()<CR>");
+                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>");
+                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>");
                 VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
                 VIM::DoCommand("command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>");
             }
