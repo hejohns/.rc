@@ -420,4 +420,4 @@ function! MySignifyDiffToggle()
     endif
     let g:mySignifyDiffToggle = !g:mySignifyDiffToggle
 endfunction
-nnoremap gp :call MySignifyDiffToggle()<cr>
+nnoremap gp :call MySignifyDiffToggle()<CR>
