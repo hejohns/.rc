@@ -183,6 +183,7 @@ if has('perl')
         'reason': ['/home/hejohns/.vim/language-server/rls-linux/reason-language-server', '--stdio'],
         'ocaml': ['ocamllsp'],
         'perl': ['pls'],
+        'tex': ['texlab'],
         }
         __EOF
         ;
@@ -280,6 +281,9 @@ if has('perl')
     my @lsLangs = split(' ', $lsLangs);
     push @lsLangs, qw(vim); # vim-vint requires pip install
     ($success, my $filetype) = SEval('&filetype');
+    # NOTE: can't figure out why plaintex shows up
+    # but it messes up the buffer local remappings
+    $filetype =~ s/plaintex/tex/;
     VOID_EVAL_LAST_WARNINGS: {
         if($filetype && grep {/$filetype/} @lsLangs){
             my $pipExists = `sh -c 'command -v pip3' 2>&1`;
@@ -312,7 +316,7 @@ if has('perl')
             # enable autocomplete
             VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
             # langauge specific mappings
-            if($filetype eq 'haskell'){
+            if(grep {/$filetype/} ('haskell', 'tex')){
                 VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>");
                 VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>");
                 VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
