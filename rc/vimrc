@@ -65,18 +65,21 @@ inoremap <C-\>"o ö
 " Allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
 
-autocmd FileType haskell setlocal shiftwidth=2
-autocmd FileType cabal setlocal shiftwidth=2
-autocmd FileType cabalconfig setlocal shiftwidth=2
-autocmd FileType cabalproject setlocal shiftwidth=2
-autocmd FileType plaintex setlocal filetype=tex
+augroup filetype_options
+    autocmd!
+    autocmd FileType haskell setlocal shiftwidth=2
+    autocmd FileType cabal setlocal shiftwidth=2
+    autocmd FileType cabalconfig setlocal shiftwidth=2
+    autocmd FileType cabalproject setlocal shiftwidth=2
+    autocmd FileType plaintex setlocal filetype=tex
+augroup END
 
 " fold settings
-" I must've forgotten to paste the link...
+" https://stackoverflow.com/a/54739345
 augroup remember_folds
     autocmd!
-    autocmd BufWinLeave * mkview
-    autocmd BufWinEnter * silent! loadview
+    autocmd BufWinLeave ?* mkview
+    autocmd BufWinEnter ?* silent! loadview
 augroup END
 " # Function to permanently delete views created by 'mkview'
 function! MyDeleteView()
@@ -160,7 +163,9 @@ endif
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !mkdir -p ~/.vim/autoload && wget -O ~/.vim/autoload/plug.vim
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup vim_plug
+      autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  augroup END
 endif
 " list of plugins
 
@@ -308,10 +313,10 @@ if has('perl')
             VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
             # langauge specific mappings
             if($filetype eq 'haskell'){
-                VIM::DoCommand('nnoremap gd :call LanguageClient#textDocument_definition()<CR>');
-                VIM::DoCommand('nnoremap K :call LanguageClient#textDocument_hover()<CR>');
-                VIM::DoCommand('command LSRename :call LanguageClient#textDocument_rename()<CR>');
-                VIM::DoCommand('command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>');
+                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <BUFFER> gd :call LanguageClient#textDocument_definition()<CR>");
+                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <BUFFER> K :call LanguageClient#textDocument_hover()<CR>");
+                VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
+                VIM::DoCommand("command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>");
             }
         }
     }
@@ -412,11 +417,14 @@ let g:syntastic_check_on_wq = 0
 set updatetime=100
 let g:signify_sign_change = '∂'
 let g:mySignifyDiffToggle = 0
+augroup signify_toggle
+    autocmd!
+augroup END
 function! MySignifyDiffToggle()
     if g:mySignifyDiffToggle
-        autocmd! User Signify
+        autocmd! signify_toggle User Signify
     else
-        autocmd User Signify SignifyHunkDiff
+        autocmd signify_toggle User Signify SignifyHunkDiff
     endif
     let g:mySignifyDiffToggle = !g:mySignifyDiffToggle
 endfunction
