@@ -65,15 +65,6 @@ inoremap <C-\>"o ö
 " Allow saving of files as sudo
 cmap w!! w !sudo tee > /dev/null %
 
-augroup filetype_options
-    autocmd!
-    autocmd FileType haskell setlocal shiftwidth=2
-    autocmd FileType cabal setlocal shiftwidth=2
-    autocmd FileType cabalconfig setlocal shiftwidth=2
-    autocmd FileType cabalproject setlocal shiftwidth=2
-    autocmd FileType plaintex setlocal filetype=tex
-augroup END
-
 " fold settings
 " https://stackoverflow.com/a/54739345
 augroup remember_folds
@@ -170,6 +161,7 @@ endif
 " list of plugins
 
 " LanguageClient-neovim variables
+let g:myLSRunning = 0
 let g:myLSLangs = []
 if has('perl')
     perl <<EOF
@@ -253,6 +245,7 @@ if has('perl')
     my @clangLangs = qw(c cpp);
     my $success; #don't bother...
     ($success, my $filetype) = SEval('&filetype');
+    $filetype //= '';
     if(grep {/$filetype/} @clangLangs){
         my @clangCmds = split /\n/, <<~"__EOF"
             set omnifunc='ClangComplete'
@@ -271,63 +264,110 @@ endif
 
 " LanguageClient-neovim
 " (and any pip stuff)
+" (and any filetype specific options)
 if has('perl')
-    perl <<EOF
+    function FiletypeSpecific(ft)
+        let g:myPerlArg = a:ft
+        perl filetype_options
+    endfunction
+    perl << EOF
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
-    my $success; #don't bother...
-    ($success, my $lsLangs) = AEval('g:myLSLangs');
-    my @lsLangs = split(' ', $lsLangs);
-    push @lsLangs, qw(vim); # vim-vint requires pip install
-    ($success, my $filetype) = SEval('&filetype');
-    # NOTE: can't figure out why plaintex shows up
-    # but it messes up the buffer local remappings
-    $filetype =~ s/plaintex/tex/;
-    VOID_EVAL_LAST_WARNINGS: {
-        if($filetype && grep {/$filetype/} @lsLangs){
-            my $pipExists = `sh -c 'command -v pip3' 2>&1`;
-            if($? >> 8){
-                VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
-                last VOID_EVAL_LAST_WARNINGS;
+    my %no_LS_opt2ft = (
+        'setlocal shiftwidth=2' =>
+        ['haskell, cabal, cabalconfig, cabalproject'],
+    );
+    my %LS_opt2ft = (
+        'nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>' =>
+        ['haskell', 'tex'],
+        'nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>' =>
+        ['haskell', 'tex'],
+    );
+
+    sub filetype_options{
+        my $success;
+        ($success, my $filetype) = SEval('g:myPerlArg');
+        $filetype //= '';
+        foreach my $k (keys %no_LS_opt2ft){
+            if(grep {/$filetype/} @{$no_LS_opt2ft{$k}}){
+                VIM::DoCommand($k);
             }
-            my @pipRequire = qw(vim-vint);
-            for (@pipRequire){
-                my $pipHas = `pip3 list 2>&1 | grep '$_' 2>&1`;
-                if($? >> 8){
-                    my $pipSuccess = `pip3 install $_ 2>&1`;
-                    if($? >> 8){
-                        VIM::DoCommand("silent !echo '[Warning] `pip3 install $_` failed'");
-                        last VOID_EVAL_LAST_WARNINGS;
-                    }
+        }
+        RETRY:
+        ($success, my $ls_running) = SEval('g:myLSRunning');
+        if($ls_running){
+            foreach my $k (keys %LS_opt2ft){
+                if(grep {/$filetype/} @{$LS_opt2ft{$k}}){
+                    VIM::DoCommand($k);
                 }
             }
-            # https://github.com/jaredly/reason-language-server
-            # (which we're no longer using)
-            #my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
-            #if($? >> 8){
-            #    my $pipSuccess = `pip3 install neovim 2>&1`;
-            #    if($? >> 8){
-            #        VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
-            #        last VOID_EVAL_LAST_WARNINGS;
-            #    }
-            #}
-            #VIM::DoCommand('pythonx import neovim');
-            # enable autocomplete
-            VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
-            # langauge specific mappings
-            if(grep {/$filetype/} ('haskell', 'tex')){
-                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>");
-                VIM::DoCommand("autocmd filetype_options FileType $filetype nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>");
-                VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
-                VIM::DoCommand("command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>");
+        }
+        else{
+            my $success; #don't bother...
+            ($success, my $lsLangs) = AEval('g:myLSLangs');
+            my @lsLangs = split(' ', $lsLangs);
+            push @lsLangs, qw(vim); # vim-vint requires pip install
+            ($success, my $filetype) = SEval('&filetype');
+            $filetype //= '';
+            # NOTE: can't figure out why plaintex shows up
+            # but it messes up the buffer local remappings
+            $filetype =~ s/plaintex/tex/;
+            VOID_EVAL_LAST_WARNINGS: {
+                if($filetype && grep {/$filetype/} @lsLangs){
+                    my $pipExists = `sh -c 'command -v pip3' 2>&1`;
+                    if($? >> 8){
+                        VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
+                        last VOID_EVAL_LAST_WARNINGS;
+                    }
+                    my @pipRequire = qw(vim-vint);
+                    for (@pipRequire){
+                        my $pipHas = `pip3 list 2>&1 | grep '$_' 2>&1`;
+                        if($? >> 8){
+                            my $pipSuccess = `pip3 install $_ 2>&1`;
+                            if($? >> 8){
+                                VIM::DoCommand("silent !echo '[Warning] `pip3 install $_` failed'");
+                                last VOID_EVAL_LAST_WARNINGS;
+                            }
+                        }
+                    }
+                    # https://github.com/jaredly/reason-language-server
+                    # (which we're no longer using)
+                    #my $pipHasNeovim = `pip3 list 2>&1 | grep 'neovim' 2>&1`;
+                    #if($? >> 8){
+                    #    my $pipSuccess = `pip3 install neovim 2>&1`;
+                    #    if($? >> 8){
+                    #        VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
+                    #        last VOID_EVAL_LAST_WARNINGS;
+                    #    }
+                    #}
+                    #VIM::DoCommand('pythonx import neovim');
+                    # enable autocomplete
+                    VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
+                    VIM::DoCommand("let g:myLSRunning = 1");
+                    VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
+                    VIM::DoCommand("command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>");
+                    goto RETRY;
+                }
             }
         }
     }
 EOF
 else
+    silent !echo '[Warning] Need +perl to set filetype specific options'
     silent !echo '[Warning] Need +perl to initialize language server correctly'
 endif
+augroup filetype_options
+    autocmd!
+    autocmd FileType plaintex setlocal filetype=tex
+    " TODO: probably don't need
+    autocmd FileType plaintex call FiletypeSpecific('tex')
+    autocmd FileType tex call FiletypeSpecific('tex')
+    autocmd FileType haskell call FiletypeSpecific('haskell')
+    autocmd FileType cabal call FiletypeSpecific('cabal')
+    autocmd FileType cabalconfig call FiletypeSpecific('cabalconfig')
+    autocmd FileType cabalproject call FiletypeSpecific('cabalproject')
+augroup END
 
 " vimtex
 if &filetype ==# 'tex' || &filetype ==# 'plaintex'
