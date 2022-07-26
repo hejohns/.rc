@@ -18,9 +18,10 @@ strace
 perl-doc
 # latex
 texlive-latex-extra
-latexmk
-texlive-science
+texlive-luatex
 texlive-fonts-extra
+texlive-science
+latexmk
 # python
 python3-pip
 # schroot
