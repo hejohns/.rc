@@ -1,10 +1,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % standard header
-    \documentclass[12pt]{article}
-    \usepackage[margin=2cm]{geometry}
+    \documentclass[paper=A4,pagesize,DIV=AUTO,10.5pt]{scrartcl}
+    %\documentclass[12pt]{article}
+    %\usepackage[margin=2cm]{geometry}
     %\usepackage[paper=A4,pagesize,DIV=18]{typearea} % KOMA-script typearea
-    \usepackage{titlesec} % see below
-    \usepackage{xcolor} % \color \textcolor
     \usepackage{hyperref} % \href
     \usepackage[normalem]{ulem} % normalem retains \emph as italic
     % \uline \uuline \uwave \sout
@@ -19,14 +18,49 @@
     %\usepackage[doublespacing]{setspace}
     \usepackage{csquotes} % \blockquote
     \usepackage{xparse} % \NewDocumentCommand{\name}{O{#1 default}mO{#3 default}}{def}
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    \renewcommand{\rmdefault}{cmr}
-    \renewcommand{\sfdefault}{cmss}
-    \renewcommand{\ttdefault}{cmtt}
-    \renewcommand{\familydefault}{\rmdefault}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% font stuff
+    \usepackage{unicode-math} % \setmathfont
+    % sets text and math fonts
+    %\usepackage{mathpazo} % palatino derived PS fonts?
+    \usepackage{fontspec}
+    % palatino: used by MIT Press for A Logical Journey
+    % lots of free derivatives
+    %
+%    \setmainfont{Domitian} % a palatino derivative
+%    %\setmainfont{TeX Gyre Pagella} % a palatino derivative
+%    \setmonofont{TeX Gyre Cursor} % a courier derivative
+%    %\setmonofont{TeX Gyre Cursor} % a courier derivative
+%    \setmathfont{Asana Math} % a palatino derivative, for math
+%    %\setmathfont{TeX Gyre Pagella Math} % a palatino derivative, for math
+    %
+    % sabon: used by penguin classics
+    % using EB Garamond as a replacement
+    \setmainfont{EB Garamond}
+    \setmonofont{Tex Gyre Cursor}
+    \setmathfont{Garamond Math}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% title stuff
+    \usepackage{titling} % why is \maketitle so wack?
+    \setlength{\droptitle}{-2.3cm}
+    \renewcommand*{\maketitlehooka}{}
+    % NOTE: the linter will complain about mismatched begin/end
+    \pretitle{\begin{flushleft}\LARGE}
+    \posttitle{\par\end{flushleft}}
+    \renewcommand*{\maketitlehookb}{\vspace{-0.6cm}}
+    \preauthor{\begin{flushleft}\large\scshape\hphantom{M}}
+    \postauthor{\par\end{flushleft}}
+    \renewcommand*{\maketitlehookc}{}
+    \predate{\begin{flushleft}\large\scshape\hphantom{M}}
+    \postdate{\par\end{flushleft}}
+    \renewcommand*{\maketitlehookd}{\hrule\vspace{-0.0cm}}
+
+    \usepackage{titlesec} % see below
     \setlength{\titlewidth}{\textwidth}
 
-    \titlespacing{\section}{0pt}{0pt}{0pt}
+    % \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+    \titlespacing{\section}{0pt}{0pt}{6pt plus 2pt minus 2pt}
     \titlespacing{\subsection}{0pt}{0pt}{0pt}
     \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
     \titlespacing{\paragraph}{0pt}{0pt}{0pt}
@@ -34,14 +68,14 @@
     % \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
     \titleformat{\section}         % Customise the \section command
         [hang]
-        {\Large\scshape\raggedright} % Make the \section headers large (\Large),
+        {\vspace{4pt}\LARGE\raggedright} % Make the \section headers large (\Large),
                                    % small capitals (\scshape) and left aligned (\raggedright)
         {}{0em}                      % Can be used to give a prefix to all sections, like 'Section ...'
         {}                           % Can be used to insert code before the heading
         [\titlerule]                 % Inserts a horizontal line after the heading
     \titleformat{\subsection}
         [hang]
-        {\large\scshape\raggedright}
+        {\large\raggedright}
         {}{0em}
         {}
         []
@@ -54,8 +88,8 @@
 %\frenchspacing % when monospaced
 %\recalctypearea % if using typearea
 \begin{document}
-\title{}
-\author{}
+\title{Title}
+\author{me}
 \date{\today}
 \maketitle
 \section{}
