@@ -102,6 +102,13 @@ cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delvie
 call matchadd('Todo', '\<notes\?:\?\>\c')
 call matchadd('Todo', '\<todo:\?\>\c')
 
+" spell stuff cont
+" undercurl not available on term usually
+hi SpellBad term=standout cterm=undercurl ctermul=Red gui=undercurl guisp=Red
+hi SpellCap term=underline cterm=undercurl ctermul=Blue gui=undercurl guisp=Blue
+hi SpellRare term=underline cterm=undercurl ctermul=Magenta gui=undercurl guisp=Magenta
+hi SpellLocal term=underline cterm=undercurl ctermul=Cyan gui=undercurl guisp=Cyan
+
 " my perl stuff
 " neovim perl provider
 if has('nvim')
