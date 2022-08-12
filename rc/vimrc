@@ -31,6 +31,7 @@ set wrap
 " for LanguageClient-neovim
 set hidden
 set timeoutlen=500
+set laststatus=2
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
@@ -117,16 +118,18 @@ call matchadd('Todo', '\<todo:\?\>\c')
 " spell stuff cont
 " undercurl not available on term usually
 " apparantly nvim doesn't understand term or ctermul
-if !has('nvim')
-    hi SpellBad term=standout cterm=undercurl ctermul=Red
-    hi SpellCap term=underline cterm=undercurl ctermul=Blue
-    hi SpellRare term=underline cterm=undercurl ctermul=Magenta
-    hi SpellLocal term=underline cterm=undercurl ctermul=Cyan
-endif
-hi SpellBad gui=undercurl guisp=Red
-hi SpellCap gui=undercurl guisp=Blue
-hi SpellRare gui=undercurl guisp=Magenta
-hi SpellLocal gui=undercurl guisp=Cyan
+function! MySetSpellColors()
+    if !has('nvim')
+        hi SpellBad term=standout cterm=undercurl ctermul=Red
+        hi SpellCap term=underline cterm=undercurl ctermul=Blue
+        hi SpellRare term=underline cterm=undercurl ctermul=Magenta
+        hi SpellLocal term=underline cterm=undercurl ctermul=Cyan
+    endif
+    hi SpellBad gui=undercurl guisp=Red
+    hi SpellCap gui=undercurl guisp=Blue
+    hi SpellRare gui=undercurl guisp=Magenta
+    hi SpellLocal gui=undercurl guisp=Cyan
+endfunction
 
 " my perl stuff
 " neovim perl provider
