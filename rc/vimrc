@@ -19,6 +19,8 @@ set foldmethod=indent
 set foldcolumn=0
 set foldlevel=99
 set foldclose=all
+set relativenumber
+set number
 " help file-searching
 set tags=./tags;
 set ruler
@@ -36,8 +38,9 @@ inoremap <tab> <C-n>
 inoremap <S-tab> <C-p>
 inoremap df <BS>
 inoremap fd <DEL>
-noremap DK kdd
-noremap DJ jddk
+"noremap DK kdd
+"noremap DJ jddk
+" ; is my main n leader
 noremap ;; :update<CR>
 " recover normal ; behavior
 noremap ;f ;
@@ -49,14 +52,12 @@ noremap ;: :OverCommandLine<CR>
 " spell stuff
 noremap ;son :setlocal spell spelllang=en<CR>
 noremap ;soff :setlocal spell spelllang=<CR>
-noremap ;sf a<C-X><C-s>
+noremap ;sf ea<C-X><C-s>
 nnoremap Q gq
 vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
 inoremap <C-E> <ESC><C-E>a
-set relativenumber
 noremap <C-\><C-\> :set invrelativenumber<CR>
-set number
 noremap <C-\> :set invnumber<CR>
 " vimdiff mappings (for git mergetool)
 " https://vi.stackexchange.com/questions/2705/create-mappings-that-only-apply-to-diff-mode
