@@ -53,6 +53,15 @@ noremap ;: :OverCommandLine<CR>
 noremap ;son :setlocal spell spelllang=en<CR>
 noremap ;soff :setlocal spell spelllang=<CR>
 noremap ;sf ea<C-X><C-s>
+" https://stackoverflow.com/a/48721323
+" + fix for single character word handling
+" def test a abc okay words
+if has('textobjects')
+    noremap ;sw yiwwviwp?\s<CR>:let @/ = ''<CR>bviwp
+    noremap ;sW yiWWviWp?\s<CR>:let @/ = ''<CR>bviWp
+else
+    silent !echo '[Warning] Need +textobjects to use ;sw[ap]'
+endif
 nnoremap Q gq
 vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
