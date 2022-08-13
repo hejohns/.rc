@@ -209,6 +209,7 @@ if has('perl')
         'ocaml': ['ocamllsp'],
         'perl': ['pls'],
         'tex': ['texlab'],
+        'nix': ['rnix-lsp'],
         }
         __EOF
         ;
