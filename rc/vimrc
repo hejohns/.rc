@@ -309,13 +309,13 @@ if has('perl')
 
     my %no_LS_opt2ft = (
         'setlocal shiftwidth=2' =>
-        ['haskell, cabal, cabalconfig, cabalproject'],
+        ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
     );
     my %LS_opt2ft = (
         'nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>' =>
-        ['haskell', 'tex'],
+        ['haskell', 'tex', 'nix'],
         'nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>' =>
-        ['haskell', 'tex'],
+        ['haskell', 'tex', 'nix'],
     );
 
     sub filetype_options{
