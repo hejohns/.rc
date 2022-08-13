@@ -51,7 +51,7 @@ noremap ;n :bNext<CR>
 " https://stackoverflow.com/a/2084221
 noremap ;: :OverCommandLine<CR>
 " spell stuff
-noremap ;son :setlocal spell spelllang=en<CR>
+noremap ;son :setlocal spell spelllang=en<CR>:call MySetSpellColors()<CR>
 noremap ;soff :setlocal spell spelllang=<CR>
 noremap ;sf ea<C-X><C-s>
 " https://stackoverflow.com/a/48721323
@@ -120,10 +120,10 @@ call matchadd('Todo', '\<todo:\?\>\c')
 " apparantly nvim doesn't understand term or ctermul
 function! MySetSpellColors()
     if !has('nvim')
-        hi SpellBad term=standout cterm=undercurl ctermul=Red
-        hi SpellCap term=underline cterm=undercurl ctermul=Blue
-        hi SpellRare term=underline cterm=undercurl ctermul=Magenta
-        hi SpellLocal term=underline cterm=undercurl ctermul=Cyan
+        hi SpellBad term=standout cterm=underline ctermul=Red
+        hi SpellCap term=underline cterm=underline ctermul=Blue
+        hi SpellRare term=underline cterm=underline ctermul=Magenta
+        hi SpellLocal term=underline cterm=underline ctermul=Cyan
     endif
     hi SpellBad gui=undercurl guisp=Red
     hi SpellCap gui=undercurl guisp=Blue
