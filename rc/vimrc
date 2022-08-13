@@ -502,4 +502,7 @@ function! MySignifyDiffToggle()
     endif
     let g:mySignifyDiffToggle = !g:mySignifyDiffToggle
 endfunction
-nnoremap gp :call MySignifyDiffToggle()<CR>
+" TODO: use a better leader
+nnoremap sigp :call MySignifyDiffToggle()<CR>
+nnoremap sigt :call SignifyToggle<CR>
+nnoremap sigu :call SignifyHunkUndo<CR>
