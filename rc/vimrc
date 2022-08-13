@@ -504,5 +504,5 @@ function! MySignifyDiffToggle()
 endfunction
 " TODO: use a better leader
 nnoremap sigp :call MySignifyDiffToggle()<CR>
-nnoremap sigt :call SignifyToggle<CR>
-nnoremap sigu :call SignifyHunkUndo<CR>
+nnoremap sigt :SignifyToggle<CR>
+nnoremap sigu :SignifyHunkUndo<CR>
