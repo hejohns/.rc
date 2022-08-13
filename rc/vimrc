@@ -53,7 +53,7 @@ noremap ;: :OverCommandLine<CR>
 " spell stuff
 noremap ;son :setlocal spell spelllang=en<CR>:call MySetSpellColors()<CR>
 noremap ;soff :setlocal spell spelllang=<CR>
-noremap ;sf ea<C-X><C-s>
+noremap ;sf /\s<CR>:let @/ = ''<CR>i<C-X><C-s>
 " https://stackoverflow.com/a/48721323
 " + fix for single character word handling
 " def test a abc okay words
@@ -322,6 +322,9 @@ if has('perl')
         my $success;
         ($success, my $filetype) = SEval('g:myPerlArg');
         $filetype //= '';
+        if($filetype eq 'plaintex'){
+            VIM::DoCommand("silent !echo '[Error] &ft plaintex should be masqueraded as tex'");
+        }
         foreach my $k (keys %no_LS_opt2ft){
             if(grep {/$filetype/} @{$no_LS_opt2ft{$k}}){
                 VIM::DoCommand($k);
@@ -393,13 +396,7 @@ endif
 augroup filetype_options
     autocmd!
     autocmd FileType plaintex setlocal filetype=tex
-    " TODO: probably don't need
-    autocmd FileType plaintex call FiletypeSpecific('tex')
-    autocmd FileType tex call FiletypeSpecific('tex')
-    autocmd FileType haskell call FiletypeSpecific('haskell')
-    autocmd FileType cabal call FiletypeSpecific('cabal')
-    autocmd FileType cabalconfig call FiletypeSpecific('cabalconfig')
-    autocmd FileType cabalproject call FiletypeSpecific('cabalproject')
+    autocmd FileType * execute 'call FiletypeSpecific("' . &filetype . '")'
 augroup END
 
 " vimtex
