@@ -255,6 +255,7 @@ Plug 'tpope/vim-surround'
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " requires >= 8.0.902
 Plug 'mhinz/vim-signify'
+Plug 'LnL7/vim-nix', {'for': 'nix'}
 call plug#end()
 
 " clang_complete
@@ -334,6 +335,8 @@ if has('perl')
         RETRY:
         ($success, my $ls_running) = SEval('g:myLSRunning');
         if($ls_running){
+            # TODO: check LS executable is present or raise message
+            # and maybe autoinstall? (if we nix it enough)
             foreach my $k (keys %LS_opt2ft){
                 if(grep {/$filetype/} @{$LS_opt2ft{$k}}){
                     VIM::DoCommand($k);
