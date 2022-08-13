@@ -30,7 +30,7 @@ set showcmd
 set wrap
 " for LanguageClient-neovim
 set hidden
-set timeoutlen=500
+set timeoutlen=650
 set laststatus=2
 inoremap kj <ESC>
 inoremap jk <C-w>
@@ -56,7 +56,6 @@ noremap ;soff :setlocal spell spelllang=<CR>
 noremap ;sf h/\s\\|\n<CR>:let @/ = ''<CR>i<C-X><C-s>
 " https://stackoverflow.com/a/48721323
 " + fix for single character word handling
-" def test a abc okay words
 if has('textobjects')
     noremap ;sw yiwwviwp?\s<CR>:let @/ = ''<CR>bviwp
     noremap ;sW yiWWviWp?\s<CR>:let @/ = ''<CR>bviWp
@@ -67,8 +66,9 @@ nnoremap Q gq
 vnoremap Q gq
 inoremap <C-Y> <ESC><C-Y>a
 inoremap <C-E> <ESC><C-E>a
-noremap <C-\><C-\> :set invrelativenumber<CR>
-noremap <C-\> :set invnumber<CR>
+" <C-\> is my leader for infrequent keys
+noremap <C-\>rn :set invrelativenumber<CR>
+noremap <C-\>n :set invnumber<CR>
 " vimdiff mappings (for git mergetool)
 " https://vi.stackexchange.com/questions/2705/create-mappings-that-only-apply-to-diff-mode
 " even though &diff is always set for some reason...
@@ -451,6 +451,8 @@ function DisableL2U()
     call LaTeXtoUnicode#Disable()
 endfunction
 command L2UDisable call DisableL2U()
+nnoremap <C-\>lon :call EnableL2U()<CR>
+nnoremap <C-\>loff :call DisableL2U()<CR>
 
 " fugitive
 command GD vertical Gdiff
@@ -506,7 +508,6 @@ function! MySignifyDiffToggle()
     endif
     let g:mySignifyDiffToggle = !g:mySignifyDiffToggle
 endfunction
-" TODO: use a better leader
-nnoremap sigp :call MySignifyDiffToggle()<CR>
-nnoremap sigt :SignifyToggle<CR>
-nnoremap sigu :SignifyHunkUndo<CR>
+nnoremap ;sigp :call MySignifyDiffToggle()<CR>
+nnoremap ;sigt :SignifyToggle<CR>
+nnoremap ;sigu :SignifyHunkUndo<CR>
