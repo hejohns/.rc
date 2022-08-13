@@ -310,7 +310,7 @@ if has('perl')
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my %no_LS_opt2ft = (
-        'setlocal shiftwidth=2' =>
+        'autocmd BufEnter * setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
     );
     my %LS_opt2ft = (
