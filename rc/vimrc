@@ -441,10 +441,11 @@ augroup END
 " vimtex
 if &filetype ==# 'tex' || &filetype ==# 'plaintex'
     if executable('latexmk')
-        if executable('evince')
-            let g:vimtex_view_general_viewer = 'evince'
-        elseif executable('okular')
+        if executable('okular')
             let g:vimtex_view_general_viewer = 'okular'
+            let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+        elseif executable('evince')
+            let g:vimtex_view_general_viewer = 'evince'
         elseif executable('atril')
             let g:vimtex_view_general_viewer = 'atril'
         else
@@ -464,6 +465,15 @@ if &filetype ==# 'tex' || &filetype ==# 'plaintex'
             \}
         else
             silent !echo '[Warning] please install lualatex'
+        endif
+        if !has('nvim')
+            if has('clientserver')
+                if empty(v:servername) && exists('*remote_startserver')
+                    call remote_startserver('VIM')
+                endif
+            else
+                silent !echo '[Warning] need +clientserver for vimtex on (not n)vim'
+            endif
         endif
     else
         silent !echo '[Warning] vimtex requires latexmk.'
