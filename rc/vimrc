@@ -469,7 +469,7 @@ if &filetype ==# 'tex' || &filetype ==# 'plaintex'
         if !has('nvim')
             if has('clientserver')
                 if empty(v:servername) && exists('*remote_startserver')
-                    call remote_startserver('VIM')
+                    silent! call remote_startserver('VIM')
                 endif
             else
                 silent !echo '[Warning] need +clientserver for vimtex on (not n)vim'
