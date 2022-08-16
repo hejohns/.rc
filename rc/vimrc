@@ -256,6 +256,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " requires >= 8.0.902
 Plug 'mhinz/vim-signify'
 Plug 'LnL7/vim-nix', {'for': 'nix'}
+Plug 'mbbill/undotree'
 call plug#end()
 
 " clang_complete
@@ -511,3 +512,6 @@ endfunction
 nnoremap ;sigp :call MySignifyDiffToggle()<CR>
 nnoremap ;sigt :SignifyToggle<CR>
 nnoremap ;sigu :SignifyHunkUndo<CR>
+
+" undotree
+nnoremap ;u :UndotreeToggle<CR>
