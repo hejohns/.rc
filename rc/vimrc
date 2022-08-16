@@ -111,6 +111,40 @@ command Delview call MyDeleteView() | set foldmethod=indent | set foldcolumn=0 |
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
+" undo-persistence
+" modified from undotree 's README
+" and :help undo-persistence
+if has('persistent_undo')
+    let g:myUndodir = expand('~/.vim/undodir')
+    " TODO: could be more robust
+    " eg if ~/.vim/undodir exists but is a regular file
+    " some of the perl code below handles this somehow
+    if !isdirectory(g:myUndodir)
+        if !call mkdir(g:myUndodir, 'p', 0700)
+            silent !echo '[Error] undo-persistence: see TODO s'
+        endif
+    endif
+    let &undodir=g:myUndodir
+    " But undodir doesn't actually work
+    set undodir=~/.vim/undodir
+    func ReadUndo()
+        " :(
+        let undofile__ = g:myUndodir .. '/' .. expand('%:p:gs?/?%?.un~')
+        let undofile_ = g:myUndodir .. '/' .. expand('%:p:gs?/?\\%?.un~')
+        if filereadable(undofile__)
+            silent execute "rundo" undofile_
+        endif
+    endfunc
+    func WriteUndo()
+        let undofile_ = g:myUndodir .. '/' .. expand('%:p:gs?/?\\%?.un~')
+        execute 'wundo' undofile_
+    endfunc
+    autocmd BufReadPost * call ReadUndo()
+    autocmd BufWritePost * call WriteUndo()
+else
+    silent !echo '[Warning] Need +persistent_undo'
+endif
+
 " more highlighting matches
 call matchadd('Todo', '\<notes\?:\?\>\c')
 call matchadd('Todo', '\<todo:\?\>\c')
