@@ -120,7 +120,7 @@ if has('persistent_undo')
     " eg if ~/.vim/undodir exists but is a regular file
     " some of the perl code below handles this somehow
     if !isdirectory(g:myUndodir)
-        if !call mkdir(g:myUndodir, 'p', 0700)
+        if !mkdir(g:myUndodir, 'p', 0700)
             silent !echo '[Error] undo-persistence: see TODO s'
         endif
     endif
