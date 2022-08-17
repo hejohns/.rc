@@ -41,8 +41,10 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-(load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+;; font stuff
+(add-to-list 'default-frame-alist '(font . "Tex Gyre Cursor-20"))
+(set-face-attribute 'default t :font "Tex Gyre Cursor-20")
+
 (ac-config-default)
 ;; auto-load agda-mode for .agda and .lagda.md
 (setq auto-mode-alist
@@ -50,3 +52,11 @@
     '(("\\.agda\\'" . agda2-mode)
       ("\\.lagda.md\\'" . agda2-mode))
      auto-mode-alist))
+(load-file (let ((coding-system-for-read 'utf-8))
+                (shell-command-to-string "agda-mode locate")))
+;; agda unicode input hack?
+(add-hook 'agda2-mode-hook
+ (lambda ()
+  (list-input-methods)
+  (set-input-method "Agda")
+  ))
