@@ -291,6 +291,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'mhinz/vim-signify'
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 Plug 'mbbill/undotree'
+Plug 'tpope/vim-dispatch', {'for': 'tex'} " NOTE: but we may want for more langs later
 call plug#end()
 
 " clang_complete
@@ -347,6 +348,10 @@ if has('perl')
     my %no_LS_opt2ft = (
         'autocmd BufEnter * setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
+        'autocmd BufWritePost * call MyDispatchOnBufWrite()' =>
+        ['tex'],
+        'nnoremap <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
+        ['tex'],
     );
     my %LS_opt2ft = (
         'nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>' =>
@@ -559,3 +564,24 @@ nnoremap ;sigu :SignifyHunkUndo<CR>
 
 " undotree
 nnoremap ;u :UndotreeToggle<CR>
+
+" vim-dispatch
+function MyDispatchOnBufWrite()
+    if &ft == 'tex'
+        if has('perl')
+            perl << EOF
+            use strict;
+            use warnings FATAL => 'all', NONFATAL => 'redefine';
+            if(-e 'Makefile' || -e 'makefile'){
+                my ($_success, $myDispatchToggle) = SEval('g:myDispatchToggle');
+                $myDispatchToggle //= 0;
+                if($myDispatchToggle){
+                    VIM::DoCommand(':Make');
+                }
+            }
+EOF
+        else
+            silent !echo '[Warning] Need +perl to :Make on BufWritePost'
+        endif
+    endif
+endfunc
