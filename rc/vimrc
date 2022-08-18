@@ -53,7 +53,9 @@ noremap ;: :OverCommandLine<CR>
 " spell stuff
 noremap ;son :setlocal spell spelllang=en<CR>:call MySetSpellColors()<CR>
 noremap ;soff :setlocal spell spelllang=<CR>
-noremap ;sf h/\s\\|\n<CR>:let @/ = ''<CR>i<C-X><C-s>
+noremap ;sf viw<ESC>a<C-X><C-s>
+" I'm dumb
+"noremap ;sf h/\s\\|\n<CR>:let @/ = ''<CR>i<C-X><C-s>
 " https://stackoverflow.com/a/48721323
 " + fix for single character word handling
 if has('textobjects')
