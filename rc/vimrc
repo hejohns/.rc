@@ -32,6 +32,13 @@ set wrap
 set hidden
 set timeoutlen=650
 set laststatus=2
+set wildmode=longest:full,full
+if has('wildmenu')
+    set wildmenu
+endif
+if has('wildignore')
+    set wildoptions=pum
+endif
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
