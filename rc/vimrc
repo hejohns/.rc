@@ -30,7 +30,7 @@ set showcmd
 set wrap
 " for LanguageClient-neovim
 set hidden
-set timeoutlen=650
+set timeoutlen=500
 set laststatus=2
 set wildmode=longest:full,full
 if has('wildmenu')
