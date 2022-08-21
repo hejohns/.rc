@@ -21,6 +21,11 @@ sub filter_out_non_rcs{
             # also kill script name
             next;
         }
+        elsif(-d $file_to_consider){
+            # and skip directories
+            # TODO: will handle this sometime...
+            next;
+        }
         else{
             push (@rcs_only, $file_to_consider);
         }
