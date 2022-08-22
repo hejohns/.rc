@@ -348,7 +348,12 @@ endif
 if has('perl')
     function FiletypeSpecific(ft)
         let g:myPerlArg = a:ft
-        perl filetype_options
+        if !(exists('g:myDisableFTSpecific') && g:myDisableFTSpecific == 1)
+            perl filetype_options
+        endif
+    endfunction
+    function MyDisableFTSpecific()
+        let g:myDisableFTSpecific = 1
     endfunction
     perl << EOF
     use strict;
