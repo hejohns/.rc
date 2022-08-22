@@ -22,6 +22,7 @@ texlive-luatex
 texlive-fonts-extra
 texlive-science
 latexmk
+biber
 # python
 python3-pip
 # schroot
