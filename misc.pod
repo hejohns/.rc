@@ -1,0 +1,39 @@
+#!/usr/bin/env perl
+
+exec "bash", "-c", "cat $0 | pod2man - | man --local-file -";
+
+=pod
+
+=encoding utf8
+
+=head1 xfce4 
+
+=head2 audio shortcuts
+
+L<https://unix.stackexchange.com/a/354144>
+
+=head1 gnome
+
+=head2 gdm3 autosuspend
+
+  # Automatic suspend
+  # =================
+  [org/gnome/settings-daemon/plugins/power]
+  # - Time inactive in seconds before suspending with AC power
+  #   1200=20 minutes, 0=never
+  # sleep-inactive-ac-timeout=1200
+  # - What to do after sleep-inactive-ac-timeout
+  #   'blank', 'suspend', 'shutdown', 'hibernate', 'interactive' or 'nothing'
+  # sleep-inactive-ac-type='suspend'
+  # - As above but when on battery
+  # sleep-inactive-battery-timeout=1200
+  # sleep-inactive-battery-type='suspend'
+
+append to /etc/gdm3/greeter.dconf-defaults
+
+  sleep-inactive-ac-timeout=0
+  sleep-inactive-ac-type='nothing'
+  sleep-inbatterytive-battery-timeout=0
+  sleep-inbatterytive-battery-type='nothing'
+
+=cut
