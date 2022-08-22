@@ -1,9 +1,20 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % standard header
-    \documentclass[paper=A4,pagesize,DIV=calc,fontsize=14pt]{scrartcl}
-    %\documentclass[12pt]{article}
-    %\usepackage[margin=2cm]{geometry}
-    %\usepackage[paper=A4,pagesize,DIV=18]{typearea} % KOMA-script typearea
+    % a saner way to configure the stub
+    \def\documentCaseKOMA{K}
+    \def\documentCaseStandard{V}
+    % ^^ cases
+    \let\documentCase\documentCaseKOMA
+    \ifx\documentCase\documentCaseKOMA
+        \documentclass[paper=A4,pagesize,DIV=calc,fontsize=14pt]{scrartcl}
+    \else\ifx\documentCase\documentCaseStandard
+        \documentclass[12pt]{article}
+        \usepackage[margin=2cm]{geometry}
+        \usepackage[paper=A4,pagesize,DIV=calc]{typearea} % KOMA-script typearea
+    \else
+        \undefined
+    \fi
+    \fi
     \usepackage{hyperref} % \href
     \usepackage[normalem]{ulem} % normalem retains \emph as italic
     % \uline \uuline \uwave \sout
@@ -42,43 +53,67 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title stuff
-    \usepackage{titling} % why is \maketitle so wack?
-    \setlength{\droptitle}{-2.3cm}
-    \renewcommand*{\maketitlehooka}{}
-    % NOTE: the linter will complain about mismatched begin/end
-    \pretitle{\begin{flushleft}\LARGE}
-    \posttitle{\par\end{flushleft}}
-    \renewcommand*{\maketitlehookb}{\vspace{-0.6cm}}
-    \preauthor{\begin{flushleft}\large\scshape\hphantom{M}}
-    \postauthor{\par\end{flushleft}}
-    \renewcommand*{\maketitlehookc}{}
-    \predate{\begin{flushleft}\large\scshape\hphantom{M}}
-    \postdate{\par\end{flushleft}}
-    \renewcommand*{\maketitlehookd}{\hrule\vspace{-0.0cm}}
+    \ifx\documentCase\documentCaseKOMA
+        % https://tex.stackexchange.com/a/473654
+        \setcounter{secnumdepth}{\partnumdepth}
+        \addtokomafont{title}{\normalfont\raggedright}
+        \KOMAoptions{titlepage=false} % in-page titlepage
+        \addtokomafont{author}{\normalfont\large\raggedright}
+        \addtokomafont{date}{\normalfont\large\raggedright}
+        \RedeclareSectionCommand[font=\normalfont\Large]{section}
+        \RedeclareSectionCommand[font=\normalfont\large]{subsection}
+        % TODO: idk what what the code below is doing
+        % https://tex.stackexchange.com/a/267824
+        \makeatletter
+        \renewcommand{\sectionlinesformat}[4]{%
+        \Ifstr{#1}{section}{% ifstr -> Ifstr
+            \parbox[t]{\linewidth}{%
+              \raggedsection\@hangfrom{\hskip #2#3}{#4}\par%
+              \kern-.75\ht\strutbox\rule{\linewidth}{.8pt}%
+            }%
+          }{%
+            \@hangfrom{\hskip #2#3}{#4}}% this is the default \sectionlinesformat
+        }
+    \else\ifx\documentCase\documentCaseStandard
+        \usepackage{titling} % why is \maketitle so wack?
+        \setlength{\droptitle}{-2.3cm}
+        \renewcommand*{\maketitlehooka}{}
+        % NOTE: the linter will complain about mismatched begin/end
+        \pretitle{\begin{flushleft}\LARGE}
+        \posttitle{\par\end{flushleft}}
+        \renewcommand*{\maketitlehookb}{\vspace{-0.6cm}}
+        \preauthor{\begin{flushleft}\large\scshape\hphantom{M}}
+        \postauthor{\par\end{flushleft}}
+        \renewcommand*{\maketitlehookc}{}
+        \predate{\begin{flushleft}\large\scshape\hphantom{M}}
+        \postdate{\par\end{flushleft}}
+        \renewcommand*{\maketitlehookd}{\hrule\vspace{-0.0cm}}
 
-    \usepackage{titlesec} % see below
-    \setlength{\titlewidth}{\textwidth}
+        \usepackage{titlesec} % see below
+        \setlength{\titlewidth}{\textwidth}
 
-    % \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
-    \titlespacing{\section}{0pt}{0pt}{6pt plus 2pt minus 2pt}
-    \titlespacing{\subsection}{0pt}{0pt}{0pt}
-    \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
-    \titlespacing{\paragraph}{0pt}{0pt}{0pt}
-    % https://www.overleaf.com/learn/latex/How_to_write_a_LaTeX_class_file_and_design_your_own_CV_(Part_1)
-    % \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
-    \titleformat{\section}         % Customise the \section command
-        [hang]
-        {\vspace{4pt}\Large\raggedright} % Make the \section headers large (\Large),
-                                   % small capitals (\scshape) and left aligned (\raggedright)
-        {}{0em}                      % Can be used to give a prefix to all sections, like 'Section ...'
-        {}                           % Can be used to insert code before the heading
-        [\titlerule]                 % Inserts a horizontal line after the heading
-    \titleformat{\subsection}
-        [hang]
-        {\large\raggedright}
-        {}{0em}
-        {}
-        []
+        % \titlespacing{command}{left spacing}{before spacing}{after spacing}[right]
+        \titlespacing{\section}{0pt}{0pt}{6pt plus 2pt minus 2pt}
+        \titlespacing{\subsection}{0pt}{0pt}{0pt}
+        \titlespacing{\subsubsection}{0pt}{0pt}{0pt}
+        \titlespacing{\paragraph}{0pt}{0pt}{0pt}
+        % https://www.overleaf.com/learn/latex/How_to_write_a_LaTeX_class_file_and_design_your_own_CV_(Part_1)
+        % \titleformat{command}[shape]{format}{label}{sep}{before-code}[after-code]
+        \titleformat{\section}         % Customise the \section command
+            [hang]
+            {\vspace{4pt}\Large\raggedright} % Make the \section headers large (\Large),
+                                       % small capitals (\scshape) and left aligned (\raggedright)
+            {}{0em}                      % Can be used to give a prefix to all sections, like 'Section ...'
+            {}                           % Can be used to insert code before the heading
+            [\titlerule]                 % Inserts a horizontal line after the heading
+        \titleformat{\subsection}
+            [hang]
+            {\large\raggedright}
+            {}{0em}
+            {}
+            []
+    \fi
+    \fi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % packages
     \usepackage{hejohns-colors}
@@ -88,9 +123,37 @@
 %\frenchspacing % when monospaced
 %\recalctypearea % if using typearea
 \begin{document}
-\title{Title}
-\author{me}
-\date{\today}
-\maketitle
-\section{}
+\ifx\documentCase\documentCaseKOMA
+% TODO: hack to get in-title titlepage
+% https://tex.stackexchange.com/a/103233
+\hphantom{.} \\
+\vspace{-1.6\baselineskip} \\
+\begin{minipage}{\textwidth}
+    \begin{titlepage}
+        \begin{flushleft}
+            \LARGE Title
+        \end{flushleft}
+        \begin{flushleft}
+            \large\scshape\hphantom{M}me
+        \end{flushleft}
+        \begin{flushleft}
+            \large\scshape\hphantom{M}\today
+        \end{flushleft}
+    \end{titlepage}
+\end{minipage}
+\vphantom{.}
+\hrule
+\vspace{\baselineskip}
+\else\ifx\documentCase\documentCaseStandard
+    \title{Title}
+    \author{me}
+    \date{\today}
+    \maketitle
+\else
+    \undefined
+\fi
+\fi
+content immediately after title
+\section{Section Name}
+section contents
 \end{document}
