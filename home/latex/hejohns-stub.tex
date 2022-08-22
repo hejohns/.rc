@@ -53,16 +53,19 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % title stuff
+    \usepackage{titling} % why is \maketitle so wack?
+
     \ifx\documentCase\documentCaseKOMA
         % https://tex.stackexchange.com/a/473654
-        \setcounter{secnumdepth}{\partnumdepth}
-        \addtokomafont{title}{\normalfont\raggedright}
-        \KOMAoptions{titlepage=false} % in-page titlepage
+        \setcounter{secnumdepth}{\partnumdepth} % do not number sections
+        %\addtokomafont{title}{\normalfont\raggedright}
+        %\KOMAoptions{titlepage=false} % in-page titlepage
         \addtokomafont{author}{\normalfont\large\raggedright}
         \addtokomafont{date}{\normalfont\large\raggedright}
+        % titlesec emulation (see Standard below)
         \RedeclareSectionCommand[font=\normalfont\Large]{section}
         \RedeclareSectionCommand[font=\normalfont\large]{subsection}
-        % TODO: idk what what the code below is doing
+        % TODO: idk what what the code below is doing, but it's for the hrule
         % https://tex.stackexchange.com/a/267824
         \makeatletter
         \renewcommand{\sectionlinesformat}[4]{%
@@ -74,8 +77,34 @@
           }{%
             \@hangfrom{\hskip #2#3}{#4}}% this is the default \sectionlinesformat
         }
+
+        % this is a huge hack to get KOMA title to look like standard \maketitle
+        \renewcommand{\maketitle}{%
+            \ifx\documentCase\documentCaseKOMA
+            % TODO: hack to get in-title titlepage
+            % https://tex.stackexchange.com/a/103233
+            \hphantom{.} \\
+            \vspace{-1.6\baselineskip} \\
+            \begin{minipage}{\textwidth}
+                \begin{titlepage}
+                    \begin{flushleft}
+                        \LARGE\thetitle
+                    \end{flushleft}
+                    \begin{flushleft}
+                        \large\scshape\hphantom{M}\theauthor
+                    \end{flushleft}
+                    \begin{flushleft}
+                        \large\scshape\hphantom{M}\thedate
+                    \end{flushleft}
+                \end{titlepage}
+            \end{minipage}
+            \vphantom{.}
+            \hrule
+            \vspace{\baselineskip}
+            \fi%
+        }
     \else\ifx\documentCase\documentCaseStandard
-        \usepackage{titling} % why is \maketitle so wack?
+        % for titling
         \setlength{\droptitle}{-2.3cm}
         \renewcommand*{\maketitlehooka}{}
         % NOTE: the linter will complain about mismatched begin/end
@@ -123,36 +152,10 @@
 %\frenchspacing % when monospaced
 %\recalctypearea % if using typearea
 \begin{document}
-\ifx\documentCase\documentCaseKOMA
-% TODO: hack to get in-title titlepage
-% https://tex.stackexchange.com/a/103233
-\hphantom{.} \\
-\vspace{-1.6\baselineskip} \\
-\begin{minipage}{\textwidth}
-    \begin{titlepage}
-        \begin{flushleft}
-            \LARGE Title
-        \end{flushleft}
-        \begin{flushleft}
-            \large\scshape\hphantom{M}me
-        \end{flushleft}
-        \begin{flushleft}
-            \large\scshape\hphantom{M}\today
-        \end{flushleft}
-    \end{titlepage}
-\end{minipage}
-\vphantom{.}
-\hrule
-\vspace{\baselineskip}
-\else\ifx\documentCase\documentCaseStandard
-    \title{Title}
-    \author{me}
-    \date{\today}
-    \maketitle
-\else
-    \undefined
-\fi
-\fi
+\title{Title}
+\author{me}
+\date{\today}
+\maketitle
 content immediately after title
 \section{Section Name}
 section contents
