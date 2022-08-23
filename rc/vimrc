@@ -542,6 +542,8 @@ function MyVimtexOptions()
                 \}
     setlocal conceallevel=2
     setlocal concealcursor=
+    " tex-conceal
+    let g:tex_conceal='abdmgs'
     endif
 endfunction
 
