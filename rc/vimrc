@@ -383,6 +383,8 @@ if has('perl')
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
         ['tex'],
+        'call MyVimtexOptions()' =>
+        ['tex'],
     );
     my ($success_, $lsLangs) = AEval('g:myLSLangs');
     my @lsLangs = split(' ', $lsLangs);
@@ -479,46 +481,51 @@ augroup filetype_options
 augroup END
 
 " vimtex
-if &filetype ==# 'tex' || &filetype ==# 'plaintex'
-    if executable('latexmk')
-        if executable('okular')
-            let g:vimtex_view_general_viewer = 'okular'
-            let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
-        elseif executable('evince')
-            let g:vimtex_view_general_viewer = 'evince'
-        elseif executable('atril')
-            let g:vimtex_view_general_viewer = 'atril'
-        else
-            silent !echo '[Warning] no suitable pdf viewer found-- prepare for havoc'
-        endif
-        if executable('lualatex')
-        " _ value modified
-        let g:vimtex_compiler_latexmk_engines = {
-            \ '_'                : '-pdflua',
-            \ 'pdflatex'         : '-pdf',
-            \ 'dvipdfex'         : '-pdfdvi',
-            \ 'lualatex'         : '-lualatex',
-            \ 'xelatex'          : '-xelatex',
-            \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
-            \ 'context (luatex)' : '-pdf -pdflatex=context',
-            \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
-            \}
-        else
-            silent !echo '[Warning] please install lualatex'
-        endif
-        if !has('nvim')
-            if has('clientserver')
-                if empty(v:servername) && exists('*remote_startserver')
-                    silent! call remote_startserver('VIM')
-                endif
+function MyVimtexOptions()
+    if &filetype ==# 'tex' || &filetype ==# 'plaintex'
+        if executable('latexmk')
+            if executable('okular')
+                let g:vimtex_view_general_viewer = 'okular'
+                let g:vimtex_view_general_options = '--unique file:@pdf\#src:@line@tex'
+            elseif executable('evince')
+                let g:vimtex_view_general_viewer = 'evince'
+            elseif executable('atril')
+                let g:vimtex_view_general_viewer = 'atril'
             else
-                silent !echo '[Warning] need +clientserver for vimtex on (not n)vim'
+                silent !echo '[Warning] no suitable pdf viewer found-- prepare for havoc'
             endif
+            if executable('lualatex')
+            " _ value modified
+            let g:vimtex_compiler_latexmk_engines = {
+                \ '_'                : '-pdflua',
+                \ 'pdflatex'         : '-pdf',
+                \ 'dvipdfex'         : '-pdfdvi',
+                \ 'lualatex'         : '-lualatex',
+                \ 'xelatex'          : '-xelatex',
+                \ 'context (pdftex)' : '-pdf -pdflatex=texexec',
+                \ 'context (luatex)' : '-pdf -pdflatex=context',
+                \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
+                \}
+            else
+                silent !echo '[Warning] please install lualatex'
+            endif
+            if !has('nvim')
+                if has('clientserver')
+                    if empty(v:servername) && exists('*remote_startserver')
+                        silent! call remote_startserver('VIM')
+                    endif
+                else
+                    silent !echo '[Warning] need +clientserver for vimtex on (not n)vim'
+                endif
+            endif
+        else
+            silent !echo '[Warning] vimtex requires latexmk.'
         endif
-    else
-        silent !echo '[Warning] vimtex requires latexmk.'
+    let g:vimtex_syntax_conceal = 1
+    set conceallevel=2
+    set concealcursor=''
     endif
-endif
+endfunction
 
 " julia latex2unicode
 " [let g:latex_to_unicode_tab = "off"] to disable julia tab completion
