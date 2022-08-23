@@ -41,8 +41,11 @@ if has('wildignore')
 endif
 " default spell on
 " (dumb but non autocmd doesn't work for some reason)
-autocmd BufWinEnter * setlocal spell spelllang=en
-autocmd BufWinEnter * call MySetSpellColors()
+autocmd BufNew * autocmd BufWinEnter <buffer=abuf> setlocal spell spelllang=en
+autocmd VimEnter * setlocal spell spelllang=en
+autocmd VimEnter * call MySetSpellColors()
+autocmd SourcePost * setlocal spell spelllang=en
+autocmd SourcePost * call MySetSpellColors()
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
