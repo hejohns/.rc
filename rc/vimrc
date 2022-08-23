@@ -68,6 +68,8 @@ noremap ;sf viw<ESC>a<C-X><C-s>
 if has('textobjects')
     noremap ;sw yiwwviwp?\s<CR>:let @/ = ''<CR>bviwp
     noremap ;sW yiWWviWp?\s<CR>:let @/ = ''<CR>bviWp
+    noremap ;s{ ya{%/{<CR>:let @/ = ''<CR>va{p%?}<CR>:let @/ = ''<CR>va{p
+    noremap ;s} ya}%/}<CR>:let @/ = ''<CR>va}p%?}<CR>:let @/ = ''<CR>va}p
 else
     silent !echo '[Warning] Need +textobjects to use ;sw[ap]'
 endif
