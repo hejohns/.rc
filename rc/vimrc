@@ -39,6 +39,10 @@ endif
 if has('wildignore')
     set wildoptions=pum
 endif
+" default spell on
+" (dumb but non autocmd doesn't work for some reason)
+autocmd CursorHold * setlocal spell spelllang=en
+autocmd CursorHold * call MySetSpellColors()
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
