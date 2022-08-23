@@ -522,8 +522,8 @@ function MyVimtexOptions()
             silent !echo '[Warning] vimtex requires latexmk.'
         endif
     let g:vimtex_syntax_conceal = 1
-    set conceallevel=2
-    set concealcursor=''
+    setlocal conceallevel=2
+    setlocal concealcursor=
     endif
 endfunction
 
