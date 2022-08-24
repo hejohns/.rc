@@ -315,7 +315,9 @@ Plug 'mhinz/vim-signify'
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch', {'for': 'tex'} " NOTE: but we may want for more langs later
-Plug 'vim-utils/vim-man' " replaces ``builtin'' :Man ?
+if !has('nvim')
+    Plug 'vim-utils/vim-man' " replaces ``builtin'' :Man ?
+endif
 call plug#end()
 
 " clang_complete
