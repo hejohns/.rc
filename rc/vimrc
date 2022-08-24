@@ -378,9 +378,9 @@ if has('perl')
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my %no_LS_opt2ft = (
-        'autocmd filetype_specific BufEnter <buffer> * setlocal shiftwidth=2' =>
+        'autocmd filetype_specific BufEnter <buffer> setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
-        'autocmd filetype_specific BufWritePost <buffer> * call MyDispatchOnBufWrite()' =>
+        'autocmd filetype_specific BufWritePost <buffer> call MyDispatchOnBufWrite()' =>
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
         ['tex'],
