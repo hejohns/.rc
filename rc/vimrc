@@ -42,12 +42,9 @@ endif
 " default spell on
 " (dumb but non autocmd doesn't work for some reason)
 augroup spell_default_on
-    autocmd! * <buffer>
-    autocmd BufNew * autocmd! BufWinEnter <buffer=abuf>
-    autocmd BufNew * autocmd BufWinEnter <buffer=abuf> setlocal spell spelllang=en
-    autocmd VimEnter * setlocal spell spelllang=en
-    autocmd VimEnter * call MySetSpellColors()
-    autocmd SourcePost * setlocal spell spelllang=en
+    autocmd!
+    autocmd BufNew * setlocal spell spelllang=en
+    " sourcing one of the syntax files screws up the hi colors
     autocmd SourcePost * call MySetSpellColors()
 augroup END
 inoremap kj <ESC>
@@ -487,7 +484,6 @@ endif
 augroup filetype_options
     autocmd!
     autocmd FileType plaintex setlocal filetype=tex
-    autocmd FileType * execute 'call FiletypeSpecific("' . &filetype . '")'
     autocmd BufEnter * execute 'call FiletypeSpecific("' . &filetype . '")'
 augroup END
 
