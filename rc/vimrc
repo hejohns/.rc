@@ -42,11 +42,13 @@ endif
 " default spell on
 " (dumb but non autocmd doesn't work for some reason)
 augroup spell_default_on
-    autocmd!
+    autocmd! * <buffer>
     autocmd BufNew * autocmd! BufWinEnter <buffer=abuf>
     autocmd BufNew * autocmd BufWinEnter <buffer=abuf> setlocal spell spelllang=en
-    autocmd VimEnter,SourcePost * setlocal spell spelllang=en
-    autocmd VimEnter,SourcePost * call MySetSpellColors()
+    autocmd VimEnter * setlocal spell spelllang=en
+    autocmd VimEnter * call MySetSpellColors()
+    autocmd SourcePost * setlocal spell spelllang=en
+    autocmd SourcePost * call MySetSpellColors()
 augroup END
 inoremap kj <ESC>
 inoremap jk <C-w>
@@ -245,6 +247,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
   silent !mkdir -p ~/.vim/autoload && wget -O ~/.vim/autoload/plug.vim
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   augroup vim_plug
+      autocmd!
       autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   augroup END
 endif
@@ -361,10 +364,10 @@ endif
 " (and any pip stuff)
 " (and any filetype specific options)
 if has('perl')
-    augroup filetype_specific
-        autocmd! * <buffer>
-    augroup END
     function FiletypeSpecific(ft)
+        augroup filetype_specific
+            autocmd! * <buffer>
+        augroup END
         let g:myPerlArg = a:ft
         if !(exists('g:myDisableFTSpecific') && g:myDisableFTSpecific == 1)
             perl filetype_options
@@ -378,15 +381,19 @@ if has('perl')
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
     my %no_LS_opt2ft = (
-        'autocmd filetype_specific BufEnter <buffer=abuf> * setlocal shiftwidth=2' =>
+        'autocmd filetype_specific BufEnter <buffer> * setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
-        'autocmd filetype_specific BufWritePost <buffer=abuf> * call MyDispatchOnBufWrite()' =>
+        'autocmd filetype_specific BufWritePost <buffer> * call MyDispatchOnBufWrite()' =>
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
         ['tex'],
         'nnoremap <buffer> ysc <Plug>(vimtex-cmd-create)' =>
         ['tex'],
         'call MyVimtexOptions()' =>
+        ['tex'],
+        # TODO: some ft autocmd (not mine) needs to fire late to get vimtex conceal to work correctly
+        # this hack ``just works''
+        'setlocal filetype=tex' =>
         ['tex'],
     );
     my ($success_, $lsLangs) = AEval('g:myLSLangs');
@@ -481,6 +488,7 @@ augroup filetype_options
     autocmd!
     autocmd FileType plaintex setlocal filetype=tex
     autocmd FileType * execute 'call FiletypeSpecific("' . &filetype . '")'
+    autocmd BufEnter * execute 'call FiletypeSpecific("' . &filetype . '")'
 augroup END
 
 " vimtex
