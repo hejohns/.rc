@@ -384,6 +384,8 @@ if has('perl')
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
         ['tex'],
+        'nnoremap <buffer> ysc <Plug>(vimtex-cmd-create)' =>
+        ['tex'],
         'call MyVimtexOptions()' =>
         ['tex'],
     );
