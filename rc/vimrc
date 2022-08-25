@@ -202,7 +202,7 @@ if has('perl')
         sub SEval($){
             # TODO: Does this make sense? Trying to patch an error nvim throws
             VIM::DoCommand("let g:myPerlArg_ = exists('$_[0]')");
-            my ($_success, $exists) = VIM::Eval('g:myPerlArg');
+            my ($_success, $exists) = VIM::Eval('g:myPerlArg_');
             ($exists) ? VIM::Eval(shift) : return;
         }
         sub AEval($){
