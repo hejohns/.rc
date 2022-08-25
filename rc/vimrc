@@ -47,6 +47,7 @@ augroup spell_default_on
     " sourcing one of the syntax files screws up the hi colors
     autocmd SourcePost * call MySetSpellColors()
 augroup END
+set shortmess-=S
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
