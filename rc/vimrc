@@ -201,13 +201,13 @@ if has('perl')
         # NOTE: nvim's VIM::Eval does not dereference like vim does
         sub SEval($){
             # TODO: Does this make sense? Trying to patch an error nvim throws
-            VIM::DoCommand("let g:myPerlArg = exists($_[0]");
+            VIM::DoCommand("let g:myPerlArg = exists('$_[0]')");
             my ($_success, $exists) = VIM::Eval('g:myPerlArg');
             ($exists) ? VIM::Eval(shift) : return;
         }
         sub AEval($){
             # TODO: Does this make sense? Trying to patch an error nvim throws
-            VIM::DoCommand("let g:myPerlArg = exists($_[0]");
+            VIM::DoCommand("let g:myPerlArg = exists('$_[0]')");
             my ($_success, $exists) = VIM::Eval('g:myPerlArg');
             if($exists){
                 my ($success, $e) = VIM::Eval(shift);
