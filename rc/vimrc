@@ -400,6 +400,12 @@ if has('perl')
         ['tex'],
         'nnoremap <buffer> ysc <Plug>(vimtex-cmd-create)' =>
         ['tex'],
+        'nnoremap <buffer> ysiWc viW<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
+        'nnoremap <buffer> ysi{c vi{<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
+        'nnoremap <buffer> ysi}c vi}<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
         'call MyVimtexOptions()' =>
         ['tex'],
         # TODO: some ft autocmd (not mine) needs to fire late to get vimtex conceal to work correctly
