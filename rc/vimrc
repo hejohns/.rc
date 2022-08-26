@@ -400,11 +400,19 @@ if has('perl')
         ['tex'],
         'nnoremap <buffer> ysc <Plug>(vimtex-cmd-create)' =>
         ['tex'],
+        'vnoremap <buffer> ysc <Plug>(vimtex-cmd-create)' =>
+        ['tex'],
         'nnoremap <buffer> ysiWc viW<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
+        'vnoremap <buffer> ysiWc viW<Plug>(vimtex-cmd-create)' =>
         ['tex'],
         'nnoremap <buffer> ysi{c vi{<Plug>(vimtex-cmd-create)' =>
         ['tex'],
+        'vnoremap <buffer> ysi{c vi{<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
         'nnoremap <buffer> ysi}c vi}<Plug>(vimtex-cmd-create)' =>
+        ['tex'],
+        'vnoremap <buffer> ysi}c vi}<Plug>(vimtex-cmd-create)' =>
         ['tex'],
         'call MyVimtexOptions()' =>
         ['tex'],
