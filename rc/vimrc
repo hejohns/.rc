@@ -280,6 +280,7 @@ if has('perl')
         'perl': ['pls'],
         'tex': ['texlab'],
         'nix': ['rnix-lsp'],
+        'go': ['gopls'],
         }
         __EOF
         ;
@@ -428,9 +429,11 @@ if has('perl')
         'nnoremap <buffer> ;ls :call LanguageClient_contextMenu()<CR>' =>
         [@lsLangs],
         'nnoremap <buffer> gd :call LanguageClient#textDocument_definition()<CR>' =>
-        ['haskell', 'tex', 'nix'],
+        [(grep {!/perl/} @lsLangs)],
         'nnoremap <buffer> K :call LanguageClient#textDocument_hover()<CR>' =>
-        ['haskell', 'tex', 'nix'],
+        [(grep {!/perl/} @lsLangs)],
+        'autocmd filetype_specific BufWritePre *.go :call LanguageClient#textDocument_formatting_sync()' =>
+        ['go'],
     );
 
     sub filetype_options{
