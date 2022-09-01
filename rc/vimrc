@@ -52,8 +52,8 @@ set shortmess-=S
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
-inoremap <tab> <C-n>
-inoremap <S-tab> <C-p>
+inoremap <TAB> <C-n>
+inoremap <S-TAB> <C-p>
 inoremap df <BS>
 inoremap fd <DEL>
 "noremap DK kdd
@@ -305,13 +305,14 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/fzf'
+let g:myDeopleteLangs = g:myLSLangs + ['vim', 'gitcommit']
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', { 'for': g:myLSLangs, 'do': ':UpdateRemotePlugins' }
+    Plug 'Shougo/deoplete.nvim', {'for': g:myDeopleteLangs, 'do': ':UpdateRemotePlugins'}
 " for vim 8 with python
 else
-    Plug 'Shougo/deoplete.nvim', {'for': g:myLSLangs}
-    Plug 'roxma/nvim-yarp', {'for': g:myLSLangs}
-    Plug 'roxma/vim-hug-neovim-rpc', {'for': g:myLSLangs}
+    Plug 'Shougo/deoplete.nvim', {'for': g:myDeopleteLangs}
+    Plug 'roxma/nvim-yarp', {'for': g:myDeopleteLangs}
+    Plug 'roxma/vim-hug-neovim-rpc', {'for': g:myDeopleteLangs}
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
 endif
@@ -399,9 +400,24 @@ if has('perl')
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
+    my ($_success_, $lsLangs) = AEval('g:myLSLangs');
+    my @lsLangs = split(' ', $lsLangs);
+    ($_success_, my $deopleteLangs) = AEval('g:myDeopleteLangs');
+    my @deopleteLangs = split(' ', $deopleteLangs);
     my %no_LS_opt2ft = (
         'autocmd filetype_specific BufEnter <buffer> setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
+        # use deoplete so vim stops hanging on autocomplete
+        # still needed for some reason even with g:deoplete#enable_at_startup
+        'call deoplete#enable()' =>
+        [@deopleteLangs],
+        'inoremap <buffer> <expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()' =>
+        [@deopleteLangs],
+        'inoremap <buffer> <expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()' =>
+        [@deopleteLangs],
+        # deoplete-options-num_processes
+        "call deoplete#custom#option('num_processes', 2)" =>
+        [@deopleteLangs],
         'autocmd filetype_specific BufWritePost <buffer> call MyDispatchOnBufWrite()' =>
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
@@ -428,9 +444,10 @@ if has('perl')
         # this hack ``just works''
         'setlocal filetype=tex' =>
         ['tex'],
+        # vimtex-complete-auto
+        "call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})" =>
+        ['tex'],
     );
-    my ($success_, $lsLangs) = AEval('g:myLSLangs');
-    my @lsLangs = split(' ', $lsLangs);
     my %LS_opt2ft = (
         'nnoremap <buffer> ;ls :call LanguageClient_contextMenu()<CR>' =>
         [@lsLangs],
@@ -692,3 +709,10 @@ EOF
         endif
     endif
 endfunc
+
+" deoplete
+" deoplete-faq-config
+function! s:check_back_space() abort
+    let col = col('.') - 1
+    return !col || getline('.')[col-1] =~# '\s'
+endfunction
