@@ -336,6 +336,11 @@ endif
 call plug#end()
 
 " clang_complete
+" TODO: move the option setting to no_LS_opt2ft
+" this is how I used to write filetype specific options, but if I start vim on
+" another filetype and open a c buffer, none of the right things get set
+" I just don't feel like fixing it rn
+
 " set g:clang_library_path with highest clang version available
 if has('perl')
     perl <<EOF
