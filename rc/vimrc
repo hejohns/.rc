@@ -315,6 +315,7 @@ else
     Plug 'roxma/vim-hug-neovim-rpc', {'for': g:myDeopleteLangs}
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
+    let g:deoplete#enable_at_startup = 1
 endif
 Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'maxboisvert/vim-simple-complete'
@@ -416,7 +417,12 @@ if has('perl')
         'inoremap <buffer> <expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()' =>
         [@deopleteLangs],
         # deoplete-options-num_processes
-        "call deoplete#custom#option('num_processes', 2)" =>
+        "call deoplete#custom#var('around', {'range_above': 10000, 'range_below': 10000})" =>
+        [@deopleteLangs],
+        # NOTE: deoplete by default uses all sources?
+        "call deoplete#custom#option('sources', {'_': []})" =>
+        [@deopleteLangs],
+        "call deoplete#custom#buffer_option('num_processes', 2)" =>
         [@deopleteLangs],
         'autocmd filetype_specific BufWritePost <buffer> call MyDispatchOnBufWrite()' =>
         ['tex'],
@@ -522,7 +528,6 @@ if has('perl')
                     #}
                     #VIM::DoCommand('pythonx import neovim');
                     # enable autocomplete
-                    VIM::DoCommand("let g:deoplete#enable_at_startup = 1");
                     VIM::DoCommand("let g:myLSRunning = 1");
                     VIM::DoCommand("command LSRename :call LanguageClient#textDocument_rename()<CR>");
                     VIM::DoCommand("command LSTDef :call LanguageClient#textDocument_typeDefinition()<CR>");
