@@ -362,7 +362,7 @@ if has('perl')
     my @clangLangs = qw(c cpp);
     my $success; #don't bother...
     ($success, my $filetype) = SEval('&filetype');
-    $filetype //= 'I could change the regex to /^$filetype$/, but this is easier';
+    $filetype //= '';
     if(grep {/$filetype/} @clangLangs){
         my @clangCmds = split /\n/, <<~"__EOF"
             set omnifunc='ClangComplete'
@@ -468,7 +468,7 @@ if has('perl')
     sub filetype_options{
         my $success;
         ($success, my $filetype) = SEval('g:myPerlArg');
-        $filetype //= 'I could change the regex to /^$filetype$/, but this is easier';
+        $filetype //= '';
         if($filetype eq 'plaintex'){
             VIM::DoCommand("silent !echo '[Error] &ft plaintex should be masqueraded as tex'");
         }
@@ -494,7 +494,7 @@ if has('perl')
             my @lsLangs = split(' ', $lsLangs);
             push @lsLangs, qw(vim); # vim-vint requires pip install
             ($success, my $filetype) = SEval('&filetype');
-            $filetype //= 'I could change the regex to /^$filetype$/, but this is easier';
+            $filetype //= '';
             # NOTE: can't figure out why plaintex shows up
             # but it messes up the buffer local remappings
             $filetype =~ s/plaintex/tex/;
