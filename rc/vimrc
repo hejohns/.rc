@@ -303,14 +303,13 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ 'do': 'bash install.sh',
     \ }
 Plug 'junegunn/fzf'
-let g:myDeopleteLangs = g:myLSLangs + ['vim', 'gitcommit']
 if has('nvim')
-    Plug 'Shougo/deoplete.nvim', {'for': g:myDeopleteLangs, 'do': ':UpdateRemotePlugins'}
+    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 " for vim 8 with python
 else
-    Plug 'Shougo/deoplete.nvim', {'for': g:myDeopleteLangs}
-    Plug 'roxma/nvim-yarp', {'for': g:myDeopleteLangs}
-    Plug 'roxma/vim-hug-neovim-rpc', {'for': g:myDeopleteLangs}
+    Plug 'Shougo/deoplete.nvim'
+    Plug 'roxma/nvim-yarp'
+    Plug 'roxma/vim-hug-neovim-rpc'
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
     let g:deoplete#enable_at_startup = 1
@@ -401,27 +400,9 @@ if has('perl')
 
     my ($_success_, $lsLangs) = AEval('g:myLSLangs');
     my @lsLangs = split(' ', $lsLangs);
-    ($_success_, my $deopleteLangs) = AEval('g:myDeopleteLangs');
-    my @deopleteLangs = split(' ', $deopleteLangs);
     my %no_LS_opt2ft = (
         'autocmd filetype_specific BufEnter <buffer> setlocal shiftwidth=2' =>
         ['haskell', 'cabal', 'cabalconfig', 'cabalproject', 'nix'],
-        # use deoplete so vim stops hanging on autocomplete
-        # still needed for some reason even with g:deoplete#enable_at_startup
-        'call deoplete#enable()' =>
-        [@deopleteLangs],
-        'inoremap <buffer> <expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()' =>
-        [@deopleteLangs],
-        'inoremap <buffer> <expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()' =>
-        [@deopleteLangs],
-        # deoplete-options-num_processes
-        "call deoplete#custom#var('around', {'range_above': 10000, 'range_below': 10000})" =>
-        [@deopleteLangs],
-        # NOTE: deoplete by default uses all sources?
-        "call deoplete#custom#option('sources', {'_': []})" =>
-        [@deopleteLangs],
-        "call deoplete#custom#buffer_option('num_processes', 2)" =>
-        [@deopleteLangs],
         'autocmd filetype_specific BufWritePost <buffer> call MyDispatchOnBufWrite()' =>
         ['tex'],
         'nnoremap <buffer> <C-\>ll :let g:myDispatchToggle = (exists("g:myDispatchToggle") && g:myDispatchToggle) ? 0 : 1<CR>' =>
@@ -449,7 +430,7 @@ if has('perl')
         'setlocal filetype=tex' =>
         ['tex'],
         # vimtex-complete-auto
-        "call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})" =>
+        "silent! call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})" =>
         ['tex'],
         'call EnableL2U()' =>
         ['tex'],
@@ -471,6 +452,22 @@ if has('perl')
         $filetype //= '';
         if($filetype eq 'plaintex'){
             VIM::DoCommand("silent !echo '[Error] &ft plaintex should be masqueraded as tex'");
+        }
+        # deoplete
+        VIM::DoCommand('let g:myPerlArg_ = deoplete#is_enabled()');
+        ($success, my $deopleteIs_enabled) = SEval('g:myPerlArg_');
+        $deopleteIs_enabled //= 0;
+        if($deopleteIs_enabled){
+            # use deoplete so vim stops hanging on autocomplete
+            # still needed for some reason even with g:deoplete#enable_at_startup
+            VIM::DoCommand('call deoplete#enable()');
+            VIM::DoCommand('inoremap <buffer> <expr> <TAB> pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()');
+            VIM::DoCommand('inoremap <buffer> <expr> <S-TAB> pumvisible() ? "\<C-p>" : <SID>check_back_space() ? "\<TAB>" : deoplete#can_complete() ? deoplete#complete() : deoplete#manual_complete()');
+            # deoplete-options-num_processes
+            VIM::DoCommand("call deoplete#custom#var('around', {'range_above': 10000, 'range_below': 10000})");
+            # NOTE: deoplete by default uses all sources?
+            VIM::DoCommand("call deoplete#custom#option('sources', {'_': []})");
+            VIM::DoCommand("call deoplete#custom#buffer_option('num_processes', 2)");
         }
         foreach my $k (keys %no_LS_opt2ft){
             if(grep {/^$filetype$/} @{$no_LS_opt2ft{$k}}){
