@@ -208,8 +208,8 @@ if has('perl')
         }
         sub AEval($){
             # TODO: Does this make sense? Trying to patch an error nvim throws
-            VIM::DoCommand("let g:myPerlArg = exists('$_[0]')");
-            my ($_success, $exists) = VIM::Eval('g:myPerlArg');
+            VIM::DoCommand("let g:myPerlArg_ = exists('$_[0]')");
+            my ($_success, $exists) = VIM::Eval('g:myPerlArg_');
             if($exists){
                 my ($success, $e) = VIM::Eval(shift);
                 ($success, "@$e");
