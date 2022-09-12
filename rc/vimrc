@@ -80,7 +80,7 @@ if has('textobjects')
     noremap ;s{ ya{%/{<CR>:let @/ = ''<CR>va{p%?}<CR>:let @/ = ''<CR>va{p
     noremap ;s} ya}%/}<CR>:let @/ = ''<CR>va}p%?}<CR>:let @/ = ''<CR>va}p
 else
-    silent !echo '[Warning] Need +textobjects to use ;sw[ap]'
+    silent !echo '[warning] Need +textobjects to use ;sw[ap]'
 endif
 nnoremap Q gq
 vnoremap Q gq
@@ -142,7 +142,7 @@ if has('persistent_undo')
     " some of the perl code below handles this somehow
     if !isdirectory(g:myUndodir)
         if !mkdir(g:myUndodir, 'p', 0700)
-            silent !echo '[Error] undo-persistence: see TODO s'
+            silent !echo '[error] undo-persistence: see TODO s'
         endif
     endif
     let &undodir=g:myUndodir
@@ -165,7 +165,7 @@ if has('persistent_undo')
         autocmd BufWritePost ?* call WriteUndo()
     augroup END
 else
-    silent !echo '[Warning] Need +persistent_undo'
+    silent !echo '[warning] Need +persistent_undo'
 endif
 
 " more highlighting matches
@@ -177,7 +177,7 @@ call matchadd('Todo', '\<todo:\?\>\c')
 " apparantly nvim doesn't understand term or ctermul
 function! MySetSpellColors()
     if !has('nvim')
-        hi SpellBad term=standout cterm=underline ctermul=Red
+        hi SpellBad term=underline cterm=underline ctermul=Red
         hi SpellCap term=underline cterm=underline ctermul=Blue
         hi SpellRare term=underline cterm=underline ctermul=Magenta
         hi SpellLocal term=underline cterm=underline ctermul=Cyan
@@ -291,7 +291,7 @@ if has('perl')
     VIM::DoCommand("let g:myLSLangs = [@myLSLangs]");
 EOF
 else
-    silent !echo '[Warning] Need +perl to initialize language server correctly'
+    silent !echo '[warning] Need +perl to initialize language server correctly'
 endif
 call plug#begin('~/.vim/plugged')
 Plug 'https://github.com/xavierd/clang_complete.git', {'for': ['c', 'cpp']}
@@ -375,7 +375,7 @@ if has('perl')
     }
 EOF
 else
-    silent !echo '[Warning] Need +perl to initialize clang_complete correctly'
+    silent !echo '[warning] Need +perl to initialize clang_complete correctly'
 endif
 
 " LanguageClient-neovim
@@ -451,7 +451,7 @@ if has('perl')
         ($success, my $filetype) = SEval('g:myPerlArg');
         $filetype //= '';
         if($filetype eq 'plaintex'){
-            VIM::DoCommand("silent !echo '[Error] &ft plaintex should be masqueraded as tex'");
+            VIM::DoCommand("silent !echo '[error] &ft plaintex should be masqueraded as tex'");
         }
         # deoplete
         VIM::DoCommand('let g:myPerlArg_ = deoplete#is_enabled()');
@@ -499,7 +499,7 @@ if has('perl')
                 if($filetype && grep {/^$filetype$/} @lsLangs){
                     my $pipExists = `sh -c 'command -v pip3' 2>&1`;
                     if($? >> 8){
-                        VIM::DoCommand("silent !echo '[Warning] `pip3` not found. Not using language server.'");
+                        VIM::DoCommand("silent !echo '[warning] `pip3` not found. Not using language server.'");
                         last VOID_EVAL_LAST_WARNINGS;
                     }
                     my @pipRequire = qw(vim-vint);
@@ -508,7 +508,7 @@ if has('perl')
                         if($? >> 8){
                             my $pipSuccess = `pip3 install $_ 2>&1`;
                             if($? >> 8){
-                                VIM::DoCommand("silent !echo '[Warning] `pip3 install $_` failed'");
+                                VIM::DoCommand("silent !echo '[warning] `pip3 install $_` failed'");
                                 last VOID_EVAL_LAST_WARNINGS;
                             }
                         }
@@ -519,7 +519,7 @@ if has('perl')
                     #if($? >> 8){
                     #    my $pipSuccess = `pip3 install neovim 2>&1`;
                     #    if($? >> 8){
-                    #        VIM::DoCommand("silent !echo '[Warning] `pip3 install neovim` failed. Not using langauge server.'");
+                    #        VIM::DoCommand("silent !echo '[warning] `pip3 install neovim` failed. Not using langauge server.'");
                     #        last VOID_EVAL_LAST_WARNINGS;
                     #    }
                     #}
@@ -535,8 +535,8 @@ if has('perl')
     }
 EOF
 else
-    silent !echo '[Warning] Need +perl to set filetype specific options'
-    silent !echo '[Warning] Need +perl to initialize language server correctly'
+    silent !echo '[warning] Need +perl to set filetype specific options'
+    silent !echo '[warning] Need +perl to initialize language server correctly'
 endif
 augroup filetype_options
     autocmd!
@@ -556,7 +556,7 @@ function MyVimtexOptions()
             elseif executable('atril')
                 let g:vimtex_view_general_viewer = 'atril'
             else
-                silent !echo '[Warning] no suitable pdf viewer found-- prepare for havoc'
+                silent !echo '[warning] no suitable pdf viewer found-- prepare for havoc'
             endif
             if executable('lualatex')
             " _ value modified
@@ -571,7 +571,7 @@ function MyVimtexOptions()
                 \ 'context (xetex)'  : '-pdf -pdflatex=''texexec --xtx''',
                 \}
             else
-                silent !echo '[Warning] please install lualatex'
+                silent !echo '[warning] please install lualatex'
             endif
             if !has('nvim')
                 if has('clientserver')
@@ -579,11 +579,11 @@ function MyVimtexOptions()
                         silent! call remote_startserver('VIM')
                     endif
                 else
-                    silent !echo '[Warning] need +clientserver for vimtex on (not n)vim'
+                    silent !echo '[warning] need +clientserver for vimtex on (not n)vim'
                 endif
             endif
         else
-            silent !echo '[Warning] vimtex requires latexmk.'
+            silent !echo '[warning] vimtex requires latexmk.'
         endif
     let g:vimtex_syntax_conceal = {
                 \ 'accents': 1,
@@ -708,7 +708,7 @@ function MyDispatchOnBufWrite()
             }
 EOF
         else
-            silent !echo '[Warning] Need +perl to :Make on BufWritePost'
+            silent !echo '[warning] Need +perl to :Make on BufWritePost'
         endif
     endif
 endfunc
