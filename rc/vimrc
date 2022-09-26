@@ -657,8 +657,16 @@ function! MyStatusline()
         use strict;
         use warnings FATAL => 'all', NONFATAL => 'redefine';
         chomp(my $time = `date '+%r'`);
-        $time = "[$time]";
-        my $statusline = $time;
+        our $weather;
+        $weather //= '⟳';
+        our $weather_last_update;
+        my $s_now = `date '+%s'`;
+        chomp($weather_last_update //= $s_now);
+        if(($s_now - $weather_last_update) >= 60){
+            $weather_last_update = $s_now;
+            chomp($weather = `curl -s wttr.in?format=%c+%t+%p`);
+        }
+        my $statusline = "[$weather][$time]";
         VIM::DoCommand("let g:mystatusline='$statusline'");
 EOF
     endif
@@ -683,7 +691,11 @@ let g:airline_solarized_bg = 'dark'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 "let g:airline_statusline_ontop = 1
-let g:airline_section_y = '%{MyStatusline()}'
+if has('nvim')
+    let g:airline_section_y = '[%{strftime("%r")}]'
+else
+    let g:airline_section_y = '%{MyStatusline()}'
+endif
 
 " vim-signify
 set updatetime=100
