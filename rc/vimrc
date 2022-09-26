@@ -660,8 +660,8 @@ function! MyStatusline()
         our $weather;
         $weather //= '⟳';
         our $weather_last_update;
-        my $s_now = `date '+%s'`;
-        chomp($weather_last_update //= $s_now);
+        $weather_last_update //= 0;
+        chomp(my $s_now = `date '+%s'`);
         if(($s_now - $weather_last_update) >= 60){
             $weather_last_update = $s_now;
             chomp($weather = `curl -s wttr.in?format=%c%t+%p`);
