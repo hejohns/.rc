@@ -674,13 +674,14 @@ EOF
 endfunction
 
 " Emulate default statusline
-"function! MySetStatusline()
-"    set statusline=%f\ %y%r%m%<\ %{FugitiveStatusline()}\ %{MyStatusline()}%=
-"    set statusline+=%#warningmsg#
-"    set statusline+=%{SyntasticStatuslineFlag()}
-"    set statusline+=%*
-"    set statusline+=\ %-12.(%l,%c%V%)\ %P
-"endfunction
+function! MySetStatusline()
+    set statusline=%f\ %y%r%m%<\ %{FugitiveStatusline()}\ %{MyStatusline()}%=
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+    set statusline+=\ %-12.(%l,%c%V%)\ %P
+endfunction
+call MySetStatusline()
 
 "autocmd SourcePost * call MySetStatusline()
 
