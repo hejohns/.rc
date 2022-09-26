@@ -332,6 +332,8 @@ Plug 'tpope/vim-dispatch', {'for': 'tex'} " NOTE: but we may want for more langs
 if !has('nvim')
     Plug 'vim-utils/vim-man' " replaces ``builtin'' :Man ?
 endif
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 call plug#end()
 
 " clang_complete
@@ -641,8 +643,12 @@ let g:syntastic_mode_map = {
             \ 'mode': 'passive',
             \ 'active_filetypes': ['reason', 'vim', 'pod', 'rust'],
             \ 'passive_filetypes': []}
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" (help statusline)
+" statusline
 let g:mystatusline = ''
 function! MyStatusline()
     " !has('nvim') -- neovim doesn't seem to like this for some reason
@@ -658,17 +664,26 @@ EOF
     endif
     return g:mystatusline
 endfunction
-" Emulate default statusline
-set statusline=%f\ %y%r%m%<\ %{FugitiveStatusline()}\ %{MyStatusline()}%=
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-set statusline+=\ %-12.(%l,%c%V%)\ %P
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+" Emulate default statusline
+function! MySetStatusline()
+    set statusline=%f\ %y%r%m%<\ %{FugitiveStatusline()}\ %{MyStatusline()}%=
+    set statusline+=%#warningmsg#
+    set statusline+=%{SyntasticStatuslineFlag()}
+    set statusline+=%*
+    set statusline+=\ %-12.(%l,%c%V%)\ %P
+endfunction
+
+autocmd SourcePost * call MySetStatusline()
+
+" vim-airline
+" airline has lots of cool extensions w/ other plugins
+" but I like my default statusline, so let's do this
+let g:airline_theme = 'solarized'
+let g:airline_solarized_bg = 'dark'
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_statusline_ontop = 1
 
 " vim-signify
 set updatetime=100
