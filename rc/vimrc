@@ -434,6 +434,10 @@ if has('perl')
         # vimtex-complete-auto
         "silent! call deoplete#custom#var('omni', 'input_patterns', {'tex': g:vimtex#re#deoplete})" =>
         ['tex'],
+        # NOTE: julia unicode input doesn't play well w/ deoplete
+        # when EnableL2U, autocomplete is sync and may hang vim
+        # I can't find a easy way to dig into this problem
+        # hopefully you (I) don't need async autocomplete and unicode input together too often...
         'call EnableL2U()' =>
         ['tex'],
     );
