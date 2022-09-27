@@ -328,7 +328,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'mhinz/vim-signify'
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 Plug 'mbbill/undotree'
-Plug 'tpope/vim-dispatch', {'for': 'tex'} " NOTE: but we may want for more langs later
+Plug 'tpope/vim-dispatch', {'for': ['tex', 'ocaml']} " NOTE: but we may want for more langs later
 if !has('nvim')
     Plug 'vim-utils/vim-man' " replaces ``builtin'' :Man ?
 endif
