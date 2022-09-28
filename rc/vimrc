@@ -668,7 +668,7 @@ function! MyStatusline()
         $weather_last_update //= $s_now; # don't add curl to startup time
         if(($s_now - $weather_last_update) >= 60){
             $weather_last_update = $s_now;
-            chomp($weather = `curl -s wttr.in?format=%c%t+%p`);
+            chomp($weather = `curl -s wttr.in?format=%p+%c%t`);
         }
         my $statusline = "[$weather][$time]";
         VIM::DoCommand("let g:mystatusline='$statusline'");
