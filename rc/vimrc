@@ -666,9 +666,13 @@ function! MyStatusline()
         our $weather_last_update;
         chomp(my $s_now = `date '+%s'`);
         $weather_last_update //= $s_now; # don't add curl to startup time
+        our $curl_tmp; # "async" curl
+        chomp($curl_tmp //= `mktemp tmp.vimrc.XXX`);
         if(($s_now - $weather_last_update) >= 60){
             $weather_last_update = $s_now;
-            chomp($weather = `curl -s wttr.in?format=%p+%c%t`);
+            `curl -s wttr.in?format=%p+%c%t > $curl_tmp &`;
+            # TODO: maybe don't spam the statusline if curl returns error code
+            chomp($weather = `cat $curl_tmp`);
         }
         my $statusline = "[$weather][$time]";
         VIM::DoCommand("let g:mystatusline='$statusline'");
