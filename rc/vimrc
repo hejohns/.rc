@@ -47,6 +47,7 @@ augroup spell_default_on
     autocmd SourcePost * call MySetSpellColors()
 augroup END
 set shortmess-=S
+set smarttab
 inoremap kj <ESC>
 inoremap jk <C-w>
 inoremap lk <ESC>ll
@@ -280,6 +281,7 @@ if has('perl')
         'tex': ['texlab'],
         'nix': ['rnix-lsp'],
         'go': ['gopls'],
+        'ruby': ['solargraph'],
         }
         __EOF
         ;
