@@ -19,6 +19,11 @@ if has('perl')
     use strict;
     use warnings FATAL => 'all', NONFATAL => 'redefine';
 
+    sub executable{
+        `sh -c 'command -v $_[0]' 2>&1`;
+        return $? >> 8;
+    }
+
     my $lsCmds = <<~"__EOF"
         let g:LanguageClient_serverCommands = {
         'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
@@ -39,6 +44,16 @@ if has('perl')
     my @langs = map {/'(\S+)':/; $1} grep {/'(\S+)':/} @rows;
     my @myLSLangs = map {"'$_',"} @langs;
     VIM::DoCommand("let g:myLSLangs = [@myLSLangs]");
+    # check if commands exist
+    my @h = map {/'(\S+)':\s*\[(.+)\]/; ($1, $2)} grep {/'\S+':/; } @rows;
+    my %h = @h;
+    for my $k (keys %h){
+        my $c = join('', (split /,/, $h{$k})); # NOTE: this is extremely buggy, but please just have sane arguments
+        $c =~ s/'//g;
+        if(&executable($c)){
+            VIM::DoCommand("silent !echo '[warning] Need $c for ft=$k'");
+        }
+    }
 EOF
 else
     silent !echo '[warning] Need +perl to initialize language server correctly'
