@@ -21,7 +21,7 @@ if has('perl')
 
     sub executable{
         `sh -c 'command -v $_[0]' 2>&1`;
-        return $? >> 8;
+        return !($? >> 8);
     }
 
     my $lsCmds = <<~"__EOF"
@@ -50,7 +50,7 @@ if has('perl')
     for my $k (keys %h){
         my $c = join('', (split /,/, $h{$k})); # NOTE: this is extremely buggy, but please just have sane arguments
         $c =~ s/'//g;
-        if(&executable($c)){
+        if(!&executable($c)){
             VIM::DoCommand("silent !echo '[warning] Need $c for ft=$k'");
         }
     }
