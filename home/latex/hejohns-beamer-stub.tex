@@ -1,0 +1,54 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% standard header
+    \documentclass[aspectratio=169]{beamer}
+    \mode<presentation>
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% color stuff
+    \usetheme{AnnArbor}
+    \usecolortheme[accent=blue]{solarized}
+    \colorlet{solarizedMixFg}{solarizedRebase2!80!solarizedRebase0}
+    \setbeamercolor{normal text}{fg=solarizedMixFg, bg=solarizedRebase02}
+    \setbeamercolor{palette primary}{fg=solarizedMixFg, bg=solarizedRebase01}
+    \setbeamercolor{palette secondary}{fg=solarizedMixFg, bg=solarizedRebase01}
+    \setbeamercolor{palette tertiary}{fg=solarizedMixFg, bg=solarizedRebase01}
+    \setbeamercolor{palette quaternary}{fg=solarizedMixFg, bg=solarizedRebase01}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% font stuff
+    \usepackage{hejohns-fonts}
+    \usefonttheme{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% packages
+    \usepackage{tikz}
+    \usepackage{graphicx}
+    \usepackage{media9}
+    \usepackage{svg}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\beamertemplatenavigationsymbolsempty
+\setbeamercolor{button}{bg=blue, fg=white}
+\title[short title]{title}
+\subtitle{subtitle}
+\author{hejohns}
+\date{\today}
+\titlegraphic{\includemedia[
+keepaspectratio,
+activate=pagevisible,
+deactivate=pageinvisible
+]{\includesvg{cc.logo.svg}}{CCLogoColorPop1.gif}}
+\begin{frame}
+    \titlepage
+\end{frame}
+\section{A}
+\begin{frame}
+    \frametitle{frame title}
+\end{frame}
+\section{Sources}
+\begin{frame}[allowframebreaks]
+    \frametitle{References}
+    \begin{thebibliography}{00}
+        \setbeamertemplate{bibliography item}{\insertbiblabel}
+        \bibitem{sourceA}
+        sourceA
+    \end{thebibliography}
+\end{frame}
+\end{document}
