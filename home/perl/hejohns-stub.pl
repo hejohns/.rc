@@ -21,6 +21,7 @@ use diagnostics -verbose;
     use JSON;
     use YAML::XS;
 # misc scripting IO utilities
+    use IO::Prompter;
     # `capture_stdout` for backticks w/o shell
     use Capture::Tiny qw(:all);
 # option/arg handling
@@ -32,6 +33,8 @@ use diagnostics -verbose;
         ); # https://stackoverflow.com/a/46550384
  
 # turn on features
+    use builtin;
+    no warnings 'experimental::builtin';
     use feature 'try';
     no warnings 'experimental::try';
 
@@ -39,3 +42,15 @@ use diagnostics -verbose;
 # end prelude
 
 0;
+
+=pod
+
+=encoding utf8
+
+=head1 NAME
+
+=head1 SYNOPSIS
+
+=head1 DESCRIPTION
+
+=cut
