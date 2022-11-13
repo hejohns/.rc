@@ -21,8 +21,7 @@ use diagnostics -verbose;
     use JSON;
     use YAML::XS;
 # misc scripting IO utilities
-    # `capture_stdout` for more transparent scripts
-    # `capture` for backticks w/o shell
+    # `capture_stdout` for backticks w/o shell
     use Capture::Tiny qw(:all);
 # option/arg handling
     use Getopt::Long qw(:config gnu_getopt auto_version); # auto_help not the greatest
