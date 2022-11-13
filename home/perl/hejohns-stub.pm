@@ -17,10 +17,8 @@ package Translate v2022.11.13{
     # default exports
     our @EXPORT = qw();
     # optional exports
-    my $EXPORT_OK = <<~'__EOF'
-    __EOF
-    ;
-    our @EXPORT_OK = split /\n+/, $EXPORT_OK,
+    our @EXPORT_OK = qw(
+    );
 }
 
 =pod
