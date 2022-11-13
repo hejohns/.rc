@@ -41,8 +41,6 @@ use diagnostics -verbose;
     our $VERSION = version->declare('v2022.11.13');
 # end prelude
 
-0;
-
 =pod
 
 =encoding utf8

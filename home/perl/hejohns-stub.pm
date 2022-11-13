@@ -19,6 +19,8 @@ package Translate v2022.11.13 {
     # optional exports
     our @EXPORT_OK = qw(
     );
+
+    builtin::true;
 }
 
 =pod
