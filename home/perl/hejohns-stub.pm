@@ -7,7 +7,7 @@ package Translate v2022.11.13 {
     use diagnostics -verbose;
 
     # turn on features
-        use builtin;
+        use builtin qw(reftype);
         no warnings 'experimental::builtin';
         use feature 'try';
         no warnings 'experimental::try';

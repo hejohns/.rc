@@ -33,7 +33,7 @@ use diagnostics -verbose;
         ); # https://stackoverflow.com/a/46550384
  
 # turn on features
-    use builtin;
+    use builtin qw(reftype);
     no warnings 'experimental::builtin';
     use feature 'try';
     no warnings 'experimental::try';
