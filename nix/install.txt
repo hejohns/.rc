@@ -1,18 +1,36 @@
-# usermod -aG nix-users hejohns
-bash-completion
-nix-bash-completion
-firefox
-git
-xcompmgr
-xournal
-pandoc
-imagemagick
-ghostscript
-bear
-lcov
-evince
-cmake
-meld
-fzf
-hindent
-okular
+0 flake:nixpkgs#legacyPackages.x86_64-linux.bash-completion github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bash-completion /nix/store/rrr2ls4cbiix3kcfljgr544psssk3s6m-bash-completion-2.11
+1 flake:nix#packages.x86_64-linux.default github:NixOS/nix/5d77c08858096a3d8f95735ec2227c544f5cdb9c#packages.x86_64-linux.default /nix/store/jihd8ga4jx0i3qpyrf9mb6wswmaydxv4-nix-2.13.0pre20221214_5d77c08
+2 flake:nixpkgs#legacyPackages.x86_64-linux.bison github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bison /nix/store/kkwl4rviaxx77fd9gvffcrq5dazyxgyb-bison-3.8.2
+3 flake:nixpkgs#legacyPackages.x86_64-linux.libzip github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.libzip /nix/store/20g0wz915a1rhrvn1bwcz30f9hwpyrsl-libzip-1.9.2-man /nix/store/72n6v398ag6x4lwrvi9640mkx9p1gda9-libzip-1.9.2
+4 flake:nixpkgs#legacyPackages.x86_64-linux.stylish-haskell github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.stylish-haskell /nix/store/h8d5sqcmfwz9l2s1w99sz65ylwgi2jqz-stylish-haskell-0.14.3.0
+5 flake:nixpkgs#legacyPackages.x86_64-linux.fzf github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.fzf /nix/store/clrlcjpikfi82x5g8cnrcnks9rrfw5ra-fzf-0.35.1 /nix/store/sjsbxbvbaf2y0fmvl56ab19wkjraxfnq-fzf-0.35.1-man
+6 flake:nixpkgs#legacyPackages.x86_64-linux.smlnj github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.smlnj /nix/store/cn2jj0bmdy1kamzniixyri9jsxkss4qj-smlnj-110.95
+7 flake:nixpkgs#legacyPackages.x86_64-linux.tree github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.tree /nix/store/yzs02b1mxjmjhwffsia30wicx8sp48w5-tree-2.0.4
+8 flake:nixpkgs#legacyPackages.x86_64-linux.meld github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.meld /nix/store/1p7ay4xfbqpy3vbb410wxm7ydly9vqv0-meld-3.22.0
+9 flake:nixpkgs#legacyPackages.x86_64-linux.cmake github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.cmake /nix/store/vh76h64xifdiylk1dfc9s6mgpzazngxs-cmake-3.24.3
+10 flake:nixpkgs#legacyPackages.x86_64-linux.evince github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.evince /nix/store/mgz9n24cli2hrwpl48zifrih2bifq2h7-evince-43.1
+11 flake:nixpkgs#legacyPackages.x86_64-linux.lcov github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.lcov /nix/store/2vsbjf97j07jgj0qv65vjlfxxp66hnb5-lcov-1.16
+12 flake:nixpkgs#legacyPackages.x86_64-linux.ghostscript github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.ghostscript /nix/store/mdvvr79xifig2g8b81q4y968xr4qzyfc-ghostscript-with-X-9.56.1-man /nix/store/vbnpmx2z67c6dhd9m4ml48wfn954vyfa-ghostscript-with-X-9.56.1
+13 flake:nixpkgs#legacyPackages.x86_64-linux.imagemagick github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.imagemagick /nix/store/ya46nlk4g59q0b3s2fbdi4zp09qdabdn-imagemagick-7.1.0-54
+14 flake:nixpkgs#legacyPackages.x86_64-linux.xournal github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.xournal /nix/store/scjqp7mbn3gx3qwifayi9xvsify9ha3p-xournal-0.4.8.2016
+15 flake:nixpkgs#legacyPackages.x86_64-linux.pandoc github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.pandoc /nix/store/drgxrv3hnxblwir12fr4j5hhxsva9z7v-pandoc-2.17.1.1
+16 flake:nixpkgs#legacyPackages.x86_64-linux.xcompmgr github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.xcompmgr /nix/store/64pv0f7bqmbdi76bv8p8vqysbgmni3gy-xcompmgr-1.1.8
+17 flake:nixpkgs#legacyPackages.x86_64-linux.git github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.git /nix/store/1im1jlvkqfzwdwyps9nwychkl638ypz7-git-2.38.1
+18 flake:nixpkgs#legacyPackages.x86_64-linux.firefox github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.firefox /nix/store/jpk7bkv3972l2y86gn6pz36mjg25kcic-firefox-108.0
+19 flake:nixpkgs#legacyPackages.x86_64-linux.nix-bash-completions github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.nix-bash-completions /nix/store/fr7n8mhvyx0l005ag7ppgzkn6d1njd9g-nix-bash-completions-0.6.8
+20 flake:nixpkgs#legacyPackages.x86_64-linux.rnix-lsp github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.rnix-lsp /nix/store/jgrsvm0la2j1fz35abx6fcqha6n2v6s9-rnix-lsp-0.2.5
+21 flake:nixpkgs#legacyPackages.x86_64-linux.okular github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.okular /nix/store/q08mik7y151fhqqf134rrhlgkj6q925a-okular-22.12.0
+22 flake:nixpkgs#legacyPackages.x86_64-linux.go github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.go /nix/store/a5rxhf0rylvwyih38hvzddmil9z5pqhz-go-1.19.3
+23 flake:nixpkgs#legacyPackages.x86_64-linux.thunderbird github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.thunderbird /nix/store/f7gd5ql0kv6by507ijx2n5ygnknyam0q-thunderbird-102.5.1
+24 flake:nixpkgs#legacyPackages.x86_64-linux.iperf github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.iperf /nix/store/p44dnygsjyqmi9zdzvbhpg4jimp0lh4k-iperf-3.12 /nix/store/z8wjxzcvg1s8v6rcg9fbc0vm9h4rn70x-iperf-3.12-man
+25 flake:nixpkgs#legacyPackages.x86_64-linux.silver-searcher github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.silver-searcher /nix/store/bk26dj7l07jmj4a1zi6pc6wclyrbv7zw-silver-searcher-2.2.0
+26 flake:nixpkgs#legacyPackages.x86_64-linux.bat github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat /nix/store/10rd7dlmn1qbil0kqqh7s00wiiknq9nl-bat-0.22.1
+27 flake:nixpkgs#legacyPackages.x86_64-linux.ack github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.ack /nix/store/drcl4lci7pm46jnxin72cnc9dbnfv239-perl5.36.0-ack-3.6.0-man /nix/store/ilvs9a9d1977js0073d68n7ymfym54hv-perl5.36.0-ack-3.6.0
+28 flake:nixpkgs#legacyPackages.x86_64-linux.inkscape github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.inkscape /nix/store/vfljp5mvwbzzy1bbb3434c7awqqm8g4k-inkscape-1.2.2
+29 flake:nixpkgs#legacyPackages.x86_64-linux.rakudo github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.rakudo /nix/store/i9hy9c596c34s17pffns6jzc0cl7wbj1-rakudo-2022.07
+30 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.batman github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.batman /nix/store/y7nwnapwlp939j8ai333mp2xn028ln7r-bat-extras-batman-2021.04.06
+31 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.batdiff github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.batdiff /nix/store/cdbk0z7y3ha0i8br5i6wf65va0g2nwb2-bat-extras-batdiff-2021.04.06
+32 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.batgrep github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.batgrep /nix/store/p5szvzn9jpd2m3kwb5nchx3rssasa5dl-bat-extras-batgrep-2021.04.06
+33 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.batpipe github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.batpipe /nix/store/nwxblzzkas5srg4762zmnfmg1cx8dq50-bat-extras-batpipe-2021.04.06
+34 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.batwatch github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.batwatch /nix/store/m2d6nlz41r7x4bd7vvwzn5hcm1l4ccxb-bat-extras-batwatch-2021.04.06
+35 flake:nixpkgs#legacyPackages.x86_64-linux.bat-extras.prettybat github:NixOS/nixpkgs/b9a0cd40ede905f554399f3f165895dccfd35f3b#legacyPackages.x86_64-linux.bat-extras.prettybat /nix/store/zxd2ll8jirhdigh525pr3cnjn6xpf8rf-bat-extras-prettybat-2021.04.06

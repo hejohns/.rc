@@ -12,6 +12,24 @@ exec "bash", "-c", "cat $0 | pod2man - | man --local-file -";
 
 L<https://unix.stackexchange.com/a/354144>
 
+=head2 ssh -X
+
+i've been using a
+"thin client" xfce4 desktop, ssh -X into a xfce4 w/ xmonad
+setup
+
+works better when xfwm4 is running at first,
+no idea how this works, but it seems to
+
+=head2 xmonad
+
+see main website for cabal setup
+
+then symlink to the xmonad-* (eg xmonad-x86_64-linux) executable
+for PATH
+
+should move to stack but this is simple and has been working
+
 =head1 gnome
 
 =head2 gdm3 autosuspend
