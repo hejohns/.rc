@@ -30,10 +30,16 @@ original description:
 
     Reinstall all perl XS-modules, for example after upgrade perl version(App::cpanminus need).
 
-There has to be a proper way to do this,
-but I've had to use this script over and over
-so I can actually get work done,
-so I'm copying it here now.
+I have been using this
+when XS modules binary computability breaks
+but maybe we should be using
+
+    cpan recompile
+
+instead?
+
+=for comment
+sentence doesn't really make sense but you get the point
 
 =head1 AUTHOR
 
