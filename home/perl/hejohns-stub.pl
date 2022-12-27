@@ -22,8 +22,11 @@ use diagnostics -verbose;
     use YAML::XS;
 # misc scripting IO utilities
     use IO::Prompter;
-    # `capture_stdout` for backticks w/o shell
+    # `capture_stdout` for backticks w/o shell (escaping issues)
     use Capture::Tiny qw(:all);
+    # for more complicated stuff
+    # eg timeout, redirection
+    use IPC::Run;
 # option/arg handling
     use Getopt::Long qw(:config gnu_getopt auto_version); # auto_help not the greatest
     use Pod::Usage;
@@ -38,7 +41,7 @@ use diagnostics -verbose;
     use feature 'try';
     no warnings 'experimental::try';
 
-    our $VERSION = version->declare('v2022.11.13');
+    our $VERSION = version->declare('v2022.12.27');
 # end prelude
 
 =pod
