@@ -106,4 +106,5 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mileszs/ack.vim'
+Plug 'chrisbra/unicode.vim'
 call plug#end()
