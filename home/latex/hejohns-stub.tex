@@ -7,10 +7,13 @@
     \let\documentCase\documentCaseKOMA
     \ifx\documentCase\documentCaseKOMA
         \documentclass[paper=A4,pagesize,DIV=calc,fontsize=14pt]{scrartcl}
+        % KOMA compatible header/footers
+        \usepackage{scrlayer-scrpage} % \ihead \chead \ohead
     \else\ifx\documentCase\documentCaseStandard
         \documentclass[12pt]{article}
         \usepackage[margin=2cm]{geometry}
         \usepackage[paper=A4,pagesize,DIV=calc]{typearea} % KOMA-script typearea
+        \usepackage{scrlayer-scrpage} % TODO: instead of fancyhdr?
     \else
         \undefined
     \fi\fi
