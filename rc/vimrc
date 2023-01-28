@@ -107,7 +107,6 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mileszs/ack.vim'
 Plug 'chrisbra/unicode.vim'
-Plug 'neovimhaskell/haskell-vim', {'for': 'haskell'}
 call plug#end()
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system("opam config var share")
