@@ -1,0 +1,11 @@
+[Unit]
+Description=mount T130 nfs on startup
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Mount]
+What=192.168.1.100:/home/hejohns
+Where=/mnt
+Type=nfs
