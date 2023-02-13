@@ -126,8 +126,11 @@ PATH=~/.local/bin:$PATH
 # search ~/bin first
 PATH=~/bin:$PATH
 alias update='sudo apt update && sudo apt upgrade -y'
-alias xmonad='(xmonad --replace > /dev/null 2>&1 &) && (sleep 1 && xcompmgr > /dev/null 2>&1 &)'
+#alias xmonad='(xmonad --replace > /dev/null 2>&1 &) && (sleep 1 && xcompmgr > /dev/null 2>&1 &)'
 alias gg='git grep -rPn'
 
 # sticky note
 echo -n ""
+# try to use systemd
+#xmonad
+(bash ~/.xsession > /dev/null 2>&1 &)

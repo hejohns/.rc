@@ -1,0 +1,11 @@
+[Unit]
+Description=restart xcompmgr on failure
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=xmonad.service
+
+[Service]
+ExecStart=/home/hejohns/.nix-profile/bin/xcompmgr
+Type=simple
+Restart=on-failure

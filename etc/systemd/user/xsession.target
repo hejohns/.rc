@@ -1,0 +1,3 @@
+[Unit]
+Description=based off https://goral.net.pl/post/systemd-x-sessions/ and https://superuser.com/questions/759759/writing-a-service-that-depends-on-xorg
+BindsTo=graphical-session.target

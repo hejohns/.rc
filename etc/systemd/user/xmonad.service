@@ -1,0 +1,11 @@
+[Unit]
+Description=restart xmonad on failure
+PartOf=graphical-session.target
+
+[Install]
+WantedBy=xsession.target
+
+[Service]
+ExecStart=/home/hejohns/.local/bin/xmonad --replace
+Type=simple
+Restart=on-failure
