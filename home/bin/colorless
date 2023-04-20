@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+# https://unix.stackexchange.com/a/151670
+
+use IPC::Run qw(run);
+
+run ['script', '-c', "@ARGV", '/dev/null'], '<', \undef, '2>&1', '|',
+['tail', '-n', '+2'], '|',
+['head', '-n', '-1'], '|',
+['less', '-R'];
