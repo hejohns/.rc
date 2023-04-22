@@ -34,7 +34,7 @@ if has('perl')
         'tex': ['texlab'],
         'nix': ['rnix-lsp'],
         'go': ['gopls'],
-        'ruby': ['solargraph'],
+        'ruby': ['solargraph', 'stdio'],
         }
         __EOF
         ;
