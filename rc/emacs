@@ -42,8 +42,8 @@
  ;; If there is more than one, they won't work right.
  )
 ;; font stuff
-(add-to-list 'default-frame-alist '(font . "Tex Gyre Cursor-20"))
-(set-face-attribute 'default t :font "Tex Gyre Cursor-20")
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-16"))
+(set-face-attribute 'default t :font "JetBrains Mono-16")
 
 (ac-config-default)
 ;; auto-load agda-mode for .agda and .lagda.md
