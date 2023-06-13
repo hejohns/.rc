@@ -23,7 +23,18 @@
  (evil-set-undo-system 'undo-tree)
  (setq evil-want-fine-undo t)
  )
-(use-package auto-complete)
+(use-package vimish-fold
+ :ensure t
+ :after (evil)
+ )
+(use-package evil-vimish-fold
+ :ensure t
+ :after (evil vimish-fold)
+ :hook ((prog-mode conf-mode text-mode) . evil-vimish-fold-mode)
+ )
+(use-package auto-complete
+ :ensure t
+ )
 (use-package solarized-theme
  :ensure t
  :config
