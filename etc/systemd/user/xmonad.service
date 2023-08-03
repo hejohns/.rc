@@ -6,6 +6,6 @@ PartOf=graphical-session.target
 WantedBy=xsession.target
 
 [Service]
-ExecStart=/home/hejohns/.local/bin/xmonad --replace
+ExecStart=/home/hejohns/.cabal/bin/xmonad --replace
 Type=simple
 Restart=on-failure
