@@ -109,6 +109,7 @@ Plug 'justinmk/vim-sneak'
 Plug 'tpope/vim-repeat'
 Plug 'mileszs/ack.vim'
 Plug 'chrisbra/unicode.vim'
+Plug 'itchyny/calendar.vim'
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
