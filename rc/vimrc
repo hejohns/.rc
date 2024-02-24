@@ -112,6 +112,11 @@ Plug 'chrisbra/unicode.vim'
 Plug 'itchyny/calendar.vim'
 Plug 'tpope/vim-characterize'
 Plug 'https://github.com/kshenoy/vim-signature'
+" these plugins don't seem to support {'for': ['markdown', 'vimwiki']}
+" they misbehave
+Plug 'vimwiki/vimwiki'
+Plug 'michal-h21/vim-zettel'
+Plug 'michal-h21/vimwiki-sync'
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
