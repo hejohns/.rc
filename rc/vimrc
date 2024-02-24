@@ -14,9 +14,14 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 " Run PlugInstall if there are missing plugins
 " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation-of-missing-plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-  \| PlugInstall --sync | source $MYVIMRC
-\| endif
+function! s:auto_plug() abort
+    PlugInstall --sync
+    silent !echo '**rerun `vim` to load newly installed plugins**. Quitting...'
+    sleep 5
+    quitall
+endfunction
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) | call s:auto_plug() | endif
+autocmd VimEnter * PlugUpdate | quit
 " LanguageClient-neovim variables
 let g:myLSRunning = 0
 let g:myLSLangs = []
@@ -122,6 +127,7 @@ Plug 'https://github.com/kshenoy/vim-signature'
 Plug 'vimwiki/vimwiki'
 Plug 'michal-h21/vim-zettel'
 Plug 'michal-h21/vimwiki-sync'
+Plug 'altercation/vim-colors-solarized'
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
