@@ -16,12 +16,13 @@ endif
 " https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation-of-missing-plugins
 function! s:auto_plug() abort
     PlugInstall --sync
+    PlugUpdate --sync
     silent !echo '**rerun `vim` to load newly installed plugins**. Quitting...'
     sleep 5
     quitall
 endfunction
 autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) | call s:auto_plug() | endif
-autocmd VimEnter * PlugUpdate | quit
+autocmd VimEnter * ++once PlugUpdate --sync | quit
 " LanguageClient-neovim variables
 let g:myLSRunning = 0
 let g:myLSLangs = []
