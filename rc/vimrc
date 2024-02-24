@@ -99,7 +99,7 @@ Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'mhinz/vim-signify'
 Plug 'LnL7/vim-nix', {'for': 'nix'}
 Plug 'mbbill/undotree'
-Plug 'tpope/vim-dispatch', {'for': ['tex', 'ocaml']} " NOTE: but we may want for more langs later
+Plug 'tpope/vim-dispatch', {'for': ['tex', 'ocaml', 'c', 'cpp']} " NOTE: but we may want for more langs later
 if !has('nvim')
     Plug 'vim-utils/vim-man' " replaces ``builtin'' :Man ?
 endif
@@ -111,10 +111,20 @@ Plug 'mileszs/ack.vim'
 Plug 'chrisbra/unicode.vim'
 Plug 'itchyny/calendar.vim'
 Plug 'tpope/vim-characterize'
+Plug 'https://github.com/kshenoy/vim-signature'
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
 call hejohns#initialize_clang_complete()
+" ------------------------------------------------------------
+" On the t130, I had issues where this was suuuuper slow for some reason
+" (startup time), and had to commend out the opam stuff below.
+"
+" I haven't seen this issue since, but I'm leaving this note here in case it
+" comes up again.
+" Worst case, just comment it out again as long as we don't need to edit ocaml
+" for the time being.
+" ------------------------------------------------------------
 " ## added by OPAM user-setup for vim / base ## 93ee63e278bdfc07d1139a748ed3fff2 ## you can edit, but keep this line
 let s:opam_share_dir = system('opam config var share')
 let s:opam_share_dir = substitute(s:opam_share_dir, '[\r\n]*$', '', '')
