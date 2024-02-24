@@ -3,6 +3,7 @@ scriptencoding utf8
 
 " vim-plug
 " for auto-installation
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !mkdir -p ~/.vim/autoload && wget -O ~/.vim/autoload/plug.vim
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
@@ -11,6 +12,11 @@ if empty(glob('~/.vim/autoload/plug.vim'))
       autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
   augroup END
 endif
+" Run PlugInstall if there are missing plugins
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation-of-missing-plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
 " LanguageClient-neovim variables
 let g:myLSRunning = 0
 let g:myLSLangs = []
@@ -74,13 +80,12 @@ Plug 'autozimu/LanguageClient-neovim', {
     \ }
 Plug 'junegunn/fzf', {'do': {-> fzf#install()}}
 Plug 'junegunn/fzf.vim'
-if has('nvim')
-    Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-" for vim 8 with python
-else
-    Plug 'Shougo/deoplete.nvim'
-    Plug 'roxma/nvim-yarp'
-    Plug 'roxma/vim-hug-neovim-rpc'
+" handle both neovim and vim 8 with python
+" https://github.com/junegunn/vim-plug/wiki/tips#conditional-activation
+Plug 'Shougo/deoplete.nvim', has('nvim') ? {'do': ':UpdateRemotePlugins'} : {}
+Plug 'roxma/nvim-yarp', has('nvim') ? {'for': []} : {}
+Plug 'roxma/vim-hug-neovim-rpc', has('nvim') ? {'for': []} : {}
+if !has('nvim')
     " the path to python3 is obtained through executing `:echo exepath('python3')` in vim
     let g:python3_host_prog = exepath('python3')
     let g:deoplete#enable_at_startup = 1
