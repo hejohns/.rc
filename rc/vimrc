@@ -76,7 +76,11 @@ endif
 call plug#begin('~/.vim/plugged')
 " moved my vimrc into a plugin
 Plug 'hejohns/hejohns-vim', {'branch': 'trunk'}
-source ~/.vim/plugged/hejohns-vim/plugins.vim
+try
+    source ~/.vim/plugged/hejohns-vim/plugins.vim
+catch
+    silent !echo '[error] sourcing `:Plug` list failed. `:PlugUpdate` manually, and rerun vim.'
+endtry
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
