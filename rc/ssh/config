@@ -1,1 +1,2 @@
 VisualHostKey=yes
+ServerAliveInterval 60
