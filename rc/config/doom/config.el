@@ -201,4 +201,5 @@
 (global-ligature-mode 't)
 (map! :after agda2-mode :m "C-u" nil)
 ;; performance debugging
-(setq agda2-highlight-level 'interactive)
+(after! agda2-mode
+  (setq agda2-highlight-level 'interactive))

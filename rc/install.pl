@@ -9,7 +9,16 @@ use File::Basename;
 use File::Copy;
 use File::Spec;
 
-$SIG{INT} = sub{die "Aborting...\n"};
+our $caught_sigint = 0;
+$SIG{INT} = sub{
+    $caught_sigint = 1;
+    die "Aborting...\n";
+};
+END {
+    if(!$caught_sigint){
+        # TODO: lazy copy semantics?
+    }
+}
 
 opendir (my $cd_dh, dirname($0)) or die "Couldn't open rc file directory: $!";
 my $home = $ENV{HOME} // die "$!";
@@ -47,8 +56,8 @@ while (@zipped_diff){
     my $yn = <STDIN> // die "eof on stdin: $!";;
     chomp($yn);
     if($yn eq 'y'){
-        say $upstream_abs, $downstream_abs;
-        #copy($upstream_abs, $downstream_abs) or die "Failed to copy $_ : $!";
+        copy($upstream_abs, $downstream_abs) or die "Failed to copy $_ : $!";
+        next;
     }
     elsif($yn eq 'n'){
         say "skipping...";
@@ -61,8 +70,8 @@ while (@zipped_diff){
         say '################################################################################';
     }
     elsif($yn eq 's'){
-        say $downstream_abs, $upstream_abs;
-        #copy($downstream_abs, $upstream_abs) or die "Failed to copy $_ : $!";
+        copy($downstream_abs, $upstream_abs) or die "Failed to copy $_ : $!";
+        next;
     }
     elsif($yn eq 'p'){
         say '################################################################################';
