@@ -80,6 +80,7 @@ my $yn = <STDIN> // die "eof on stdin: $!";
 chomp($yn);
 if($yn eq 'y'){
     system 'git', 'commit';
+    die;
 }
 exit 0;
 
