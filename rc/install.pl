@@ -72,9 +72,12 @@ while (@zipped_diff){
     goto RETRY;
 }
 
-say '$ git';
+say '$ git add -u';
 system 'git', 'add', '-u';
+say '$ git status';
 system 'git', 'status';
+say '$ git diff --staged';
+system 'git', 'diff', '--staged';
 say 'commit changes? y/n';
 my $yn = <STDIN> // die "eof on stdin: $!";
 chomp($yn);
