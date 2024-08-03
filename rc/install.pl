@@ -73,14 +73,19 @@ while (@zipped_diff){
 }
 
 say '$ git';
-`git add -u`;
-print `git -c color.ui=always status`;
-say 'push changes? y/n';
+system 'git', 'add', '-u';
+system 'git', 'status';
+say 'commit changes? y/n';
 my $yn = <STDIN> // die "eof on stdin: $!";
 chomp($yn);
 if($yn eq 'y'){
     system 'git', 'commit';
-    die;
+    say 'push changes? y/n';
+    $yn = <STDIN> // die "eof on stdin: $!";
+    chomp($yn);
+    if($yn eq 'y'){
+        system 'git', 'push';
+    }
 }
 exit 0;
 
