@@ -203,3 +203,5 @@
 ;; performance debugging
 (after! agda2-mode
   (setq agda2-highlight-level 'interactive))
+;; https://github.com/agda/agda/issues/2837#issuecomment-473282957
+(add-to-list 'auto-mode-alist '("\\.lagda.md\\'" . agda2-mode))
