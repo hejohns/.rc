@@ -49,7 +49,7 @@ if has('perl')
         'ruby': ['bundler', 'exec', 'solargraph', 'stdio'],
         'c': ['clangd'],
         'cpp': ['clangd'],
-        'typescript': ['deno lsp'],
+        'typescript': ['deno', 'lsp'],
         }
         __EOF
         ;
