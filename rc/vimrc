@@ -22,7 +22,6 @@ function! s:auto_plug() abort
     quitall
 endfunction
 autocmd VimEnter * ++once if len(filter(values(g:plugs), '!isdirectory(v:val.dir)')) | call s:auto_plug() | endif
-autocmd VimEnter * ++once try | call hejohns#PlugUpdate() | catch echoerr 'Try rerunning vim' | endtry
 " LanguageClient-neovim variables
 let g:myLSRunning = 0
 let g:myLSLangs = []
@@ -86,7 +85,7 @@ call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
 try
-	call hejohns#initialize_clang_complete()
+    call hejohns#initialize_clang_complete()
 catch
     silent !echo '[warning] `hejohns\#initialize_clang_complete` errored out-- are we installing plugins for the first time?'
 endtry
