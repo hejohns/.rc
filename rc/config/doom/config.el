@@ -86,7 +86,7 @@
 (map! :map agda2-mode-map
       :prefix "C-c"
       "C-g" #'agda2-goto-definition-keyboard)
-(setq evil-snipe-spillover-scope 'whole-visible)
+;(setq evil-snipe-spillover-scope 'whole-visible)
 ;; I couldn't get fira-code-mode to work
 ;;(use-package! fira-code-mode
 ;;  :custom (fira-code-mode-disabled-ligatures '("x"))
@@ -205,6 +205,7 @@
   (setq agda2-highlight-level 'interactive))
 ;; https://github.com/agda/agda/issues/2837#issuecomment-473282957
 (add-to-list 'auto-mode-alist '("\\.lagda.md\\'" . agda2-mode))
+(add-to-list 'auto-mode-alist '("\\.lagda.tree\\'" . agda2-mode))
 ;; For some reason, terminal emacs seems to receive a C-c , and C-c . instead of
 ;; C-c C-, and C-c C-.
 (map! :after agda2-mode :map agda2-mode-map :prefix "C-c" "," #'agda2-goal-and-context)
