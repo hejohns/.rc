@@ -82,7 +82,7 @@
   (nerd-icons-install-fonts t))
 ;; agda-mode setup
 (load-file (let ((coding-system-for-read 'utf-8))
-                (shell-command-to-string "agda-mode locate")))
+                (shell-command-to-string "agda --emacs-mode locate")))
 (map! :map agda2-mode-map
       :prefix "C-c"
       "C-g" #'agda2-goto-definition-keyboard)
