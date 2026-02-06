@@ -84,11 +84,11 @@ endtry
 call plug#end()
 " clang_complete
 " need to run this before VimEnter to silence clang_complete errors
-try
-    call hejohns#initialize_clang_complete()
-catch
-    silent !echo '[warning] `hejohns\#initialize_clang_complete` errored out-- are we installing plugins for the first time?'
-endtry
+"try
+"    call hejohns#initialize_clang_complete()
+"catch
+"    silent !echo '[warning] `hejohns\#initialize_clang_complete` errored out-- are we installing plugins for the first time?'
+"endtry
 " ------------------------------------------------------------
 " On the t130, I had issues where this was suuuuper slow for some reason
 " (startup time), and had to commend out the opam stuff below.
