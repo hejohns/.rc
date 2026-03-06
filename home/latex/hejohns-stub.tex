@@ -59,7 +59,15 @@
               \kern-.75\ht\strutbox\rule{\linewidth}{.8pt}%
             }%
           }{%
-            \@hangfrom{\hskip #2#3}{#4}}% this is the default \sectionlinesformat
+            \Ifstr{#1}{subsection}{%
+              \parbox[t]{\widthof{#4}}{%
+                \raggedsection\@hangfrom{\hskip #2#3}{#4}\par%
+                \kern-.75\ht\strutbox\rule{\linewidth}{.8pt}%
+              }%
+            }{%
+              \@hangfrom{\hskip #2#3}{#4}% this is the default \sectionlinesformat
+            }%
+          }%
         }
         \makeatother
 
