@@ -49,6 +49,7 @@ if has('perl')
         'c': ['clangd'],
         'cpp': ['clangd'],
         'typescript': ['deno', 'lsp'],
+        'python': ['zuban', 'server'],
         }
         __EOF
         ;
